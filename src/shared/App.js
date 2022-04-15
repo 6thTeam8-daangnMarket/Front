@@ -5,11 +5,11 @@ import { Route } from "react-router-dom"; // 경로설정및 이동을위해 꼭
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/store";
 
-import Header from "./header/Header";
+import Header from "../components/Header";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
-import MyPage from "../pages/Mypage";
-import MainPage from "../pages/Mainpage";
+import MyPage from "../pages/MyPage";
+import MainPage from "../pages/MainPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import PostWritePage from "../pages/PostWritePage";
 
