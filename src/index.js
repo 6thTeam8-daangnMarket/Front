@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import App from "./shared/App";
+import "./static/fonts/font.css";
 
 ReactDOM.render(
   <Provider store={store}>

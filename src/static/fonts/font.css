@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "AppleSDGothicNeoB";
+  font-style: normal;
+  font-weight: normal;
+
+  src: url("./AppleSDGothicNeoB.ttf") format("truetype"),
+    url("./AnyConv.com__AppleSDGothicNeoB.woff") format("woff"),
+    url("./AnyConv.com__AppleSDGothicNeoB.eot") format("embedded-opentype");
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoEB";
+  font-style: normal;
+  font-weight: normal;
+
+  src: url("./AppleSDGothicNeoEB.ttf") format("truetype"),
+    url("./AnyConv.com__AppleSDGothicNeoEB.woff") format("woff"),
+    url("./AnyConv.com__AppleSDGothicNeoEB.eot") format("embedded-opentype");
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoH";
+  font-style: normal;
+  font-weight: normal;
+
+  src: url("./AppleSDGothicNeoH.ttf") format("truetype"),
+    url("./AnyConv.com__AppleSDGothicNeoH.woff") format("woff"),
+    url("./AnyConv.com__AppleSDGothicNeoH.eot") format("embedded-opentype");
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoL";
+  font-style: normal;
+  font-weight: normal;
+
+  src: url("./AppleSDGothicNeoL.ttf") format("truetype"),
+    url("./AnyConv.com__AppleSDGothicNeoL.woff") format("woff"),
+    url("./AnyConv.com__AppleSDGothicNeoL.eot") format("embedded-opentype");
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoM";
+  font-style: normal;
+  font-weight: normal;
+
+  src: url("./AppleSDGothicNeoM.ttf") format("truetype"),
+    url("./AnyConv.com__AppleSDGothicNeoM.woff") format("woff"),
+    url("./AnyConv.com__AppleSDGothicNeoM.eot") format("embedded-opentype");
+}
