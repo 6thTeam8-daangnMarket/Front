@@ -41,4 +41,4 @@ const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
 const store = (initialStore) => createStore(rootReducer, enhancer);
 
-export default store;
+export default store();
