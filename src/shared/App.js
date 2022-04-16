@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <ConnectedRouter history={history}>
-        <Header />
+        {/* <Header /> */}
         <Route path="/" exact component={MainPage} />
         <Route path="/mypage" exact component={MyPage} />
         <Route path="/login" exact component={LoginPage} />
