@@ -6,7 +6,7 @@ import { fontSize, fontWeight } from "@mui/system";
 
 const Header = (props) => {
   const isLogin = sessionStorage.getItem('token') ? true: false;
-  if(isLogin) {
+  if(!isLogin) {
     return (
       <React.Fragment>
         <HeaderWrap>
