@@ -43,3 +43,13 @@ p{
     transform: rotate(360deg);
   }
 }
+.prefix {
+  position: relative;
+  right: -3px;
+  color: grey;
+  margin: 10px;
+}
+input.has-prefix {
+  padding-left: 30px;
+  margin-left: -30px;
+}
