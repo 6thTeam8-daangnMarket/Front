@@ -1,7 +1,7 @@
 import React from "react";
 
 const post = () => {
-  return <div></div>;
+  return (null);
 };
 
 export default post;

@@ -2,24 +2,52 @@ import React from "react";
 import styled from "styled-components";
 import Button from '@mui/material/Button';
 import Text2 from "../elements/Text2";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 
 const PostWritePage = () => {
+  const cateRef = React.useRef();
+  const dispatch  = useDispatch();
+  const history = useHistory();
+  
+  const [image, setImage] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [content, setContent] = React.useState("");
+  const [category, setCategory] = React.useState("");
+  const [price, setPrice] = React.useState(0);
+
+  const formData = new FormData();
+
+  const changeContent = (e) => {
+    setContent(e.target.value);
+  } 
+  const changePrice = (e) => {
+    setPrice(e.target.value);
+  } 
+  const changeTitle = (e) => {
+    setTitle (e.target.value);
+  }
+  const changeCategory = (category) => {
+    setCategory(category.value)
+  }
   return (
       <PostWrite>
         <PostHeader>
-        <Button variant="text" style={{color:"black", fontSize: "30px", fontWeight: "300", lineHeight: "1"}}>x</Button>
+        <Button variant="text" style={{color:"black", fontSize: "30px", fontWeight: "300", lineHeight: "1"}} 
+        onClick={()=>history.push('/')}>x</Button>
         <Text2 fontSize="25px" style={{lineHeight: "1.75", fontFamily: "AppleSDGothicNeoM"}}>중고거래 글쓰기</Text2>
         <Button variant="text" style={{color:"#FF9F57", fontSize: "23px", fontWeight: "600", lineHeight: "1"}}>완료</Button>
         </PostHeader> <Hr/>
         <PostBody>
           <ImageUpload>
             <input type="file" />
+            <img src={image} style={{width: "100px", height:"100px"}}></img>
           </ImageUpload>
           <DetailWrap>
-            <input type="text" placeholder="글 제목"/>
+            <input type="text" placeholder="글 제목" onChange={changeTitle}/>
           </DetailWrap>
           <DetailWrap>
-            <select name="category">
+            <select name="category" cateRef={changeCategory}>
               <option value="none">카테고리 선택</option>
               <option value="디지털기기">디지털기기</option>
               <option value="생활가전">생활가전</option>
@@ -40,19 +68,22 @@ const PostWritePage = () => {
           </DetailWrap>
           <DetailWrap>
               <span className="prefix">₩</span>
-              <input className="has-prefix" 
-              type="number" placeholder="가격 (선택사항)" /> 
+              <input className="has-prefix" type="number" placeholder="가격 (선택사항)" 
+              onChange={changePrice}/> 
               <div  style={{float: "right"}} >
                 <input type="radio" name="priceOffer" id="priceOffer" value="priceOffer"/>
                 <label htmlFor="priceOffer">가격 제안받기</label>
               </div>
           </DetailWrap>
           <ContentsWrap>
-            <input type="text" placeholder="ㅇㅇ동에 올릴 게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)"></input>
+            <textarea className="content" rows="10" style={{fontSize:"20px",width: "97%"}} 
+            placeholder="ㅇㅇ동에 올릴 게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)"
+            onChange={changeContent}></textarea>
           </ContentsWrap>
         </PostBody><Hr/>
         <PostFooter>
-
+          <Button variant="text"> 자주 쓰는 문구 </Button>
+          <Button variant="text"> 보여줄 동네 설정 </Button>
         </PostFooter>
       </PostWrite>
     )
@@ -72,6 +103,7 @@ const PostHeader = styled.div`
 const PostBody = styled.div`
   width: 100%;
   height: 80%;
+  font-size: 20px;
 `
 const Hr = styled.hr`
 color: lightgrey;
