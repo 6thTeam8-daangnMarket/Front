@@ -18,7 +18,6 @@ const Header = (props) => {
         </HeaderWrap>
         <Bar></Bar>
       </React.Fragment>
-      
     )
   }
   else {
