@@ -11,6 +11,7 @@ const Input = (props) => {
     _onChange,
     width,
     height,
+    display,
     margin,
     padding,
   } = props;
@@ -18,6 +19,7 @@ const Input = (props) => {
   const styles = {
     width,
     height,
+    display,
     margin,
     padding,
   };
@@ -42,6 +44,7 @@ Input.defaultProps = {
   _onChange: () => {},
   width: "50%",
   height: "10%",
+  display: "inline-block",
   margin: false,
   padding: false,
 };
@@ -54,8 +57,10 @@ const ElInput = styled.input`
 
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  margin: ${(props) => (props.margin ? `${props.margin}` : "10px 10px")}
+  ${(props) => (props.display ? `display: ${props.display}` : "")};
+  margin: ${(props) => (props.margin ? `${props.margin}` : "10px 10px")};
   padding: ${(props) => (props.padding ? `${props.padding};` : "19px 19px;")};
+
   &::placeholder {
     color: #bbb;
     font-size: 14px;

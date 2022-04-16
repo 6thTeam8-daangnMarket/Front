@@ -48,7 +48,7 @@ Grid.defaultProps = {
 };
 
 const GridBox = styled.div`
-  min-width: 300px;
+  // min-width: 300px;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   box-sizing: border-box;

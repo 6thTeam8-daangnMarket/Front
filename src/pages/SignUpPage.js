@@ -110,8 +110,8 @@ const SignUpPage = () => {
   };
 
   return (
-    <Grid>
-      <Grid width="50%" height="50%" margin="10% auto">
+    <Grid shadow="none">
+      <Grid width="50%" height="50%" margin="10% auto" center>
         <Text size="30px" bold margin="0px 0px 30px 0px">
           회원가입
         </Text>
@@ -150,6 +150,7 @@ const SignUpPage = () => {
         <Input
           placeholder="설정할 비밀번호를 입력해주세요"
           type="password"
+          display="block"
           margin="10px "
           _onChange={(e) => {
             setPw(e.target.value);
@@ -158,6 +159,7 @@ const SignUpPage = () => {
         <Input
           placeholder="비밀번호를 다시 입력해주세요"
           type="password"
+          display="block"
           margin="10px"
           _onChange={(e) => {
             setpwCheck(e.target.value);

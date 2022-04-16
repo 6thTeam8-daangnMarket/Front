@@ -6,6 +6,7 @@ const Button = (props) => {
   const {
     width,
     height,
+    display,
     margin,
     padding,
     size,
@@ -23,6 +24,7 @@ const Button = (props) => {
   const styles = {
     width,
     height,
+    display,
     margin,
     padding,
     size,
@@ -50,11 +52,12 @@ const Button = (props) => {
 };
 
 Button.defaultProps = {
-  width: "50%",
+  width: "40%",
   height: "10%",
+  display: "inline-block",
   margin: false,
   padding: "15px 15px",
-  size: "16px",
+  size: "13px",
   color: "#fff",
   bg: "#298D49",
   border: null,
@@ -66,6 +69,7 @@ Button.defaultProps = {
 const BasicButton = styled.button`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  ${(props) => (props.display ? `display: ${props.display}` : "")}
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
   padding: ${(props) => props.padding};
   border: ${(props) => (props.border ? `${props.border};` : "1px solid #bbb")};
