@@ -37,7 +37,9 @@ const getPost = () => {
     api
       .get(`/api/posts`)
       .then((res) => {
-        dispatch(set_post(res.data));
+        console.log(res.data.data); //[]
+        dispatch(set_post(res.data.data));
+        
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +60,7 @@ const search = (searchWord) => {
       })
       .catch((err) => {
         console.log(err);
-      });
+    });
   };
 };
 
@@ -72,6 +74,7 @@ const addPost = (imageUrl, title, category, content, price) => {
     return async function (dispatch, getState, {history}){
       try{
           await axios.post("http://3.36.77.41/api/write",formData, {
+          // await axios.post("http:///api/write",formData, {
             headers: { 
               'content-type': "multipart/form-data", 
               Authorization: `${localStorage.getItem("token")}`
@@ -114,7 +117,7 @@ export default handleActions(
       }),
       [SET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.post_list = action.payload.post_list;
+        draft.post_list = action.payload.posts;
       }),
       [UPDATE_POST] : (state, action) => produce (state, (draft) =>{
 

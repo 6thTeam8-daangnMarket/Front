@@ -186,7 +186,7 @@ const PostWritePage = () => {
               id="content"
               className="content"
               rows="10"
-              style={{ fontSize: "20px", width: "97%" }}
+              style={{ fontSize: "20px", width: "100%", boxSizing: "border-box", padding:"10px"}}
               placeholder="ㅇㅇ동에 올릴 게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)"
               onChange={changeContent}
             ></textarea>

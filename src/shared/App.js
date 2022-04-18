@@ -10,8 +10,22 @@ import MyPage from "../pages/MyPage";
 import MainPage from "../pages/MainPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import PostWritePage from "../pages/PostWritePage";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useEffect } from "react";
 
 function App() {
+  const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
+  const isToken = localStorage.getItem('token') ? true: false;
+  
+  useEffect(() => {
+    if(isToken){
+      dispatch(userActions.isLogin(localStorage.getItem("token")));
+    }
+  }, [userId]);
+
   return (
     <>
       <ConnectedRouter history={history}>

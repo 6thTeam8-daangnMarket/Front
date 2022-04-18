@@ -166,16 +166,19 @@ const SignUpPage = () => {
           <option value="강원도">강원도</option>
           <option value="제주도">제주도</option>
         </select>
-
+        <div>
         <Input
           placeholder="설정할 비밀번호를 입력해주세요"
           type="password"
           display="block"
+          width="100%"
           margin="10px "
           _onChange={(e) => {
             setPw(e.target.value);
           }}
         />
+        </div>
+        
         <Input
           placeholder="비밀번호를 다시 입력해주세요"
           type="password"

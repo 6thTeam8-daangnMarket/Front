@@ -39,7 +39,7 @@ const login = (id, pw) => {
         console.log(data);
         // 로컬스토리지에 token 저장
         localStorage.setItem("token", data.headers.authorization);
-        localStorage.setItem("userInfo", data.data);
+        // localStorage.setItem("userInfo", data.data);
 
         dispatch(
           setUser({
@@ -50,7 +50,6 @@ const login = (id, pw) => {
             // userProfile: data.data.userProfile,
           })
         );
-
         history.push("/");
       })
       .catch((err) => {
@@ -63,20 +62,21 @@ const login = (id, pw) => {
 const isLogin = (Token) => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
+
     api
       .get(
         "/user/isLogIn",
-        {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: ` ${token}`,
           },
         }
       )
       .then((res) => {
+        console.log(res);
         const userId = res.data.userId;
-        const userName = res.data.username;
-        const nickName = res.data.nickname;
+        const userName = res.data.userName;
+        const nickName = res.data.nickName;
         const location = res.data.location;
         dispatch(
           setUser({
@@ -89,6 +89,7 @@ const isLogin = (Token) => {
       })
       .catch((err) => {
         console.log(err);
+        
       });
   };
 };

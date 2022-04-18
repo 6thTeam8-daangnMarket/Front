@@ -8,9 +8,12 @@ import { Grid } from "../elements/index";
 const Navbar = () => {
   const userId = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
-
+  const isToken = localStorage.getItem('token') ? true: false;
+  
   useEffect(() => {
-    dispatch(userActions.isLogin(localStorage.getItem("token")));
+    if(isToken){
+      dispatch(userActions.isLogin(localStorage.getItem("token")));
+    }
   }, [userId]);
 
   return (

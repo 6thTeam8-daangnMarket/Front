@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import Text2 from "../elements/Text2";
 import { useHistory } from "react-router";
-import { style } from "@mui/system";
+import { useSelector } from "react-redux";
 
 const PostDetailPage = (props) => {
+  //useSelect
+  const state = useSelector((state) => state.post.detail);
   const history = useHistory();
   return(
     <DetailWrap>
