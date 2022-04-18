@@ -4,19 +4,31 @@ import Button from "@mui/material/Button";
 import Text2 from "../elements/Text2";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
+import { actionCreators as PostActions } from "../redux/modules/post";
 
 const PostWritePage = () => {
   const cateRef = React.useRef();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [image, setImage] = React.useState("");
+  const [image, setImage] = React.useState(""); //preview
+
+  const [imageUrl, setImageUrl] = React.useState(""); //보내는 image
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [price, setPrice] = React.useState(0);
 
-  const formData = new FormData();
+  const reader = new FileReader();
+
+  const encodeFileToBase64 = (fileBlob) => {
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+    });
+  };
 
   const changeContent = (e) => {
     setContent(e.target.value);
@@ -27,10 +39,27 @@ const PostWritePage = () => {
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
-  const changeCategory = (category) => {
-    setCategory(category.value);
+  const changeCategory = (e) => {
+    setCategory(e.target.value);
   };
-  const submit = () => {};
+  const changeImageUrl = (e) => {
+    setImageUrl(e.target.files[0]);
+  };
+
+  const submit = () => {
+    if (
+      imageUrl === "" ||
+      title === "" ||
+      category === "" ||
+      content === "" ||
+      price === ""
+    ) {
+      alert("모든 사항을 기입해주세요.");
+      return;
+    } else {
+      dispatch(PostActions.addPost(imageUrl, title, category, content, price));
+    }
+  };
   return (
     <PostWrite>
       <PostHeader>
@@ -52,8 +81,18 @@ const PostWritePage = () => {
         >
           중고거래 글쓰기
         </Text2>
-        {/* <Button variant="text" style={{color:"#FF9F57", fontSize: "23px", fontWeight: "600", lineHeight: "1"}}
-        onClick={()=>{submit}}>완료</Button> */}
+        <Button
+          variant="text"
+          style={{
+            color: "#FF9F57",
+            fontSize: "23px",
+            fontWeight: "600",
+            lineHeight: "1",
+          }}
+          onClick={() => submit()}
+        >
+          완료
+        </Button>
       </PostHeader>{" "}
       <Hr />
       <PostBody>
@@ -62,9 +101,29 @@ const PostWritePage = () => {
           <ImageUpload>
             {/* 이미지 업로드 */}
             <label htmlFor="image"></label>
-            <input id="image" name="image" type="file" />
+            <input
+              id="image"
+              name="image"
+              type="file"
+              onChange={(e) => {
+                changeImageUrl(e);
+                encodeFileToBase64(e.target.files[0]);
+              }}
+            />
             {/* 미리보기 */}
-            {/* <img src={image} style={{width: "100px", height:"100px"}}></img> */}
+            <div style={{ width: "100px", height: "100px" }}>
+              {image && (
+                <img
+                  src={image}
+                  alt="preview-img"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundSize: "cover",
+                  }}
+                />
+              )}
+            </div>
           </ImageUpload>
           <DetailWrap>
             <input
@@ -77,7 +136,7 @@ const PostWritePage = () => {
           </DetailWrap>
           {/* 카테고리 설정 */}
           <DetailWrap>
-            <select name="category" cateRef={changeCategory} id="category">
+            <select name="category" id="category" onChange={changeCategory}>
               <option value="none">카테고리 선택</option>
               <option value="디지털기기">디지털기기</option>
               <option value="생활가전">생활가전</option>
