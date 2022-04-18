@@ -44,6 +44,7 @@ const getPost = () => {
       });
   };
 };
+
 const search = (searchWord) => {
   return function (dispatch, getState, { history }) {
     api
@@ -63,16 +64,17 @@ const search = (searchWord) => {
 
 const addPost = (imageUrl, title, category, content, price) => {
     const formData = new FormData();
-      formData.append("title", title);
+      formData.append("postTitle", title);
       formData.append("category", category);
-      formData.append("content", content);
+      formData.append("postContents", content);
       formData.append("price", price);
-      formData.append("image", imageUrl);
-  return async function (dispatch, getState, {history}){
+      formData.append("imageUrl", imageUrl);
+    return async function (dispatch, getState, {history}){
       try{
           await axios.post("http://3.36.77.41/api/write",formData, {
-            headers: {
-              Authorization: `BEARER ${sessionStorage.getItem("token")}`
+            headers: { 
+              'content-type': "multipart/form-data", 
+              Authorization: `${localStorage.getItem("token")}`
             },
           },
           { withCredentials: true }
@@ -85,8 +87,9 @@ const addPost = (imageUrl, title, category, content, price) => {
         console.log(err);
         return;
       }
-  }
+    }
 }
+
 const deletePost = (token, postId) => {
   return async function (dispatch, getState, {history}){
     try{

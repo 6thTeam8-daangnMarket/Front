@@ -26,8 +26,8 @@ const SignUpPage = () => {
       })
       .then((res) => {
         setIdDup(true);
-        console.log(res.data.result);
-        if (res.data.result === "false") {
+        console.log(res);
+        if (res.data.status === "OK") {
           window.alert("사용할 수 있는 ID 입니다.");
         } else {
           window.alert("사용할 수 없는 ID 입니다.");
@@ -41,13 +41,13 @@ const SignUpPage = () => {
 
   const nickNameCheckAPI = (nickName) => {
     api
-      .post("/user/nicknameCheck", {
-        nickname: nickName,
+      .post("/user/nickNameCheck", {
+        nickName: nickName,
       })
       .then((res) => {
         setNickNameDup(true);
-        console.log(res.data.result);
-        if (res.data.result === "false") {
+        console.log(res.data.status);
+        if (res.data.status === "OK") {
           window.alert("사용할 수 있는 닉네임 입니다.");
         } else {
           window.alert("사용할 수 없는 닉네임 입니다.");
@@ -59,18 +59,20 @@ const SignUpPage = () => {
       });
   };
 
-  const signupAPI = (id, nickname, location, pw) => {
+  const signupAPI = (id, nickname, location, pw, pwCheck) => {
     return function (dispatch, getState, { history }) {
       console.log("아이디", id);
       console.log("닉네임", nickname);
       console.log("비밀번호", pw);
+      console.log("pwcheck", pwCheck);
 
       api
-        .post("/user/signup", {
-          username: id,
-          nickname: nickname,
+        .post("/user/signUp", {
+          userName: id,
+          nickName: nickname,
           location: location,
-          password: pw,
+          passWord: pw,
+          passWordCheck: pwCheck
         })
         .then((res) => {
           console.log(res);
@@ -110,7 +112,7 @@ const SignUpPage = () => {
       return false;
     }
 
-    dispatch(signupAPI(id, nickName, location, pw));
+    dispatch(signupAPI(id, nickName, location, pw, pwCheck));
   };
 
   return (

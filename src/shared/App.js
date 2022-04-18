@@ -1,11 +1,9 @@
 import React from "react";
 import "./App.css";
-
+import Navbar from "../components/Navbar";
 import { Route } from "react-router-dom"; // 경로설정및 이동을위해 꼭 필요함
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/store";
-
-import Header from "../components/Header";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
 import MyPage from "../pages/MyPage";
@@ -18,6 +16,7 @@ function App() {
     <>
       <ConnectedRouter history={history}>
         {/* <Header /> */}
+        <Navbar />
         <Route path="/" exact component={MainPage} />
         <Route path="/mypage" exact component={MyPage} />
         <Route path="/login" exact component={LoginPage} />
