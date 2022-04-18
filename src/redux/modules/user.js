@@ -22,35 +22,11 @@ const initialState = {
   userId: null, // 서버에서 받아올 값
   username: null, // id
   nickname: null,
+  location: null,
   is_login: false,
 };
 
-// 4. 미들웨어
-// 4.1. 회원가입
-// const signupAPI = (id, nickname, pw) => {
-//   return function (dispatch, getState, { history }) {
-//     console.log("아이디", id);
-//     console.log("닉네임", nickname);
-//     console.log("비밀번호", pw);
-
-//     api
-//       .post("/user/signup", {
-//         username: id,
-//         nickname: nickname,
-//         password: pw,
-//       })
-//       .then((res) => {
-//         console.log(res);
-//         window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
-//         history.push("/login");
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-// };
-
-// 4.2. 로그인
+// 로그인
 const loginAPI = (id, pw) => {
   return function (dispatch, getState, { history }) {
     console.log(id, pw);
@@ -64,19 +40,14 @@ const loginAPI = (id, pw) => {
         // 로컬스토리지에 token 저장
         localStorage.setItem("token", data.headers.authorization);
         localStorage.setItem("userInfo", data.data);
-        // localStorage.setItem("userId", data.data.userId);
-        // localStorage.setItem("username", data.data.usernamel);
-        // localStorage.setItem("email", data.data.email);
-        // localStorage.setItem("nickname", data.data.nickname);
-        // localStorage.setItem("userProfile", data.data.userProfile);
 
         dispatch(
           setUser({
             userId: data.data.userId,
             username: data.data.username,
-            email: data.data.email,
             nickname: data.data.nickname,
-            userProfile: data.data.userProfile,
+            location: data.data.location,
+            // userProfile: data.data.userProfile,
           })
         );
 
@@ -89,28 +60,41 @@ const loginAPI = (id, pw) => {
 };
 
 // 4.3. isLogin
-// const isLogin = () => {
-//   return function (dispatch, getState, { history }) {
-//     const token = localStorage.getItem("token");
-//     const userInfo = localStorage.getItem("userInfo");
-
-//     // 토큰이 없거나 유저아이디가 없거나 둘 중 하나면 로그인이 아님
-//     if (!token) {
-//       dispatch(logout());
-//     }
-//     console.log(token);
-//     console.log(userInfo);
-//     dispatch(
-//       // 어딘가에서 setUser 를 위한 정보를 가지고 와야 함. 토큰에 이 정보 있는지 확인 필요
-//       setUser({
-
-//       })
-//     );
-//   };
-// };
+const isLoginAPI = (Token) => {
+  return function (dispatch, getState, { history }) {
+    const token = localStorage.getItem("token");
+    api
+      .get(
+        "/user/islogin",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        const userId = res.data.userId;
+        const userName = res.data.username;
+        const nickName = res.data.nickname;
+        const location = res.data.location;
+        dispatch(
+          setUser({
+            userId,
+            userName,
+            nickName,
+            location,
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
 // 4.4.2. 마이페이지_내가 쓴 글 불러오기
-// export const mypostAPI = () => {
+// export const mylikeAPI = () => {
 //   const token = localStorage.getItem("token");
 
 //   return function (dispatch, getState, { history }) {
@@ -148,6 +132,7 @@ export default handleActions(
         draft.userId = action.payload.user.userId;
         draft.username = action.payload.user.username;
         draft.nickname = action.payload.user.nickname;
+        draft.location = action.payload.user.location;
         draft.is_login = true;
       }),
 
@@ -164,10 +149,10 @@ export default handleActions(
 
 // action creator export
 const actionCreators = {
-  // signupAPI,
   loginAPI,
+  isLoginAPI,
   setUser,
-  // isLogin,
+
   // mypostAPI,
   logout,
 };

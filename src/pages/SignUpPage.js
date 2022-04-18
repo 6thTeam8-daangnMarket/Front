@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+
 import { Button, Grid, Text, Input } from "../elements/index";
+import { Navbar } from "../components/Navbar";
 
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { api } from "../shared/api";
 
@@ -14,6 +15,7 @@ const SignUpPage = () => {
   const [idDup, setIdDup] = useState(false);
   const [nickName, setNickName] = useState("");
   const [nickNameDup, setNickNameDup] = useState(false);
+  const [location, setLocation] = useState("");
   const [pw, setPw] = useState("");
   const [pwCheck, setpwCheck] = useState("");
 
@@ -57,7 +59,7 @@ const SignUpPage = () => {
       });
   };
 
-  const signupAPI = (id, nickname, pw) => {
+  const signupAPI = (id, nickname, location, pw) => {
     return function (dispatch, getState, { history }) {
       console.log("아이디", id);
       console.log("닉네임", nickname);
@@ -67,6 +69,7 @@ const SignUpPage = () => {
         .post("/user/signup", {
           username: id,
           nickname: nickname,
+          location: location,
           password: pw,
         })
         .then((res) => {
@@ -81,7 +84,13 @@ const SignUpPage = () => {
   };
 
   const signUp = () => {
-    if (id === "" || nickName === "" || pw === "" || pwCheck === "") {
+    if (
+      id === "" ||
+      nickName === "" ||
+      location === "" ||
+      pw === "" ||
+      pwCheck === ""
+    ) {
       window.alert("위 입력란을 모두 입력해주세요.");
       return false;
     }
@@ -90,11 +99,6 @@ const SignUpPage = () => {
       alert("아이디 중복 여부를 확인해주세요.");
       return false;
     }
-
-    // if (nickName === "") {
-    //   alert("닉네임을 입력해주세요.");
-    //   return false;
-    // }
 
     if (nickNameDup === false) {
       alert("닉네임 중복 여부를 확인해주세요.");
@@ -106,12 +110,12 @@ const SignUpPage = () => {
       return false;
     }
 
-    dispatch(signupAPI(id, nickName, pw));
+    dispatch(signupAPI(id, nickName, location, pw));
   };
 
   return (
-    <Grid shadow="none">
-      <Grid width="50%" height="50%" margin="10% auto" center>
+    <Grid>
+      <Grid height="95%" margin="10% auto" center>
         <Text size="30px" bold margin="0px 0px 30px 0px">
           회원가입
         </Text>
@@ -147,6 +151,20 @@ const SignUpPage = () => {
         >
           닉네임 중복 체크
         </Button>
+        <select
+          name="location"
+          id="location"
+          onChange={(e) => setLocation(e.target.value)}
+        >
+          <option value=" ">--선택--</option>
+          <option value="서울시">서울시</option>
+          <option value="경기도">경기도</option>
+          <option value="충청도">충청도</option>
+          <option value="경상도">경상도</option>
+          <option value="강원도">강원도</option>
+          <option value="제주도">제주도</option>
+        </select>
+
         <Input
           placeholder="설정할 비밀번호를 입력해주세요"
           type="password"

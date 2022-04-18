@@ -43,7 +43,7 @@ Input.defaultProps = {
   placeholder: "텍스트를 입력하시오.",
   _onChange: () => {},
   width: "50%",
-  height: "10%",
+  height: "5%",
   display: "inline-block",
   margin: false,
   padding: false,

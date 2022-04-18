@@ -53,7 +53,7 @@ const Button = (props) => {
 
 Button.defaultProps = {
   width: "40%",
-  height: "10%",
+  height: "5%",
   display: "inline-block",
   margin: false,
   padding: "15px 15px",

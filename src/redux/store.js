@@ -9,7 +9,6 @@ import user from "./modules/user";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  //우리가 만들 리듀서를 묶을때 넣어줌 이때 user 소문자 변수로 쓴것때문에 user.user. ~~ 에서 좀 헷갈린것이다. 그냥 user.js, post.js 등등 에서 받아온 reducer 정보들을 묶어서 여기서 쓴다
   post: post,
   user: user,
   router: connectRouter(history),
