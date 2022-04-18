@@ -36,14 +36,13 @@ const Grid = (props) => {
 
 Grid.defaultProps = {
   chidren: null,
-  width: "100vw",
-  height: "100vh",
-  // shadow: "1px 4px 4px 4px rgba(0, 0, 0, 0.15)",
+  width: "100%",
+  height: "100%",
   bg: false,
   padding: false,
   margin: false,
   is_flex: false,
-  center: "center",
+  center: false,
   _onClick: () => {},
 };
 

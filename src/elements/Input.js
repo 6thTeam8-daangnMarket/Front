@@ -42,8 +42,8 @@ Input.defaultProps = {
   type: "text",
   placeholder: "텍스트를 입력하시오.",
   _onChange: () => {},
-  width: "50%",
-  height: "5%",
+  width: "45%",
+  height: "4%",
   display: "inline-block",
   margin: false,
   padding: false,
@@ -59,7 +59,7 @@ const ElInput = styled.input`
   height: ${(props) => props.height};
   ${(props) => (props.display ? `display: ${props.display}` : "")};
   margin: ${(props) => (props.margin ? `${props.margin}` : "10px 10px")};
-  padding: ${(props) => (props.padding ? `${props.padding};` : "19px 19px;")};
+  padding: ${(props) => (props.padding ? `${props.padding};` : "15px 15px;")};
 
   &::placeholder {
     color: #bbb;

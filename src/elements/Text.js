@@ -32,6 +32,7 @@ const P = styled.p`
   color: ${(props) => props.color};
   margin: ${(props) => (props.margin ? `${props.margin}` : "0px")};
   ${(props) => (props.padding ? `${props.padding};` : "19px 19px;")};
+  box-sizing: border-box;
 `;
 
 export default Text;

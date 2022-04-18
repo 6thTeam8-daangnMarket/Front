@@ -1,16 +1,16 @@
 import React from "react";
-import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router";
-import { Text, Input, Button } from "../elements/index";
+// import { useHistory } from "react-router";
+import { Input, Button } from "../elements/index";
 
 import Navbar from "../components/Navbar";
 import Postlist from "../components/mainpage/Postlist";
-import { actionCreators as postActions  } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
+
 const MainPage = () => {
   // history 공부하자
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
 
   const [searchWord, setSearchWord] = React.useState("");

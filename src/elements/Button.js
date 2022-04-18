@@ -52,8 +52,8 @@ const Button = (props) => {
 };
 
 Button.defaultProps = {
-  width: "40%",
-  height: "5%",
+  width: "35%",
+  height: "4%",
   display: "inline-block",
   margin: false,
   padding: "15px 15px",
@@ -69,12 +69,13 @@ Button.defaultProps = {
 const BasicButton = styled.button`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  ${(props) => (props.display ? `display: ${props.display}` : "")}
+  display: ${(props) => props.display};
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
   padding: ${(props) => props.padding};
   border: ${(props) => (props.border ? `${props.border};` : "1px solid #bbb")};
   border-radius: 3px;
   background-color: ${(props) => props.bg};
+  box-sizing: border-box;
 
   //폰트
   font-size: ${(props) => props.size};
