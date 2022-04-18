@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 // import styled from "styled-components";
 
-import { Button, Grid, Text, Input } from "../elements/index";
+import { Button, Grid, Text, Input, Image } from "../elements/index";
+import Navbar from "../components/Navbar";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { api } from "../shared/api";
+
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
@@ -89,65 +96,112 @@ const SignUpPage = () => {
   };
 
   return (
-    <Grid height="85%" margin="auto">
-      {/* <Text size="30px" bold margin="0px 0px 30px 0px">
-          회원가입
-        </Text> */}
-      <Input
-        placeholder="아이디를 입력해주세요"
-        margin="10px"
-        _onChange={(e) => {
-          setId(e.target.value);
-        }}
-      />
-      <Button
-        margin="10px"
-        bg="#FF9F57"
-        color="#ffffff"
-        _onClick={() => idCheck(id)}
-      >
-        아이디 중복 체크
-      </Button>
-      <div>
-        <Input
-          placeholder="닉네임을 입력해주세요"
-          margin="10px"
-          _onChange={(e) => {
-            setNickName(e.target.value);
-          }}
-        />
-        <Button
-          margin="10px"
-          bg="#FF9F57"
-          color="#ffffff"
-          _onClick={() => nickNameCheck(id)}
-        >
-          닉네임 중복 체크
-        </Button>
-      </div>
-      <div>
-        <Input
-          placeholder="설정할 비밀번호를 입력해주세요"
-          type="password"
-          margin="10px "
-          _onChange={(e) => {
-            setPw(e.target.value);
-          }}
-        />
-      </div>
+    <Grid margin="auto">
+      <Navbar is_flex>
+        <Image src="Danggeun_logo.png" width="30%" height="30%"></Image>
+      </Navbar>
 
-      <div>
-        <Input
-          placeholder="비밀번호를 다시 입력해주세요"
-          type="password"
-          display="block"
-          margin="10px"
-          _onChange={(e) => {
-            setpwCheck(e.target.value);
-          }}
-        />
-      </div>
-      <select
+      <Grid bg="white" padding="16px 16px" margin="24px 0 0 0 ">
+        <Grid height="16%">
+          <Input
+            width="52%"
+            placeholder="아이디를 입력해주세요"
+            margin="8px"
+            _onChange={(e) => {
+              setId(e.target.value);
+            }}
+          />
+          <Button
+            margin="8px"
+            bg="#FF9F57"
+            color="#ffffff"
+            _onClick={() => idCheck(id)}
+          >
+            아이디 중복 체크
+          </Button>
+        </Grid>
+        <Grid height="16%">
+          <Input
+            width="52%"
+            placeholder="닉네임을 입력해주세요"
+            margin="8px"
+            _onChange={(e) => {
+              setNickName(e.target.value);
+            }}
+          />
+          <Button
+            margin="8px"
+            bg="#FF9F57"
+            color="#ffffff"
+            _onClick={() => nickNameCheck(id)}
+          >
+            닉네임 중복 체크
+          </Button>
+        </Grid>
+        <Grid height="16%" is_flex>
+          {" "}
+          <Input
+            width="100%"
+            placeholder="설정할 비밀번호를 입력해주세요"
+            type="password"
+            margin="8px "
+            _onChange={(e) => {
+              setPw(e.target.value);
+            }}
+          />
+        </Grid>
+        <Grid height="16%" is_flex>
+          {" "}
+          <Input
+            width="100%"
+            placeholder="비밀번호를 다시 입력해주세요"
+            type="password"
+            display="block"
+            margin="8px"
+            _onChange={(e) => {
+              setpwCheck(e.target.value);
+            }}
+          />
+        </Grid>
+        <Grid height="16%" is_flex>
+          {" "}
+          <FormControl sx={{ m: 1, minWidth: "95%" }}>
+            <InputLabel id="demo-simple-select-helper-label">지역</InputLabel>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              value={location}
+              label="지역"
+              onChange={(e) => {
+                setpwCheck(e.target.value);
+              }}
+            >
+              {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+              <MenuItem value={"서울시"}>서울시</MenuItem>
+              <MenuItem value={"경기도"}>경기도</MenuItem>
+              <MenuItem value={"충청도"}>충청도</MenuItem>
+              <MenuItem value={"전라도"}>전라도</MenuItem>
+              <MenuItem value={"경상도"}>경상도</MenuItem>
+              <MenuItem value={"강원도"}>강원도</MenuItem>
+              <MenuItem value={"제주도"}>제주도</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid height="16%" is_flex>
+          <Button
+            width="100%"
+            margin="8px"
+            _onClick={signUp}
+            bg="#FF9F57"
+            color="#ffffff"
+          >
+            회원가입
+          </Button>
+        </Grid>
+
+        {/* <select
         name="location"
         id="location"
         onChange={(e) => setLocation(e.target.value)}
@@ -159,10 +213,8 @@ const SignUpPage = () => {
         <option value="경상도">경상도</option>
         <option value="강원도">강원도</option>
         <option value="제주도">제주도</option>
-      </select>
-      <Button bold margin="10px" _onClick={signUp} bg="#FF9F57" color="#ffffff">
-        회원가입
-      </Button>
+      </select> */}
+      </Grid>
     </Grid>
   );
 };

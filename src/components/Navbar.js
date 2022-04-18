@@ -4,21 +4,22 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 import { Grid } from "../elements/index";
 
-const Navbar = () => {
-  const userId = useSelector((state) => state.user.userId);
-  const dispatch = useDispatch();
-  const isToken = localStorage.getItem('token') ? true: false;
-  
-  useEffect(() => {
-    if(isToken){
-      dispatch(userActions.isLogin(localStorage.getItem("token")));
-    }
-  }, [userId]);
+const Navbar = (props) => {
+  const { children, is_flex } = props;
 
+  if (is_flex) {
+    return (
+      <React.Fragment>
+        <Grid height="4%" bg="white" padding="8px 16px" is_flex>
+          {children}
+        </Grid>
+      </React.Fragment>
+    );
+  }
   return (
     <React.Fragment>
-      <Grid height="5%" margin="5% auto">
-        나브바
+      <Grid height="4%" bg="white" padding="8px 16px" space_between>
+        {children}
       </Grid>
     </React.Fragment>
   );
