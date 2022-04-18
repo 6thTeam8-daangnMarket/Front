@@ -26,8 +26,34 @@ const initialState = {
   is_login: false,
 };
 
+const signUp = (id, nickname, location, pw, pwCheck) => {
+  return function (dispatch, getState, { history }) {
+    console.log("아이디", id);
+    console.log("닉네임", nickname);
+    console.log("비밀번호", pw);
+    console.log("pwcheck", pwCheck);
+
+    api
+      .post("/user/signUp", {
+        userName: id,
+        nickName: nickname,
+        location: location,
+        passWord: pw,
+        passWordCheck: pwCheck,
+      })
+      .then((res) => {
+        console.log(res);
+        window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
+        history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 // 로그인
-const login = (id, pw) => {
+const logIn = (id, pw) => {
   return function (dispatch, getState, { history }) {
     console.log(id, pw);
     api
@@ -150,7 +176,8 @@ export default handleActions(
 
 // action creator export
 const actionCreators = {
-  login,
+  signUp,
+  logIn,
   isLogin,
   setUser,
 

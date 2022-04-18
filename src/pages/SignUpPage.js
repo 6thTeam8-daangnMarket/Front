@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 
 import { Button, Grid, Text, Input } from "../elements/index";
-import { Navbar } from "../components/Navbar";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -19,7 +18,7 @@ const SignUpPage = () => {
   const [pw, setPw] = useState("");
   const [pwCheck, setpwCheck] = useState("");
 
-  const idCheckAPI = (id) => {
+  const idCheck = (id) => {
     api
       .post("/user/idCheck", {
         username: id,
@@ -39,7 +38,7 @@ const SignUpPage = () => {
       });
   };
 
-  const nickNameCheckAPI = (nickName) => {
+  const nickNameCheck = (nickName) => {
     api
       .post("/user/nickNameCheck", {
         nickName: nickName,
@@ -57,32 +56,6 @@ const SignUpPage = () => {
         console.log(err);
         window.alert("오류가 확인되었습니다. 다시 시도해주세요.");
       });
-  };
-
-  const signupAPI = (id, nickname, location, pw, pwCheck) => {
-    return function (dispatch, getState, { history }) {
-      console.log("아이디", id);
-      console.log("닉네임", nickname);
-      console.log("비밀번호", pw);
-      console.log("pwcheck", pwCheck);
-
-      api
-        .post("/user/signUp", {
-          userName: id,
-          nickName: nickname,
-          location: location,
-          passWord: pw,
-          passWordCheck: pwCheck
-        })
-        .then((res) => {
-          console.log(res);
-          window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
-          history.push("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
   };
 
   const signUp = () => {
@@ -112,32 +85,30 @@ const SignUpPage = () => {
       return false;
     }
 
-    dispatch(signupAPI(id, nickName, location, pw, pwCheck));
+    dispatch(userActions.signUp(id, nickName, location, pw, pwCheck));
   };
 
   return (
-    <Grid>
-      <Grid height="95%" margin="10% auto" center>
-        <Text size="30px" bold margin="0px 0px 30px 0px">
+    <Grid height="85%" margin="auto">
+      {/* <Text size="30px" bold margin="0px 0px 30px 0px">
           회원가입
-        </Text>
-
-        <Input
-          placeholder="아이디를 입력해주세요"
-          margin="10px"
-          _onChange={(e) => {
-            setId(e.target.value);
-          }}
-        />
-        <Button
-          margin="10px"
-          bg="#FF9F57"
-          color="#ffffff"
-          _onClick={() => idCheckAPI(id)}
-        >
-          아이디 중복 체크
-        </Button>
-
+        </Text> */}
+      <Input
+        placeholder="아이디를 입력해주세요"
+        margin="10px"
+        _onChange={(e) => {
+          setId(e.target.value);
+        }}
+      />
+      <Button
+        margin="10px"
+        bg="#FF9F57"
+        color="#ffffff"
+        _onClick={() => idCheck(id)}
+      >
+        아이디 중복 체크
+      </Button>
+      <div>
         <Input
           placeholder="닉네임을 입력해주세요"
           margin="10px"
@@ -149,36 +120,23 @@ const SignUpPage = () => {
           margin="10px"
           bg="#FF9F57"
           color="#ffffff"
-          _onClick={() => nickNameCheckAPI(id)}
+          _onClick={() => nickNameCheck(id)}
         >
           닉네임 중복 체크
         </Button>
-        <select
-          name="location"
-          id="location"
-          onChange={(e) => setLocation(e.target.value)}
-        >
-          <option value=" ">--선택--</option>
-          <option value="서울시">서울시</option>
-          <option value="경기도">경기도</option>
-          <option value="충청도">충청도</option>
-          <option value="경상도">경상도</option>
-          <option value="강원도">강원도</option>
-          <option value="제주도">제주도</option>
-        </select>
-        <div>
+      </div>
+      <div>
         <Input
           placeholder="설정할 비밀번호를 입력해주세요"
           type="password"
-          display="block"
-          width="100%"
           margin="10px "
           _onChange={(e) => {
             setPw(e.target.value);
           }}
         />
-        </div>
-        
+      </div>
+
+      <div>
         <Input
           placeholder="비밀번호를 다시 입력해주세요"
           type="password"
@@ -188,16 +146,23 @@ const SignUpPage = () => {
             setpwCheck(e.target.value);
           }}
         />
-        <Button
-          bold
-          margin="10px"
-          _onClick={signUp}
-          bg="#FF9F57"
-          color="#ffffff"
-        >
-          회원가입
-        </Button>
-      </Grid>
+      </div>
+      <select
+        name="location"
+        id="location"
+        onChange={(e) => setLocation(e.target.value)}
+      >
+        <option value=" ">--선택--</option>
+        <option value="서울시">서울시</option>
+        <option value="경기도">경기도</option>
+        <option value="충청도">충청도</option>
+        <option value="경상도">경상도</option>
+        <option value="강원도">강원도</option>
+        <option value="제주도">제주도</option>
+      </select>
+      <Button bold margin="10px" _onClick={signUp} bg="#FF9F57" color="#ffffff">
+        회원가입
+      </Button>
     </Grid>
   );
 };
