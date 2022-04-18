@@ -18,7 +18,7 @@ const LoginPage = () => {
       return;
     }
 
-    dispatch(userActions.loginAPI(id, pw));
+    dispatch(userActions.login(id, pw));
   };
 
   return (

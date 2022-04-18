@@ -20,8 +20,8 @@ const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // 4. initialState 초기값 설정
 const initialState = {
   userId: null, // 서버에서 받아올 값
-  username: null, // id
-  nickname: null,
+  userName: null, // id
+  nickName: null,
   location: null,
   is_login: false,
 };
@@ -31,9 +31,9 @@ const login = (id, pw) => {
   return function (dispatch, getState, { history }) {
     console.log(id, pw);
     api
-      .post("/user/login", {
-        username: id,
-        password: pw,
+      .post("/user/logIn", {
+        userName: id,
+        passWord: pw,
       })
       .then((data) => {
         console.log(data);
@@ -44,8 +44,8 @@ const login = (id, pw) => {
         dispatch(
           setUser({
             userId: data.data.userId,
-            username: data.data.username,
-            nickname: data.data.nickname,
+            userName: data.data.userName,
+            nickName: data.data.nickName,
             location: data.data.location,
             // userProfile: data.data.userProfile,
           })
@@ -65,7 +65,7 @@ const isLogin = (Token) => {
     const token = localStorage.getItem("token");
     api
       .get(
-        "/user/islogin",
+        "/user/isLogIn",
         {},
         {
           headers: {
@@ -149,8 +149,8 @@ export default handleActions(
 
 // action creator export
 const actionCreators = {
-  loginAPI,
-  isLoginAPI,
+  login,
+  isLogin,
   setUser,
 
   // mypostAPI,

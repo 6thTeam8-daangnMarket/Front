@@ -4,12 +4,12 @@ import { Image, Grid, Text } from "../../elements/index";
 import { useHistory } from "react-router-dom";
 
 const Postlist = (props) => {
-  const postlist = useSelector((state) => state.post.posts);
+  const post_list = useSelector((state) => state.post.post_list);
 
   return (
     <React.Fragment>
       <Grid>
-        {postlist.map((p) => {
+        {post_list.map((p) => {
           return (
             <>
               <Image src="p.imageUrl"></Image>;<Text>{p.postTitle}</Text>;

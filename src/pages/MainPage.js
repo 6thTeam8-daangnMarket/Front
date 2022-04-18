@@ -7,8 +7,7 @@ import { Text, Input, Button } from "../elements/index";
 
 import Navbar from "../components/Navbar";
 import Postlist from "../components/mainpage/Postlist";
-import { search, getPost } from "../redux/modules/post";
-
+import { actionCreators as postActions  } from "../redux/modules/post";
 const MainPage = () => {
   // history 공부하자
   const history = useHistory();
@@ -22,7 +21,7 @@ const MainPage = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getPost());
+    dispatch(postActions.getPost());
   }, []);
 
   return (
@@ -32,7 +31,7 @@ const MainPage = () => {
           placeholder="검색어를 입력해주세요"
           _onChange={searchWordChange}
         ></Input>
-        <Button _onClick={search(searchWord)}></Button>
+        <Button _onClick={postActions.search(searchWord)}></Button>
       </Navbar>
 
       <Postlist></Postlist>
