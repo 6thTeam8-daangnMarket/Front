@@ -2,11 +2,12 @@ import axios from "axios";
 
 export const api = axios.create(
   {
-    baseURL: "http://192.168.0.7:8085",
+    baseURL: "http://3.36.77.41",
+    //headers 이렇게 보내도 동일한가
     headers: {
-      "content-type": "application/json;charset=UTF-8",
-      accept: "application/json,",
+      "content-type":  'application/json;charset=UTF-8'
     },
   },
   { withCredentials: true }
 );
+
