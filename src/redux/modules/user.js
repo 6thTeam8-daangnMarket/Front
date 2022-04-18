@@ -27,7 +27,7 @@ const initialState = {
 };
 
 // 로그인
-const loginAPI = (id, pw) => {
+const login = (id, pw) => {
   return function (dispatch, getState, { history }) {
     console.log(id, pw);
     api
@@ -60,7 +60,7 @@ const loginAPI = (id, pw) => {
 };
 
 // 4.3. isLogin
-const isLoginAPI = (Token) => {
+const isLogin = (Token) => {
   return function (dispatch, getState, { history }) {
     const token = localStorage.getItem("token");
     api

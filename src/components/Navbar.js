@@ -10,7 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userActions.isloginAPI(localStorage.getItem("token")));
+    dispatch(userActions.isLogin(localStorage.getItem("token")));
   }, [userId]);
 
   return (
