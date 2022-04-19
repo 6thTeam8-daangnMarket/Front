@@ -1,7 +1,7 @@
 // Action 과 Reducer 사용을 편하게 하기 위한 패키지
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer"; //immer : 불변성 관리
-import moment from "moment"; // Date객체와 유사
+// import moment from "moment"; // Date객체와 유사
 import { api } from "../../shared/api";
 import axios from "axios"; //axios: node.js와 브라우저를 위한 Promise 기반 HTTP 클라이언트
 
@@ -31,6 +31,7 @@ const set_post = createAction(SET_POST, (posts) => ({ posts }));
 const get_a_post = createAction(GET_A_POST, (post) => ({ post }));
 const delete_post = createAction(DELETE_POST, () => ({}));
 const update_post = createAction(UPDATE_POST, (post) => ({ post }));
+
 const getPost = () => {
   return function (dispatch, getState, { history }) {
     api
@@ -62,14 +63,28 @@ const getAPost = (postId) => {
   };
 };
 
-const search = (searchWord) => {
+const search = (keyword) => {
   return function (dispatch, getState, { history }) {
     api
-      .post(`/api/search/${searchWord}`, {
-        data: {
-          searchWord: searchWord,
-        },
+      .get(
+        `/api/search/${keyword}`
+        // {data: {
+        //     keyword: keyword,
+        //   }}
+      )
+      .then((post_list) => {
+        dispatch(set_post(post_list));
       })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+const categoryLoad = (category) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .get(`/api/category/${category}`)
       .then((post_list) => {
         dispatch(set_post(post_list));
       })
@@ -153,6 +168,7 @@ export default handleActions(
 const actionCreators = {
   addPost,
   search,
+  categoryLoad,
   getPost,
   getAPost,
   deletePost,
