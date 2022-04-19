@@ -59,7 +59,6 @@ const LoginPage = () => {
           </Grid>
 
           <Grid height="16%" is_flex>
-            {" "}
             <Button
               width="50%"
               margin="8px"
@@ -83,6 +82,15 @@ const LoginPage = () => {
             >
               회원가입
             </Button>
+          </Grid>
+          <Grid>
+            <a id="custom-login-btn" href="javascript:loginWithKakao()">
+              <img
+                src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+                width="222"
+                alt="카카오 로그인 버튼"
+              />
+            </a>
           </Grid>
         </Grid>
       </Grid>

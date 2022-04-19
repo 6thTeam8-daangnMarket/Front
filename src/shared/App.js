@@ -13,18 +13,23 @@ import SearchPage from "../pages/SearchPage";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { useEffect } from "react";
+import { useParams } from "react-router";
 
 function App() {
   const userId = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
   const Token = localStorage.getItem("token");
 
+  // const params = useParams();
+  // const postId = Number(params.postId);
+
   useEffect(() => {
     if (Token) {
       dispatch(userActions.isLogin(localStorage.getItem("token")));
     }
-  }, [userId]);
+  }, []);
 
   return (
     <>
