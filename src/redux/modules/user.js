@@ -90,14 +90,11 @@ const isLogin = (Token) => {
     const token = localStorage.getItem("token");
 
     api
-      .get(
-        "/user/isLogIn",
-        {
-          headers: {
-            Authorization: ` ${token}`,
-          },
-        }
-      )
+      .get("/user/isLogIn", {
+        headers: {
+          Authorization: ` ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res);
         const userId = res.data.userId;
@@ -115,7 +112,6 @@ const isLogin = (Token) => {
       })
       .catch((err) => {
         console.log(err);
-        
       });
   };
 };
@@ -144,7 +140,7 @@ const isLogin = (Token) => {
 const logout = () => {
   return function (dispatch, getState, { history }) {
     localStorage.removeItem("token");
-    localStorage.removeItem("userInfo");
+    // localStorage.removeItem("userInfo");
 
     dispatch(logOut());
     history.replace("/");
@@ -157,8 +153,8 @@ export default handleActions(
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
         draft.userId = action.payload.user.userId;
-        draft.username = action.payload.user.username;
-        draft.nickname = action.payload.user.nickname;
+        draft.userName = action.payload.user.userName;
+        draft.nickName = action.payload.user.nickName;
         draft.location = action.payload.user.location;
         draft.is_login = true;
       }),
@@ -167,7 +163,7 @@ export default handleActions(
 
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        draft.username = null;
+        draft.userName = null;
         draft.is_login = false;
       }),
   },

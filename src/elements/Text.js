@@ -28,10 +28,10 @@ Text.defaultProps = {
 const P = styled.p`
   font-weight: ${(props) => (props.bold ? "600" : "400")};
   font-size: ${(props) => props.size};
-  font-family: ${(props) => props.family}
+  font-family: ${(props) => props.family};
   color: ${(props) => props.color};
   margin: ${(props) => (props.margin ? `${props.margin}` : "0px")};
-  ${(props) => (props.padding ? `${props.padding};` : "19px 19px;")};
+  padding: ${(props) => (props.padding ? `${props.padding};` : "")};
   box-sizing: border-box;
 `;
 

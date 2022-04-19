@@ -11,6 +11,7 @@ const Grid = (props) => {
     margin,
     padding,
     is_flex,
+    space_between,
     center,
     _onClick,
   } = props;
@@ -23,6 +24,7 @@ const Grid = (props) => {
     margin,
     padding,
     is_flex,
+    space_between,
     center,
   };
   return (
@@ -42,6 +44,7 @@ Grid.defaultProps = {
   padding: false,
   margin: false,
   is_flex: false,
+  space_between: false,
   center: false,
   _onClick: () => {},
 };
@@ -58,6 +61,10 @@ const GridBox = styled.div`
     ${(props) =>
     props.is_flex
       ? `display: flex; align-items: center; justify-content: center;`
+      : ""};
+  ${(props) =>
+    props.space_between
+      ? `display: flex; align-items: center; justify-content: space-between;`
       : ""};
   ${(props) => (props.center ? `text-align: center;` : "")};
 `;

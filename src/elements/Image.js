@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-  const { shape, src, width, height, margin, padding, size, half } = props;
+  const { src, width, height, margin, padding, size, half } = props;
 
   const styles = {
-    src: src,
+    src,
     width,
     height,
     margin,
@@ -14,26 +14,26 @@ const Image = (props) => {
     half: half,
   };
 
-  return <ImageCircle {...styles} src={src}></ImageCircle>;
+  return <ImageBox {...styles} src={src}></ImageBox>;
 };
 
 Image.defaultProps = {
-  width: "100%",
-  height: "100%",
-  shape: "circle",
+  width: "72pt",
+  height: "72pt",
+  // shape: "rectangul",
   src: false,
   size: "80%",
   half: false,
 };
 
-const ImageCircle = styled.div`
+const ImageBox = styled.img`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  border-radius: 50%;
+  border-radius: 10%;
   box-sizing: border-box;
 
   background-image: url("${(props) => props.src}");
-  background-size: cover;
+  background-size: auto;
   margin: 0px;
 `;
 

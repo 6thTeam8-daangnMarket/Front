@@ -15,8 +15,8 @@ const Button = (props) => {
     bg,
     border,
     children,
-    // is_float,
-    // text,
+    is_float,
+    text,
     _onClick,
     _value,
   } = props;
@@ -34,13 +34,15 @@ const Button = (props) => {
     bold,
   };
 
-  // if (is_float) {
-  //   return (
-  //     <React.Fragment>
-  //       <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
-  //     </React.Fragment>
-  //   );
-  // }
+  if (is_float) {
+    return (
+      <React.Fragment>
+        <FloatButton {...styles} onClick={_onClick}>
+          {text ? text : children}
+        </FloatButton>
+      </React.Fragment>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -52,12 +54,12 @@ const Button = (props) => {
 };
 
 Button.defaultProps = {
-  width: "35%",
-  height: "4%",
+  // width: "35%",
+  // height: "4%",
   display: "inline-block",
   margin: false,
-  padding: "15px 15px",
-  size: "13px",
+  padding: "16px 16px",
+  size: "14px",
   color: "#fff",
   bg: "#298D49",
   border: null,
@@ -87,25 +89,27 @@ const BasicButton = styled.button`
   }
 `;
 
-// const FloatButton = styled.button`
-//   width: 50px;
-//   height: 50px;
-//   background-color: #ffd500;
-//   color: #ffffff;
-//   box-sizing: border-box;
-//   font-size: 36px;
-//   font-weight: 800;
+const FloatButton = styled.button`
+  width: 50px;
+  height: 50px;
+  background-color: ${(props) => props.bg};
+  color: #ffffff;
+  box-sizing: border-box;
+  font-size: 36px;
+  font-weight: 800;
 
-//   //버튼 위치
-//   position: fixed;
-//   bottom: 50px;
-//   right: 300px;
+  //버튼 위치
+  position: fixed;
+  bottom: 240px;
+  right: 25px;
 
-//   //+ 위치
-//   text-align: center;
-//   vertical-align: middle;
-//   border: none;
-//   border-radius: 50px;
-// `;
+  //+ 위치
+  // text-align: center;
+  // vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50px;
+`;
 
 export default Button;
