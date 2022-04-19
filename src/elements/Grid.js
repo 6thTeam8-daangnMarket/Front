@@ -7,6 +7,8 @@ const Grid = (props) => {
     width,
     height,
     shadow,
+    border_top,
+    border_bottom,
     bg,
     margin,
     padding,
@@ -20,6 +22,8 @@ const Grid = (props) => {
     width,
     height,
     shadow,
+    border_top,
+    border_bottom,
     bg,
     margin,
     padding,
@@ -39,7 +43,9 @@ const Grid = (props) => {
 Grid.defaultProps = {
   chidren: null,
   width: "100%",
-  height: "100%",
+  height: "80%",
+  border_top: false,
+  border_bottom: false,
   bg: false,
   padding: false,
   margin: false,
@@ -55,6 +61,9 @@ const GridBox = styled.div`
   height: ${(props) => props.height};
   box-sizing: border-box;
   box-shadow: ${(props) => props.shadow};
+  border-top: ${(props) => (props.border_top ? `${props.border_top};` : "")};
+  border-bottom: ${(props) =>
+    props.border_bottom ? `${props.border_bottom};` : ""};
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
     ${(props) => (props.margin ? `margin: ${props.margin};` : "")}

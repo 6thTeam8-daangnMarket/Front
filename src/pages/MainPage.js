@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Input, Button, Text, Grid } from "../elements/index";
 import Permit from "../components/mainpage/Permit";
 import Navbar from "../components/Navbar";
+import BottomNavbar from "../components/BottomNavbar";
 import Postlist from "../components/mainpage/Postlist";
 
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -12,7 +13,10 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import HomeIcon from "@mui/icons-material/Home";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import IconButton from "@mui/material/IconButton";
+import { Icon } from "@mui/material";
 
 const MainPage = () => {
   const history = useHistory();
@@ -72,6 +76,16 @@ const MainPage = () => {
             }}
           ></Button>
         </Permit>
+        <BottomNavbar is_flex>
+          <IconButton>
+            <HomeIcon sx={{ fontSize: 40 }}></HomeIcon>
+          </IconButton>
+          <IconButton>
+            <LocationOnOutlinedIcon
+              sx={{ fontSize: 40 }}
+            ></LocationOnOutlinedIcon>
+          </IconButton>
+        </BottomNavbar>
       </Grid>
     </React.Fragment>
   );
