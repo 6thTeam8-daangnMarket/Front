@@ -24,7 +24,7 @@ function App() {
     if (Token) {
       dispatch(userActions.isLogin(localStorage.getItem("token")));
     }
-  }, [userId]);
+  }, []);
   return (
     <>
       <ConnectedRouter history={history}>

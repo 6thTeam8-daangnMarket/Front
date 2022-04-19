@@ -49,8 +49,6 @@ const getPost = () => {
 const getAPost = (postId) => {
   return function (dispatch, getState, {history}){
     const postID = parseInt(postId);
-
-    //여기까지 오지도 못해.
     api
     .get(`/api/posts/${postID}`)
     .then((res) => {
