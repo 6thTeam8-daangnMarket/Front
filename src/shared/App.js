@@ -18,10 +18,10 @@ import { useEffect } from "react";
 function App() {
   const userId = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
-  const isToken = localStorage.getItem("token") ? true : false;
+  const Token = localStorage.getItem("token");
 
   useEffect(() => {
-    if (isToken) {
+    if (Token) {
       dispatch(userActions.isLogin(localStorage.getItem("token")));
     }
   }, [userId]);
