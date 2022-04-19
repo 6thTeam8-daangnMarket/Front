@@ -173,7 +173,7 @@ const SignUpPage = () => {
               value={location}
               label="지역"
               onChange={(e) => {
-                setpwCheck(e.target.value);
+                setLocation(e.target.value);
               }}
             >
               {/* <MenuItem value="">

@@ -4,7 +4,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 import { Grid } from "../elements/index";
 
-const Navbar = (props) => {
+const BottomNavbar = (props) => {
   const { children, is_flex } = props;
 
   if (is_flex) {
@@ -13,7 +13,7 @@ const Navbar = (props) => {
         <Grid
           height="4%"
           bg="white"
-          border_bottom=" 1px solid #bbb"
+          border_top=" 1px solid #bbb"
           padding="8px 16px"
           is_flex
         >
@@ -27,7 +27,7 @@ const Navbar = (props) => {
       <Grid
         height="4%"
         bg="white"
-        border_bottom=" 1px solid #bbb"
+        border_top=" 1px solid #bbb"
         padding="8px 16px"
         space_between
       >
@@ -37,4 +37,4 @@ const Navbar = (props) => {
   );
 };
 
-export default Navbar;
+export default BottomNavbar;

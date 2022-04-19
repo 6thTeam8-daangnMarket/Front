@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Input, Button, Text, Grid } from "../elements/index";
 import Permit from "../components/mainpage/Permit";
@@ -16,11 +16,11 @@ const SearchPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [query, setQuery] = useState("");
   const [searchWord, setSearchWord] = React.useState("");
 
   const searchWordChange = (e) => {
-    const { value } = e.target;
-    setSearchWord(value);
+    setSearchWord(e.target.value);
   };
 
   // dispatch(postActions.getPost());
