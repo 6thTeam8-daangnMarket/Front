@@ -1,11 +1,9 @@
-// Action 과 Reducer를 편하게 사용하도록하는 함수
+// Action 과 Reducer 사용을 편하게 하기 위한 패키지
 import { createAction, handleActions } from "redux-actions";
-// 불변성 관리를 편한게 해주는 함수
-import { produce } from "immer";
-// Date객체처럼 날짜시간을 받아오는 함수
-import moment from "moment";
+import { produce } from "immer"; //immer : 불변성 관리
+import moment from "moment"; // Date객체와 유사
 import { api } from "../../shared/api";
-import axios from "axios";
+import axios from "axios"; //axios: node.js와 브라우저를 위한 Promise 기반 HTTP 클라이언트 
 
 //Actions
 const ADD_POST = "ADD_POST";
@@ -28,19 +26,19 @@ const initialPost = {
   category:"전자제품"
 }
 //actionCreators
-const add_post = createAction(ADD_POST, (post)=> (post));
+const add_post = createAction(ADD_POST, (post)=> ({ post }));
 const set_post = createAction(SET_POST, (posts) => ({ posts }));
-const get_a_post = createAction(GET_A_POST, (post) => ({post}));
+const get_a_post = createAction(GET_A_POST, (post) => ({ post }));
 const delete_post = createAction(DELETE_POST, ()=>({}));
 const update_post = createAction(UPDATE_POST, (post)=>({post}));
 
 const getPost = () => {
   return function (dispatch, getState, { history }) {
     api
-      .get(`/api/posts`)
+      .get(`/api/posted/1`)
       .then((res) => {
-        console.log(res.data.data); //[]
-        dispatch(set_post(res.data.data));
+        console.log(res.data);
+        dispatch(set_post(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -50,11 +48,14 @@ const getPost = () => {
 
 const getAPost = (postId) => {
   return function (dispatch, getState, {history}){
+    const postID = parseInt(postId);
+
+    //여기까지 오지도 못해.
     api
-    .get(`/api/post`)
+    .get(`/api/posts/${postID}`)
     .then((res) => {
       console.log(res.data);
-      dispatch(set_post(res.data.data));
+      dispatch(get_a_post(res.data));
     })
     .catch((err) => {
       console.log(err);
@@ -130,7 +131,7 @@ export default handleActions(
   {
       [ADD_POST] : (state, action) => produce (state, (draft) => {
           draft.list.unshift(action.payload.post);
-
+          
       }),
       [SET_POST]: (state, action) =>
       produce(state, (draft) => {
@@ -138,7 +139,7 @@ export default handleActions(
       }),
       [GET_A_POST]: (state, action) => produce(state, (draft) => {
         draft.post = action.payload.post;
-
+        console.log(action.payload.post);
       }),
       [UPDATE_POST] : (state, action) => produce (state, (draft) =>{
 

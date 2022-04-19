@@ -7,20 +7,22 @@ import { useHistory } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const Postlist = (props) => {
-  const post_list = useSelector((state) => state.post.post_list);
-
+  const post_list = useSelector((state) => state.post?.post_list);
   const is_login = useSelector((state) => state.user.is_login);
 
   const history = useHistory();
-
-  console.log("post_list", post_list);
+  const postList = post_list?.postList;
+  console.log("post_list", postList);
+  //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
+  if(!postList){ 
+    return <div></div>
+  }
   return (
-    <React.Fragment>
+    <React.Fragment >
       <Grid bg="white" padding="16px 16px">
-        {post_list.map((p) => {
+        {postList.map((p) => {
           return (
-
-            <Grid
+            <Grid key={p.postId}
               height="21%"
               _onClick={() => {
                 if (!is_login) {

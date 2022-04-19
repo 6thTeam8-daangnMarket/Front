@@ -20,12 +20,11 @@ function App() {
   const dispatch = useDispatch();
   const Token = localStorage.getItem("token");
 
-  useEffect(() => {
+  useEffect(() => { //동기로 바꾸던지 
     if (Token) {
       dispatch(userActions.isLogin(localStorage.getItem("token")));
     }
   }, [userId]);
-
   return (
     <>
       <ConnectedRouter history={history}>

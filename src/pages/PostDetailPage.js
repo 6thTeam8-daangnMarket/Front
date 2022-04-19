@@ -11,17 +11,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import Modal from "../components/Modal";
 import '../modal.css';
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const PostDetailPage = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams();
-  const [like, setLike] = React.useState(false);
+  console.log(params);
+  const postId = parseInt(params.postId);
 
+  const userId = useSelector((state) => state.user.userId);
+  
   React.useEffect(() => {
-    dispatch(postActions.getAPost(params));
-  })
-  const state = useSelector((state) => state.post_list);
+    dispatch(postActions.getAPost(postId));
+  },[]);
+
+  const response = useSelector((state) => state.post?.post);
+  console.log(response);
+
+  const [like, setLike] = React.useState(false);
 
   //modal   - 수정하기 . 삭제하기 버튼
   const [modalOpen, setModalOpen] = useState(false);
@@ -33,6 +41,10 @@ const PostDetailPage = (props) => {
   }
   const markLike = () => {
     setLike(true);
+  }
+  //왤까! 왤까 
+  if(!response){   //state가 바뀌면 rerendering이 되면서 
+    return <div></div>
   }
   return(
     <DetailWrap>
@@ -46,38 +58,38 @@ const PostDetailPage = (props) => {
         onClick={openModal}>***</Button>
         <Modal postId={props.postId} open={modalOpen} close={closeModal} header="수정 및 삭제하기"></Modal>
       </React.Fragment>
-        <ImageWrap>
-          <img style={{backgroundSize: "cover", backgroundPosition: "center"}} src={props.image} alt={props.title} />
+        <ImageWrap> 
+          <PostImage src={response.imageUrl} alt={response.postTitle} />
         </ImageWrap>
         <DetailContentWrap>
           <UserInfoWrap>
-            <ProfileImg src={process.env.PUBLIC_URL + "/DaangnMarket_logo.png"} alt={"username"}/>
+            <ProfileImg src={process.env.PUBLIC_URL + "/DaangnMarket_logo.png"} alt={response.userName}/>
             <div style={{display: "grid", gridTemplateRows: "1fr 1fr", alignItems: "center"}}>
-              <Text2 padding="10px 0 0 0 " fontFamily="AppleSDGothicNeoB" fontWeight="800" fontSize="18px">아이디</Text2>
-              <Text2 padding="0 0 10px 0 " >위치</Text2>
+              <Text2 padding="10px 0 0 0 " fontFamily="AppleSDGothicNeoB" fontWeight="800" fontSize="18px">{response.userName}</Text2>
+              <Text2 padding="0 0 10px 0 " >{response.location}</Text2>
             </div>
             {/* <Text2 padding="10px 0 0 0 " fontFamily="AppleSDGothicNeoB" fontWeight="800" fontSize="18px">{state.username}</Text2>
             <Text2 padding="0 0 10px 0 ">{state.location}</Text2> */}
           </UserInfoWrap>
           {/* 게시글 제목 */}
           <TitleWrap>
-            <Text2 style={{alignItems:"center"}} margin="0 0 0 15px" fontFamily="AppleSDGothicNeoB" fontSize="1.5em">{props.title} 게시글 제목</Text2>
+            <Text2 style={{alignItems:"center"}} margin="0 0 0 15px" fontFamily="AppleSDGothicNeoB" fontSize="1.5em">{response.postTitle}</Text2>
           </TitleWrap>
           {/* 게시글 카테고리 및 게시 시간 표기 */}
           <CategoryWrap>
           <Button variant="text" style={{ marginLeft: "5px",color:"grey"}}
-          onClick={()=> history.push('/')}>여성의류{props.category}</Button>
-            <Text2 color="grey" fontSize="13px">  {props.createdAt} 27분 전 올림 </Text2>
+          onClick={()=> history.push('/')}>{response.category}</Button>
+            <Text2 color="grey" fontSize="13px">  {response.createdAt} 올림 </Text2>
           </CategoryWrap>
           <ContentsWrap>
-            <Text2>{props.contents}신세계 본점에서 2021년9월에 구매하였습니다. 선물로 하나 더 받아 필요없게 되어 팝니다! 연락주세요.</Text2>
+            <Text2>{response.postContents}</Text2>
           </ContentsWrap>
           <LikedWrap>
-            <Text2 color="grey" fontSize="15px">관심 20{props.likeCount}</Text2>
+            <Text2 color="grey" fontSize="15px">관심 {response.likeCount}</Text2>
           </LikedWrap>
           <LikesNPriceWrap>
             <FavoriteBorderIcon onClick={()=>markLike} style={{position: "relative", left:"15px", }}></FavoriteBorderIcon>
-            <Text2 lineHeight="2.5em" fontFamily="AppleSDGothicNeoB" fontSize="1.2em">가격 원{props.price}</Text2>
+            <Text2 lineHeight="2.5em" fontFamily="AppleSDGothicNeoB" fontSize="1.2em"> {response.price} 원</Text2>
             <Button style={{fontSize: "15px",color: "white", backgroundColor:"#FF8A3D", width: "100px", height:"3em"}}>채팅하기</Button>
           </LikesNPriceWrap>
         </DetailContentWrap>
@@ -141,5 +153,8 @@ const LikesNPriceWrap = styled.div`
   grid-template-columns: 1fr 3fr 1.5fr;
   align-items: center;
 `
-
+const PostImage = styled.img`
+  background-size: cover; 
+  background-position: center;
+`
 export default PostDetailPage;

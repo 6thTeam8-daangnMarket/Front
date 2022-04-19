@@ -1,6 +1,7 @@
 // 1. import
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import jwt_decode from "jwt-decode";
 import { api } from "../../shared/api";
 
 // 2. actions(액션 타입)
@@ -9,8 +10,10 @@ const SET_USER = "SET_USER";
 // const SET_PROFILE = "SET_PROFILE";
 // const SET_PREVIEW = "SET_PREVIEW";
 const LOG_OUT = "LOG_OUT";
+// const LOGGEDIN = "LOGGEDIN";
 
 // 3. action creators (액션 생성 함수)
+// const loggedin =  createAction(LOGGEDIN, (token) => ({ token }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
 // const getUser = createAction(GET_USER, (user) => ({ user }));
 // const setProfile = createAction(SET_PROFILE, (image) => ({ image }));
@@ -166,6 +169,17 @@ export default handleActions(
         draft.userName = null;
         draft.is_login = false;
       }),
+
+      // [LOGGEDIN] : (state, action) => produce (state, (draft) => {
+      //   const token = action.payload.token;
+      //   let decoded = jwt_decode(token);
+      //   console.log(decoded);
+        
+      //   draft.nickName= decoded.NICK_NAME;
+      //   draft.userName= decoded.USER_NAME;
+        
+      //   draft.is_login = true;
+      // }),
   },
   initialState
 );
@@ -179,6 +193,8 @@ const actionCreators = {
 
   // mypostAPI,
   logout,
+
+  // loggedin,
 };
 
 export { actionCreators };
