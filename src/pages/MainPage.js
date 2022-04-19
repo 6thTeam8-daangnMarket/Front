@@ -9,6 +9,7 @@ import BottomNavbar from "../components/BottomNavbar";
 import Postlist from "../components/mainpage/Postlist";
 
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -61,6 +62,21 @@ const MainPage = () => {
           </div>
         </Navbar>
         <Postlist></Postlist>
+        <button
+          variant="text"
+          style={{
+            position: "absolute",
+            right: "100",
+            top: "100",
+            color: "lightgrey",
+            zIndex: "9999",
+            lineHeight: "3",
+            backgroundColor: "transparent",
+          }}
+          onClick={userActions.logout()}
+        >
+          로그아웃
+        </button>
         <Permit>
           <Button
             is_float

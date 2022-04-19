@@ -72,10 +72,10 @@ const logIn = (id, pw) => {
 
         dispatch(
           setUser({
-            userId: data.data.userId,
-            userName: data.data.userName,
-            nickName: data.data.nickName,
-            location: data.data.location,
+            // userId: data.data.userId,
+            // userName: data.data.userName,
+            // nickName: data.data.nickName,
+            // location: data.data.location,
             // userProfile: data.data.userProfile,
           })
         );

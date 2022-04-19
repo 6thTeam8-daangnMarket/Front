@@ -101,8 +101,14 @@ const SignUpPage = () => {
         <Image src="Danggeun_logo.png" width="30%" height="30%"></Image>
       </Navbar>
 
-      <Grid bg="white" padding="16px 16px" margin="24px 0 0 0 ">
-        <Grid height="16%">
+      <Grid
+        bg="white"
+        width="100vw"
+        height="92vh"
+        padding="8px 8px"
+        margin="24px 0 0 0 "
+      >
+        <Grid height="8%">
           <Input
             width="52%"
             placeholder="아이디를 입력해주세요"
@@ -120,7 +126,7 @@ const SignUpPage = () => {
             아이디 중복 체크
           </Button>
         </Grid>
-        <Grid height="16%">
+        <Grid height="8%">
           <Input
             width="52%"
             placeholder="닉네임을 입력해주세요"
@@ -138,7 +144,7 @@ const SignUpPage = () => {
             닉네임 중복 체크
           </Button>
         </Grid>
-        <Grid height="16%" is_flex>
+        <Grid width="100vw" height="8vh" is_flex>
           {" "}
           <Input
             width="100%"
@@ -150,7 +156,7 @@ const SignUpPage = () => {
             }}
           />
         </Grid>
-        <Grid height="16%" is_flex>
+        <Grid width="100vw" height="8vh" is_flex>
           {" "}
           <Input
             width="100%"
@@ -163,7 +169,7 @@ const SignUpPage = () => {
             }}
           />
         </Grid>
-        <Grid height="16%" is_flex>
+        <Grid width="100vw" height="8vh" is_flex>
           {" "}
           <FormControl sx={{ m: 1, minWidth: "95%" }}>
             <InputLabel id="demo-simple-select-helper-label">지역</InputLabel>
@@ -189,7 +195,7 @@ const SignUpPage = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid height="16%" is_flex>
+        <Grid height="8vh" is_flex>
           <Button
             width="100%"
             margin="8px"
