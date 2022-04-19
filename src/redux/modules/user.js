@@ -26,17 +26,17 @@ const initialState = {
   is_login: false,
 };
 
-const signUp = (id, nickname, location, pw, pwCheck) => {
+const signUp = (id, nickName, location, pw, pwCheck) => {
   return function (dispatch, getState, { history }) {
     console.log("아이디", id);
-    console.log("닉네임", nickname);
+    console.log("닉네임", nickName);
     console.log("비밀번호", pw);
-    console.log("pwcheck", pwCheck);
+    console.log("pwCheck", pwCheck);
 
     api
       .post("/user/signUp", {
         userName: id,
-        nickName: nickname,
+        nickName: nickName,
         location: location,
         passWord: pw,
         passWordCheck: pwCheck,

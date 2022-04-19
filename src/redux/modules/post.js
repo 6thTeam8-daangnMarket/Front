@@ -9,7 +9,8 @@ import axios from "axios";
 
 //Actions
 const ADD_POST = "ADD_POST";
-const SET_POST = "SET_POST";
+const SET_POST = "SET_POST"; //전체 
+const GET_A_POST = "GET_A_POST"; 
 const UPDATE_POST = "UPDATE_POST";
 const DELETE_POST = "DELETE_POST";
 
@@ -29,6 +30,7 @@ const initialPost = {
 //actionCreators
 const add_post = createAction(ADD_POST, (post)=> (post));
 const set_post = createAction(SET_POST, (posts) => ({ posts }));
+const get_a_post = createAction(GET_A_POST, (post) => ({post}));
 const delete_post = createAction(DELETE_POST, ()=>({}));
 const update_post = createAction(UPDATE_POST, (post)=>({post}));
 
@@ -39,13 +41,27 @@ const getPost = () => {
       .then((res) => {
         console.log(res.data.data); //[]
         dispatch(set_post(res.data.data));
-        
       })
       .catch((err) => {
         console.log(err);
       });
   };
 };
+
+const getAPost = (postId) => {
+  return function (dispatch, getState, {history}){
+    api
+    .get(`/api/post`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch(set_post(res.data.data));
+    })
+    .catch((err) => {
+      console.log(err);
+      window.alert('게시물을 불러오지 못하였습니다.');
+    })
+  }
+}
 
 const search = (searchWord) => {
   return function (dispatch, getState, { history }) {
@@ -94,9 +110,10 @@ const addPost = (imageUrl, title, category, content, price) => {
 }
 
 const deletePost = (token, postId) => {
+  console.log(token, postId);
   return async function (dispatch, getState, {history}){
     try{
-      const response = await api.deletePost(token, postId);
+      const response = await api.deletePost(token, parseInt(postId));
       if(response === "OK") {
         window.alert('게시글 삭제를 성공하였습니다.');
         history.replace('/');
@@ -119,11 +136,15 @@ export default handleActions(
       produce(state, (draft) => {
         draft.post_list = action.payload.posts;
       }),
+      [GET_A_POST]: (state, action) => produce(state, (draft) => {
+        draft.post = action.payload.post;
+
+      }),
       [UPDATE_POST] : (state, action) => produce (state, (draft) =>{
 
       }),
       [DELETE_POST] : (state, action) => produce (state, (draft) =>{
-
+        draft.post_list.filter(!action.payload.post);
       }),
   }, initialState
 
@@ -133,5 +154,7 @@ const actionCreators = {
   addPost,
   search,
   getPost,
+  getAPost,
+  deletePost,
 }
 export { actionCreators };

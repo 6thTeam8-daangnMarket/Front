@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Text2 = (props) => {
-  const {children, lineHeight, fontWeight, color, fontSize, margin, display, alignItems} = props;
+  const {children, lineHeight, fontWeight, color, fontSize, margin, display, alignItems, fontFamily,padding} = props;
   const styles = {  
     fontWeight:fontWeight,
     fontSize:fontSize,
@@ -10,7 +10,9 @@ const Text2 = (props) => {
     margin:margin,
     lineHeight:lineHeight,
     display:display,
-    alignItems:alignItems
+    alignItems:alignItems,
+    fontFamily:fontFamily,
+    padding:padding,
   }
   return <P {...styles}>{children}</P>;
 };
@@ -32,5 +34,7 @@ margin:  ${(props) => props.margin};
 line-height:  ${(props) => props.lineHeight};
 align-items: ${(props) => props.alignItems};
 display:${(props) => props.display};
+font-family: ${(props) => props.fontFamily};
+padding: ${(props) => props.padding};
 `
 export default Text2;
