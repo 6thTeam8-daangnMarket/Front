@@ -98,17 +98,23 @@ const SignUpPage = () => {
   return (
     <Grid margin="auto">
       <Navbar is_flex>
-        <Image src="Danggeun_logo.png" width="30%" height="30%"></Image>
+        <Image src="Danggeun_logo.png" width="30%" height="60%"></Image>
       </Navbar>
 
       <Grid
         bg="white"
-        width="100vw"
-        height="92vh"
+        height="92%"
+        fixed
+        top="8%"
         padding="8px 8px"
-        margin="24px 0 0 0 "
+        margin="8px 0 0 0 "
+        center
       >
-        <Grid height="8%">
+        <Text size="32px" bold margin="0px 0px 16px 0px">
+          회원가입
+        </Text>
+
+        <Grid height="10%">
           <Input
             width="52%"
             placeholder="아이디를 입력해주세요"
@@ -126,7 +132,7 @@ const SignUpPage = () => {
             아이디 중복 체크
           </Button>
         </Grid>
-        <Grid height="8%">
+        <Grid height="10%">
           <Input
             width="52%"
             placeholder="닉네임을 입력해주세요"
@@ -144,8 +150,7 @@ const SignUpPage = () => {
             닉네임 중복 체크
           </Button>
         </Grid>
-        <Grid width="100vw" height="8vh" is_flex>
-          {" "}
+        <Grid height="10%" is_flex>
           <Input
             width="100%"
             placeholder="설정할 비밀번호를 입력해주세요"
@@ -156,8 +161,7 @@ const SignUpPage = () => {
             }}
           />
         </Grid>
-        <Grid width="100vw" height="8vh" is_flex>
-          {" "}
+        <Grid height="10%" is_flex>
           <Input
             width="100%"
             placeholder="비밀번호를 다시 입력해주세요"
@@ -169,7 +173,7 @@ const SignUpPage = () => {
             }}
           />
         </Grid>
-        <Grid width="100vw" height="8vh" is_flex>
+        <Grid height="10%" is_flex>
           {" "}
           <FormControl sx={{ m: 1, minWidth: "95%" }}>
             <InputLabel id="demo-simple-select-helper-label">지역</InputLabel>
@@ -195,7 +199,7 @@ const SignUpPage = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid height="8vh" is_flex>
+        <Grid height="10%" is_flex>
           <Button
             width="100%"
             margin="8px"

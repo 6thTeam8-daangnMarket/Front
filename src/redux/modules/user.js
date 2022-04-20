@@ -1,34 +1,31 @@
 // 1. import
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import jwt_decode from "jwt-decode";
 import { api } from "../../shared/api";
 
 // 2. actions(액션 타입)
-// const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
-// const SET_PROFILE = "SET_PROFILE";
-// const SET_PREVIEW = "SET_PREVIEW";
 const LOG_OUT = "LOG_OUT";
-// const LOGGEDIN = "LOGGEDIN";
 
 // 3. action creators (액션 생성 함수)
-// const loggedin =  createAction(LOGGEDIN, (token) => ({ token }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
-// const getUser = createAction(GET_USER, (user) => ({ user }));
-// const setProfile = createAction(SET_PROFILE, (image) => ({ image }));
-// const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
-const logOut = createAction(LOG_OUT, (user) => ({ user }));
+const logOut = createAction(LOG_OUT, () => ({}));
+
+// const add_cart = createAction(ADD_CART, (goods) => ({goods}));
+// const delete_cart = createAction(DELETE_CART, () => ({}));
 
 // 4. initialState 초기값 설정
 const initialState = {
-  userId: null, // 서버에서 받아올 값
-  userName: null, // id
+  userId: null,
+  userName: null,
   nickName: null,
   location: null,
   is_login: false,
 };
-
+// const initialCart = {
+//   cart_list:[],
+//   cart: null,
+// }
 const signUp = (id, nickName, location, pw, pwCheck) => {
   return function (dispatch, getState, { history }) {
     console.log("아이디", id);
@@ -68,17 +65,8 @@ const logIn = (id, pw) => {
         console.log(data);
         // 로컬스토리지에 token 저장
         localStorage.setItem("token", data.headers.authorization);
-        // localStorage.setItem("userInfo", data.data);
 
-        dispatch(
-          setUser({
-            // userId: data.data.userId,
-            // userName: data.data.userName,
-            // nickName: data.data.nickName,
-            // location: data.data.location,
-            // userProfile: data.data.userProfile,
-          })
-        );
+        dispatch(setUser({}));
         history.push("/");
       })
       .catch((err) => {
@@ -90,16 +78,14 @@ const logIn = (id, pw) => {
 // 4.3. isLogin
 const isLogin = (Token) => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem("token");
-
+    console.log(Token);
     api
       .get("/user/isLogIn", {
         headers: {
-          Authorization: ` ${token}`,
+          Authorization: ` ${Token}`,
         },
       })
       .then((res) => {
-        console.log(res);
         const userId = res.data.userId;
         const userName = res.data.userName;
         const nickName = res.data.nickName;
@@ -143,13 +129,23 @@ const isLogin = (Token) => {
 const logout = () => {
   return function (dispatch, getState, { history }) {
     localStorage.removeItem("token");
-    // localStorage.removeItem("userInfo");
 
     dispatch(logOut());
     history.replace("/");
   };
 };
 
+// //좋아요 및 관심상품 담기
+// const addCart = () => {
+//   return function (dispatch, getState, { history }){
+//     return null;
+//   }
+// }
+// const deleteCart = () => {
+//   return function (dispatch, getState, { history }){
+//     return null;
+//   }
+// }
 // 5. reducer
 export default handleActions(
   {
@@ -162,24 +158,11 @@ export default handleActions(
         draft.is_login = true;
       }),
 
-    // [GET_USER]: (state, action) => produce(state, (draft) => {}),
-
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         draft.userName = null;
         draft.is_login = false;
       }),
-
-      // [LOGGEDIN] : (state, action) => produce (state, (draft) => {
-      //   const token = action.payload.token;
-      //   let decoded = jwt_decode(token);
-      //   console.log(decoded);
-        
-      //   draft.nickName= decoded.NICK_NAME;
-      //   draft.userName= decoded.USER_NAME;
-        
-      //   draft.is_login = true;
-      // }),
   },
   initialState
 );
@@ -190,11 +173,8 @@ const actionCreators = {
   logIn,
   isLogin,
   setUser,
-
   // mypostAPI,
   logout,
-
-  // loggedin,
 };
 
 export { actionCreators };

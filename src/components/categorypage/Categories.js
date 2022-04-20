@@ -8,7 +8,7 @@ import { Image, Grid, Text } from "../../elements/index";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-const Postlist = (props) => {
+const Categories = (props) => {
   const post_list = useSelector((state) => state.post?.post_list);
   const is_login = useSelector((state) => state.user.is_login);
 
@@ -65,7 +65,7 @@ const Postlist = (props) => {
   );
 };
 
-export default Postlist;
+export default Categories;
 
 const Post = styled.div`
   width: 100%;

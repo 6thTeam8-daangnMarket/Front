@@ -3,33 +3,40 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import HomeIcon from '@mui/icons-material/Home';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import Like from "../components/Like";
 import Text2 from "../elements/Text2";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import Modal from "../components/Modal";
 import '../modal.css';
-import { actionCreators as userActions } from "../redux/modules/user";
 
 const PostDetailPage = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const params = useParams();
-  console.log(params);
-  const postId = parseInt(params.postId);
 
+  // 파라미터로 postID값 받아옴
+  const params = useParams(); 
+  const postId = parseInt(params.postId);
   const userId = useSelector((state) => state.user.userId);
+  const response = useSelector((state) => state.post?.post);
   
+  const [like, setLike] = React.useState(false);
+  const toggleLike = () => {
+    if(like === false){
+      setLike(true);
+      dispatch(postActions.changeLikeCnt(postId));
+    }
+    else {
+      setLike(false);
+      dispatch(postActions.changeLikeCnt(postId));
+    }
+    
+  }
+
   React.useEffect(() => {
     dispatch(postActions.getAPost(postId));
   },[]);
-
-  const response = useSelector((state) => state.post?.post);
-  console.log(response);
-
-  const [like, setLike] = React.useState(false);
 
   //modal   - 수정하기 . 삭제하기 버튼
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,9 +46,8 @@ const PostDetailPage = (props) => {
   const closeModal = () => {
     setModalOpen(false);
   }
-  const markLike = () => {
-    setLike(true);
-  }
+
+
   //왤까! 왤까 
   if(!response){   //state가 바뀌면 rerendering이 되면서 
     return <div></div>
@@ -84,16 +90,10 @@ const PostDetailPage = (props) => {
           backgroundColor:"transparent"
         }} 
         onClick={openModal}>***</Button>
-        <Modal 
-        postId={response.postId} 
-        open={modalOpen} 
-        close={closeModal} 
-        header="수정 및 삭제하기"></Modal>
+        <Modal postId={postId} open={modalOpen} close={closeModal} header="수정 및 삭제하기"></Modal>
       </React.Fragment>
         <ImageWrap> 
-          <PostImage 
-          src={response.imageUrl} 
-          alt={response.postTitle} />
+          <img src={response.imageUrl} alt={response.postTitle} style={{backgroundSize: "cover", backgroundPosition:"center", height: "-webkit-fill-available", width: "inherit"}}/>
         </ImageWrap>
         <DetailContentWrap>
           <UserInfoWrap>
@@ -140,22 +140,10 @@ const PostDetailPage = (props) => {
             <Text2 color="grey" fontSize="15px">관심 {response.likeCount}</Text2>
           </LikedWrap>
           <LikesNPriceWrap>
-            <FavoriteBorderIcon 
-            onClick={()=>markLike} 
-            style={{position: "relative", left:"15px", }}></FavoriteBorderIcon>
-            <Text2 
-            lineHeight="2.5em" 
-            fontFamily="AppleSDGothicNeoB" 
-            fontSize="1.2em"> {response.price} 원</Text2>
-            <Button 
-            style={{
-              fontSize: "15px",
-              color: "white", 
-              backgroundColor:"#FF8A3D", 
-              width: "100px", 
-              height:"3em"
-              }}
-            >채팅하기</Button>
+            {/* 게시글을 불러올 때 해당 회원이 해당 게시물 좋아요를 눌렀었는지여부 */}
+            <Like like={like} onClick={toggleLike} {...props}/>
+            <Text2 lineHeight="2.5em" fontFamily="AppleSDGothicNeoB" fontSize="1.2em"> {response.price} 원</Text2>
+            <Button style={{fontSize: "15px",color: "white", backgroundColor:"#FF8A3D", width: "100px", height:"3em"}}>채팅하기</Button>
           </LikesNPriceWrap>
         </DetailContentWrap>
     </DetailWrap>
@@ -169,6 +157,7 @@ const ImageWrap = styled.div`
   width: 100%;
   height: 50%;
   border-bottom: 1px solid lightgrey;
+
 `
 const DetailContentWrap = styled.div`
   width: 100%;
@@ -217,9 +206,5 @@ const LikesNPriceWrap = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 1.5fr;
   align-items: center;
-`
-const PostImage = styled.img`
-  background-size: cover; 
-  background-position: center;
 `
 export default PostDetailPage;

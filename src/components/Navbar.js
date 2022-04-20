@@ -11,7 +11,9 @@ const Navbar = (props) => {
     return (
       <React.Fragment>
         <Grid
-          height="8vh"
+          height="8%"
+          fixed
+          top="0px"
           bg="white"
           border_bottom=" 1px solid #bbb"
           padding="8px 16px"
@@ -25,7 +27,9 @@ const Navbar = (props) => {
   return (
     <React.Fragment>
       <Grid
-        height="4%"
+        height="8%"
+        fixed
+        top="0px"
         bg="white"
         border_bottom=" 1px solid #bbb"
         padding="8px 16px"
