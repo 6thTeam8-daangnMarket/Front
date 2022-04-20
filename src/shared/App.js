@@ -22,7 +22,6 @@ function App() {
   const Token = localStorage.getItem("token");
 
   useEffect(() => {
-    //동기로 바꾸던지
     if (Token) {
       dispatch(userActions.isLogin(localStorage.getItem("token")));
     }

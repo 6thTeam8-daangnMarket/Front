@@ -41,7 +41,7 @@ const Grid = (props) => {
 };
 
 Grid.defaultProps = {
-  chidren: null,
+  children: null,
   width: "100%",
   height: "100%",
   border_top: false,

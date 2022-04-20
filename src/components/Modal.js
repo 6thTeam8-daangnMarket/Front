@@ -1,5 +1,4 @@
 import React from "react";
-import post from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 
@@ -10,8 +9,8 @@ const Modal = (props) => {
     const token = localStorage?.getItem("token");
     const postId = props.postId;
 
-    const deletePost =() => {
-        dispatch(postActions.deletePost(token, postId));
+    const delete_post =() => {
+        dispatch(postActions.deletePost(postId));
     }
     return (
         // 모달이 열릴때 openModal 클래스가 생성된다.
@@ -25,9 +24,8 @@ const Modal = (props) => {
                         </header>
                         <main>
                             <button>수정하기</button>
-                            <button onClick={()=>deletePost}>삭제하기</button>
-                            {/* <button onClick={updatePost}>수정하기</button>
-                            <button onClick={deletePost}>삭제하기</button> */}
+                            {/* <button onClick={()=>deletePost}>삭제하기</button> */}
+                            <button onClick={delete_post}>삭제하기</button>
                         </main>
                     </section>
                 ) : null

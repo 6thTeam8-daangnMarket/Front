@@ -100,8 +100,8 @@ const FloatButton = styled.button`
 
   //버튼 위치
   position: fixed;
-  bottom: 240px;
-  right: 25px;
+  bottom: 80px;
+  right: 30px;
 
   //+ 위치
   // text-align: center;

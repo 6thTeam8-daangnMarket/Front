@@ -10,7 +10,9 @@ const SET_USER = "SET_USER";
 // const SET_PROFILE = "SET_PROFILE";
 // const SET_PREVIEW = "SET_PREVIEW";
 const LOG_OUT = "LOG_OUT";
-// const LOGGEDIN = "LOGGEDIN";
+
+// const ADD_CART = "ADD_CART";
+// const DELETE_CART = "DELETE_CART";
 
 // 3. action creators (액션 생성 함수)
 // const loggedin =  createAction(LOGGEDIN, (token) => ({ token }));
@@ -20,6 +22,9 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 // const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 
+// const add_cart = createAction(ADD_CART, (goods) => ({goods}));
+// const delete_cart = createAction(DELETE_CART, () => ({}));
+
 // 4. initialState 초기값 설정
 const initialState = {
   userId: null, // 서버에서 받아올 값
@@ -28,7 +33,10 @@ const initialState = {
   location: null,
   is_login: false,
 };
-
+// const initialCart = {
+//   cart_list:[],
+//   cart: null,
+// }
 const signUp = (id, nickName, location, pw, pwCheck) => {
   return function (dispatch, getState, { history }) {
     console.log("아이디", id);
@@ -99,7 +107,6 @@ const isLogin = (Token) => {
         },
       })
       .then((res) => {
-        console.log(res);
         const userId = res.data.userId;
         const userName = res.data.userName;
         const nickName = res.data.nickName;
@@ -150,6 +157,17 @@ const logout = () => {
   };
 };
 
+// //좋아요 및 관심상품 담기
+// const addCart = () => {
+//   return function (dispatch, getState, { history }){
+//     return null;
+//   }
+// }
+// const deleteCart = () => {
+//   return function (dispatch, getState, { history }){
+//     return null;
+//   }
+// }
 // 5. reducer
 export default handleActions(
   {
@@ -179,6 +197,12 @@ export default handleActions(
       //   draft.userName= decoded.USER_NAME;
         
       //   draft.is_login = true;
+      // // }),
+      // [ADD_CART]: (state, action) => produce(state, (draft) => {
+      //   draft.cart.unshift(action.payload.cart);
+      // }),
+      // [DELETE_CART]: (state, action) => produce(state, (draft) => {
+      //   draft.cart.filter(!action.payload.cart);
       // }),
   },
   initialState
@@ -195,6 +219,9 @@ const actionCreators = {
   logout,
 
   // loggedin,
+
+  // addCart,
+  // deleteCart,
 };
 
 export { actionCreators };
