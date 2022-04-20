@@ -26,15 +26,22 @@ const LoginPage = () => {
     <React.Fragment>
       <Grid margin="auto">
         <Navbar is_flex>
-          <Image src="Danggeun_logo.png" width="30%" height="30%"></Image>
+          <Image src="Danggeun_logo.png" width="30%" height="60%"></Image>
         </Navbar>
 
-        {/* <Text size="30px" bold margin="0px 0px 50px 0px">
+        <Grid
+          bg="white"
+          height="80%"
+          fixed
+          top="8%"
+          padding="8px 8px"
+          margin="8px 0 0 0"
+          center
+        >
+          <Text size="32px" bold margin="0px 0px 16px 0px">
             로그인
-          </Text> */}
-
-        <Grid bg="white" padding="16px 16px" margin="24px 0 0 0 ">
-          <Grid height="16%" is_flex>
+          </Text>
+          <Grid height="12%" is_flex>
             <Input
               width="100%"
               placeholder="아이디를 입력해주세요"
@@ -45,7 +52,7 @@ const LoginPage = () => {
             />
           </Grid>
 
-          <Grid height="16%" is_flex>
+          <Grid height="12%" is_flex>
             {" "}
             <Input
               width="100%"
@@ -58,7 +65,7 @@ const LoginPage = () => {
             />
           </Grid>
 
-          <Grid height="16%" is_flex>
+          <Grid height="12%" is_flex>
             <Button
               width="50%"
               margin="8px"
@@ -83,11 +90,14 @@ const LoginPage = () => {
               회원가입
             </Button>
           </Grid>
-          <Grid>
-            <a id="custom-login-btn" href="javascript:loginWithKakao()">
+          <Grid height="4%" center padding="40px 8px">
+            <a
+              id="custom-login-btn"
+              href="https://kauth.kakao.com/oauth/authorize?client_id=d358b23f54bf03b7bc1822b251d45da7&redirect_uri=http://3.38.117.7/user/kakao/callback&response_type=code"
+            >
               <img
                 src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-                width="222"
+                width="90%"
                 alt="카카오 로그인 버튼"
               />
             </a>

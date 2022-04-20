@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Input, Button, Text, Grid } from "../elements/index";
-import Permit from "../components/mainpage/Permit";
+import { Button, Text, Grid } from "../elements/index";
+
 import Navbar from "../components/Navbar";
-import BottomNavbar from "../components/BottomNavbar";
 import Postlist from "../components/mainpage/Postlist";
+import Permit from "../components/mainpage/Permit";
+import BottomNavbar from "../components/BottomNavbar";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import IconButton from "@mui/material/IconButton";
+
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import LoginTwoToneIcon from "@mui/icons-material/LoginTwoTone";
+import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
+
 import HomeIcon from "@mui/icons-material/Home";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import IconButton from "@mui/material/IconButton";
-import { Icon } from "@mui/material";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 const MainPage = () => {
   const history = useHistory();
@@ -34,49 +40,38 @@ const MainPage = () => {
     <React.Fragment>
       <Grid bg="#CCC">
         <Navbar>
-          {/* <Input
-            width="55%"
-            height="1%"
-            padding="10px 25px"
-            placeholder="검색어를 입력해주세요"
-            _onChange={searchWordChange}
-          ></Input> */}
-          {/* <Button _onClick={postActions.search(searchWord)}></Button> */}
           <Text bold size="20px" padding="0 0 0 10px">
             {userLocation}
           </Text>
           <div>
-            <IconButton
-              onClick={() => {
-                history.push("/search");
-              }}
-            >
-              <SearchOutlinedIcon />
+            <IconButton>
+              <SearchOutlinedIcon
+                onClick={() => {
+                  history.push("/search");
+                }}
+              />
             </IconButton>
             <IconButton>
-              <MenuOutlinedIcon />
+              <MenuOutlinedIcon
+                onClick={() => {
+                  history.push("/category");
+                }}
+              />
             </IconButton>
             <IconButton>
-              <NotificationsNoneOutlinedIcon />
+              <LoginTwoToneIcon
+                onClick={() => {
+                  history.push("/login");
+                }}
+              />
+            </IconButton>
+            <IconButton onClick={userActions.logout()}>
+              <LogoutTwoToneIcon />
             </IconButton>
           </div>
         </Navbar>
         <Postlist></Postlist>
-        <button
-          variant="text"
-          style={{
-            position: "absolute",
-            right: "100",
-            top: "100",
-            color: "lightgrey",
-            zIndex: "9999",
-            lineHeight: "3",
-            backgroundColor: "transparent",
-          }}
-          onClick={userActions.logout()}
-        >
-          로그아웃
-        </button>
+
         <Permit>
           <Button
             is_float
@@ -92,16 +87,7 @@ const MainPage = () => {
             }}
           ></Button>
         </Permit>
-        <BottomNavbar is_flex>
-          <IconButton>
-            <HomeIcon sx={{ fontSize: 40 }}></HomeIcon>
-          </IconButton>
-          <IconButton>
-            <LocationOnOutlinedIcon
-              sx={{ fontSize: 40 }}
-            ></LocationOnOutlinedIcon>
-          </IconButton>
-        </BottomNavbar>
+        <BottomNavbar></BottomNavbar>
       </Grid>
     </React.Fragment>
   );

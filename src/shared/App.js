@@ -10,6 +10,9 @@ import MainPage from "../pages/MainPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import PostWritePage from "../pages/PostWritePage";
 import SearchPage from "../pages/SearchPage";
+import CategoryPage from "../pages/CategoryPage";
+import CategoryResultPage from "../pages/CategoryResultPage";
+
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -23,7 +26,7 @@ function App() {
 
   useEffect(() => {
     if (Token) {
-      dispatch(userActions.isLogin(localStorage.getItem("token")));
+      dispatch(userActions.isLogin(Token));
     }
   }, []);
   return (
@@ -35,6 +38,12 @@ function App() {
         <Route path="/post/detail/:postId" exact component={PostDetailPage} />
         <Route path="/post/write" exact component={PostWritePage} />
         <Route path="/search" exact component={SearchPage} />
+        <Route path="/category" exact component={CategoryPage} />
+        <Route
+          path="/category/:category"
+          exact
+          component={CategoryResultPage}
+        />
         <Route path="/signup" exact component={SignUpPage} />
       </ConnectedRouter>
     </>
