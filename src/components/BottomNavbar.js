@@ -47,11 +47,8 @@ const BottomNavbar = (props) => {
         padding="8px 16px"
         space_around
       >
-        <IconButton>
-          <HomeIcon
-            sx={{ fontSize: 30 }}
-            onClick={() => history.push("/")}
-          ></HomeIcon>
+        <IconButton onClick={() => history.push("/")}>
+          <HomeIcon sx={{ fontSize: 30 }}></HomeIcon>
         </IconButton>
         <IconButton>
           <ListAltIcon sx={{ fontSize: 30 }}></ListAltIcon>
@@ -64,10 +61,9 @@ const BottomNavbar = (props) => {
         <IconButton>
           <ChatBubbleOutlineIcon sx={{ fontSize: 30 }}></ChatBubbleOutlineIcon>
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => history.push("/mypage")}>
           <PersonOutlineOutlinedIcon
             sx={{ fontSize: 30 }}
-            onClick={() => history.push("/mypage")}
           ></PersonOutlineOutlinedIcon>
         </IconButton>
       </Grid>

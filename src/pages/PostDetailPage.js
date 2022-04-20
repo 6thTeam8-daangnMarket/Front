@@ -54,13 +54,41 @@ const PostDetailPage = (props) => {
   }
   return(
     <DetailWrap>
-      <ArrowBackIosIcon variant="text" style={{position:"absolute", left: "20px", top: "12px", color: "lightgrey", fontSize:"1.7em", lineHeight:"0.5"}}
+      <ArrowBackIosIcon 
+      variant="text" 
+      style={{
+        position:"absolute", 
+        left: "20px", 
+        top: "12px", 
+        color: "lightgrey", 
+        fontSize:"1.7em", 
+        lineHeight:"0.5"
+      }}
       onClick={()=>history.goBack()}></ArrowBackIosIcon>
-      <HomeIcon variant="text" style={{position:"absolute", left: "50px", top: "10px", fontSize:"1.9em", color: "lightgrey", lineHeight: "2.3"}}
+      <HomeIcon 
+      variant="text" 
+      style={{
+        position:"absolute", 
+        left: "50px", 
+        top: "10px", 
+        fontSize:"1.9em", 
+        color: "lightgrey", 
+        lineHeight: "2.3"
+      }}
       onClick={()=>history.push('/')}></HomeIcon>
       {/* 모달 */}
       <React.Fragment>
-        <Button variant="text" style={{position:"absolute", right: "0", top: "0", color: "lightgrey", zIndex:"9999", lineHeight:"3", backgroundColor:"transparent"}} 
+        <Button 
+        variant="text" 
+        style={{
+          position:"absolute", 
+          right: "0", 
+          top: "0", 
+          color: "lightgrey", 
+          zIndex:"9999", 
+          lineHeight:"3", 
+          backgroundColor:"transparent"
+        }} 
         onClick={openModal}>***</Button>
         <Modal postId={postId} open={modalOpen} close={closeModal} header="수정 및 삭제하기"></Modal>
       </React.Fragment>
@@ -69,21 +97,41 @@ const PostDetailPage = (props) => {
         </ImageWrap>
         <DetailContentWrap>
           <UserInfoWrap>
-            <ProfileImg src={process.env.PUBLIC_URL + "/DaangnMarket_logo.png"} alt={response.userName}/>
-            <div style={{display: "grid", gridTemplateRows: "1fr 1fr", alignItems: "center"}}>
-              <Text2 padding="10px 0 0 0 " fontFamily="AppleSDGothicNeoB" fontWeight="800" fontSize="18px">{response.userName}</Text2>
+            <ProfileImg 
+            src={process.env.PUBLIC_URL + "/DaangnMarket_logo.png"} 
+            alt={response.userName}/>
+            <div 
+            style={{
+              display: "grid", 
+              gridTemplateRows: "1fr 1fr", 
+              alignItems: "center"
+              }}>
+              <Text2 
+              padding="10px 0 0 0 " fontFamily="AppleSDGothicNeoB" 
+              fontWeight="800" 
+              fontSize="18px"
+              >{response.userName}</Text2>
               <Text2 padding="0 0 10px 0 " >{response.location}</Text2>
             </div>
           </UserInfoWrap>
           {/* 게시글 제목 */}
           <TitleWrap>
-            <Text2 style={{alignItems:"center"}} margin="0 0 0 15px" fontFamily="AppleSDGothicNeoB" fontSize="1.5em">{response.postTitle}</Text2>
+            <Text2 
+            style={{alignItems:"center"}} 
+            margin="0 0 0 15px" 
+            fontFamily="AppleSDGothicNeoB" 
+            fontSize="1.5em">{response.postTitle}</Text2>
           </TitleWrap>
           {/* 게시글 카테고리 및 게시 시간 표기 */}
           <CategoryWrap>
-          <Button variant="text" style={{ marginLeft: "5px",color:"grey"}}
+          <Button 
+          variant="text" 
+          style={{ 
+            marginLeft: "5px",
+            color:"grey"
+          }}
           onClick={()=> history.push('/')}>{response.category}</Button>
-            <Text2 color="grey" fontSize="13px">  {response.createdAt} 올림 </Text2>
+            <Text2 color="grey" fontSize="13px">{response.createdAt} 올림 </Text2>
           </CategoryWrap>
           <ContentsWrap>
             <Text2>{response.postContents}</Text2>

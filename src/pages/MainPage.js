@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,17 +19,11 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LoginTwoToneIcon from "@mui/icons-material/LoginTwoTone";
 import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
 
-import HomeIcon from "@mui/icons-material/Home";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-
 const MainPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const userLocation = useSelector((state) => state.user.location);
+  const userLocation = useSelector((state) => state.user?.location);
   const is_login = useSelector((state) => state.user.is_login);
 
   React.useEffect(() => {
@@ -44,28 +38,28 @@ const MainPage = () => {
             {userLocation}
           </Text>
           <div>
-            <IconButton>
-              <SearchOutlinedIcon
-                onClick={() => {
-                  history.push("/search");
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                history.push("/search");
+              }}
+            >
+              <SearchOutlinedIcon />
             </IconButton>
-            <IconButton>
-              <MenuOutlinedIcon
-                onClick={() => {
-                  history.push("/category");
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                history.push("/category");
+              }}
+            >
+              <MenuOutlinedIcon />
             </IconButton>
-            <IconButton>
-              <LoginTwoToneIcon
-                onClick={() => {
-                  history.push("/login");
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                history.push("/login");
+              }}
+            >
+              <LoginTwoToneIcon />
             </IconButton>
-            <IconButton onClick={userActions.logout()}>
+            <IconButton onClick={() => dispatch(userActions.logout())}>
               <LogoutTwoToneIcon />
             </IconButton>
           </div>
