@@ -7,15 +7,21 @@ import axios from "axios"; //axios: node.js와 브라우저를 위한 Promise �
 
 //Actions
 const ADD_POST = "ADD_POST";
-const SET_POST = "SET_POST"; //전체
+const GET_POST = "SET_POST";
 const GET_A_POST = "GET_A_POST";
 const UPDATE_POST = "UPDATE_POST";
 const DELETE_POST = "DELETE_POST";
+const GET_SEARCH_POST = "GET_SEARCH_POST";
+const GET_CATEGORY_POST = "GET_CATEGORY_POST";
+const GET_LIKE_POST = "GET_LIKE_POST";
 
 //reducer이 사용할 initialState
 const initialState = {
   post_list: [],
   post: null,
+  search_list: [],
+  category_list: [],
+  like_list: [],
 };
 // 게시글 하나에 대한 default initial 값
 const initialPost = {
@@ -27,18 +33,24 @@ const initialPost = {
 };
 //actionCreators
 const add_post = createAction(ADD_POST, (post) => ({ post }));
-const set_post = createAction(SET_POST, (posts) => ({ posts }));
+const get_post = createAction(GET_POST, (posts) => ({ posts }));
 const get_a_post = createAction(GET_A_POST, (post) => ({ post }));
 const delete_post = createAction(DELETE_POST, () => ({}));
 const update_post = createAction(UPDATE_POST, (post) => ({ post }));
+const get_search_post = createAction(GET_SEARCH_POST, (posts) => ({ posts }));
+const get_category_post = createAction(GET_CATEGORY_POST, (posts) => ({
+  posts,
+}));
+const get_like_post = createAction(GET_LIKE_POST, (posts) => ({ posts }));
 
+//무한스크롤 위해서 인자로 보내야할 값 넣어야 함
 const getPost = () => {
   return function (dispatch, getState, { history }) {
     api
       .get(`/api/posted/1`)
       .then((res) => {
         console.log(res.data);
-        dispatch(set_post(res.data));
+        dispatch(get_post(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -63,17 +75,12 @@ const getAPost = (postId) => {
   };
 };
 
-const search = (keyword) => {
+const getSearch = (keyword) => {
   return function (dispatch, getState, { history }) {
     api
-      .get(
-        `/api/search/${keyword}`
-        // {data: {
-        //     keyword: keyword,
-        //   }}
-      )
-      .then((post_list) => {
-        dispatch(set_post(post_list));
+      .get(`/api/search/${keyword}`)
+      .then((res) => {
+        dispatch(get_search_post(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -81,12 +88,25 @@ const search = (keyword) => {
   };
 };
 
-const categoryLoad = (category) => {
+const getCategory = (category) => {
   return function (dispatch, getState, { history }) {
     api
       .get(`/api/category/${category}`)
-      .then((post_list) => {
-        dispatch(set_post(post_list));
+      .then((res) => {
+        dispatch(get_category_post(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+const getLike = () => {
+  return function (dispatch, getState, { history }) {
+    api
+      .get("/user/myPage")
+      .then((res) => {
+        dispatch(get_like_post(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -147,7 +167,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
-    [SET_POST]: (state, action) =>
+    [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post_list = action.payload.posts;
       }),
@@ -161,16 +181,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.post_list.filter(!action.payload.post);
       }),
+    [GET_SEARCH_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.search_list = action.payload.posts;
+      }),
+    [GET_CATEGORY_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.category_list = action.payload.posts;
+      }),
+    [GET_LIKE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.like_list = action.payload.posts;
+      }),
   },
   initialState
 );
 //export
 const actionCreators = {
   addPost,
-  search,
-  categoryLoad,
   getPost,
   getAPost,
   deletePost,
+  getSearch,
+  getCategory,
+  getLike,
 };
 export { actionCreators };

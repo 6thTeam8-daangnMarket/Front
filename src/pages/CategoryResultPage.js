@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-import Postlist from "../components/mainpage/Postlist";
+import CategoryList from "../components/categorypage/CategoryList";
 import { Text, Grid } from "../elements/index";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 import { api } from "../shared/api";
+import { Category } from "@mui/icons-material";
 
 const CategoryResultPage = (props) => {
   const history = useHistory();
@@ -20,52 +21,33 @@ const CategoryResultPage = (props) => {
   console.log(category);
   console.log(typeof category);
 
-  const [loading, setLoading] = useState(false);
-  const post_list = useSelector((state) => state.post?.post_list);
+  // const [loading, setLoading] = useState(false);
+  // const post_list = useSelector((state) => state.post?.post_list);
 
   React.useEffect(() => {
-    const categoryLoad = async () => {
-      setLoading(true);
-      try {
-        console.log("category :", category);
-        const response = await api.get(`/api/category/${category}`);
-        dispatch(postActions.set_post(response));
-      } catch (err) {
-        console.log(err);
-      }
-      setLoading(false);
-    };
-    categoryLoad().then((r) => console.log("OK"));
-  }, [category]);
+    dispatch(postActions.getCategory(category));
+  }, []);
 
   // React.useEffect(() => {
-  //   const categoryLoad = () => {
+  //   const categoryLoad = async () => {
   //     setLoading(true);
-  //     return async function (dispatch, getState, { history }) {
-  //       try {
-  //         console.log("category :", category);
-  //         const response = await api.get(`/api/category/${category}`);
-  //         dispatch(postActions.set_post(response));
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //       setLoading(false);
-  //     };
+  //     try {
+  //       console.log("category :", category);
+  //       const response = await api.get("/api/category", {
+  //         params: { category: `${category}` },
+  //       });
+  //       dispatch(postActions.set_post(response));
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //     setLoading(false);
   //   };
-  //   // categoryLoad().then((r) => console.log("OK"));
+  //   categoryLoad().then((r) => console.log("OK"));
   // }, [category]);
-
-  if (loading) {
-    return <div>대기중...</div>;
-  }
-
-  if (!post_list) {
-    return null;
-  }
 
   return (
     <Grid bg="#CCC">
-      <Navbar>
+      <Navbar is_flex>
         <Text bold size="20px" padding="0 0 0 10px">
           카테고리 결과
         </Text>
@@ -79,10 +61,10 @@ const CategoryResultPage = (props) => {
             fontSize: "1.7em",
             lineHeight: "0.5",
           }}
-          onClick={() => history.goBack()}
+          onClick={() => history.push("/category")}
         ></ArrowBackIosIcon>
       </Navbar>
-      <Postlist></Postlist>
+      <CategoryList></CategoryList>
     </Grid>
   );
 };

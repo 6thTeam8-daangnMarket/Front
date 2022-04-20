@@ -126,7 +126,8 @@ const logout = () => {
     localStorage.removeItem("token");
 
     dispatch(logOut());
-    history.replace("/");
+    window.alert("로그아웃이 완료되었습니다!");
+    history.push("/");
   };
 };
 

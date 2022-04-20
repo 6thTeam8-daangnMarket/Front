@@ -9,20 +9,20 @@ import { Image, Grid, Text } from "../../elements/index";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const Categories = (props) => {
-  const post_list = useSelector((state) => state.post?.post_list);
+  const search_list = useSelector((state) => state.post?.search_list);
   const is_login = useSelector((state) => state.user.is_login);
 
   const history = useHistory();
-  const postList = post_list?.postList;
-  console.log("post_list", postList);
+  const searchList = search_list?.postList;
+  console.log("search_list", searchList);
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
-  if (!postList) {
-    return <div></div>;
+  if (!searchList) {
+    return <div>대기중...</div>;
   }
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
-        {postList.map((p) => {
+        {searchList.map((p) => {
           return (
             <Grid
               key={p.postId}
