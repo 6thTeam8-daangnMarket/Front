@@ -1,33 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { Input, Button, Text, Grid } from "../elements/index";
-import Permit from "../components/mainpage/Permit";
+import { Input, Button } from "../elements/index";
 import Navbar from "../components/Navbar";
-import Postlist from "../components/mainpage/Postlist";
-
-import { actionCreators as postActions } from "../redux/modules/post";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import IconButton from "@mui/material/IconButton";
 
+import { actionCreators as postActions } from "../redux/modules/post";
+
+import SearchList from "../components/SearchPage/SearchList";
+
 const SearchPage = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [query, setQuery] = useState("");
+  // const [query, setQuery] = useState("");
   const [searchWord, setSearchWord] = React.useState("");
+
+  console.log(searchWord);
 
   const searchWordChange = (e) => {
     setSearchWord(e.target.value);
   };
 
-  // dispatch(postActions.getPost());
-
   return (
     <React.Fragment>
-      <Navbar>
+      <Navbar is_flex>
+        <ArrowBackIosIcon
+          variant="text"
+          style={{
+            position: "absolute",
+            left: "20px",
+            top: "12px",
+            color: "lightgrey",
+            fontSize: "1.7em",
+            lineHeight: "0.5",
+          }}
+          onClick={() => history.goBack()}
+        ></ArrowBackIosIcon>
+
         <Input
           width="55%"
           height="1%"
@@ -36,12 +50,11 @@ const SearchPage = () => {
           _onChange={searchWordChange}
         ></Input>
 
-        <IconButton onClick={postActions.search(searchWord)}>
+        <IconButton onClick={postActions.getSearch(searchWord)}>
           <SearchOutlinedIcon />
         </IconButton>
-
-        {/* <Button _onClick={postActions.search(searchWord)}></Button> */}
       </Navbar>
+      <SearchList></SearchList>
     </React.Fragment>
   );
 };

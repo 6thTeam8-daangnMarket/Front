@@ -8,22 +8,21 @@ import { Image, Grid, Text } from "../../elements/index";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-const Postlist = (props) => {
-  const post_list = useSelector((state) => state.post?.post_list);
+const Categories = (props) => {
+  const like_list = useSelector((state) => state.post?.like_list);
   const is_login = useSelector((state) => state.user.is_login);
 
   const history = useHistory();
-  const postList = post_list?.postList;
-  console.log(post_list);
-  console.log("post_list", postList);
+  const likeList = like_list?.postList;
+  console.log("like_list", likeList);
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
-  if (!postList) {
+  if (!likeList) {
     return <div></div>;
   }
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
-        {postList.map((p) => {
+        {likeList.map((p) => {
           return (
             <Grid
               key={p.postId}
@@ -66,7 +65,7 @@ const Postlist = (props) => {
   );
 };
 
-export default Postlist;
+export default Categories;
 
 const Post = styled.div`
   width: 100%;
