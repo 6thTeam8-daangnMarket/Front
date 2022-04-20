@@ -12,6 +12,7 @@ import PostWritePage from "../pages/PostWritePage";
 import SearchPage from "../pages/SearchPage";
 import CategoryPage from "../pages/CategoryPage";
 import CategoryResultPage from "../pages/CategoryResultPage";
+import PostUpdatePage from "../pages/PostUpdatePage";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/login" exact component={LoginPage} />
         <Route path="/post/detail/:postId" exact component={PostDetailPage} />
         <Route path="/post/write" exact component={PostWritePage} />
+        <Route path="/post/edit/:postId" exact component={PostUpdatePage}/>
         <Route path="/search" exact component={SearchPage} />
         <Route path="/category" exact component={CategoryPage} />
         <Route

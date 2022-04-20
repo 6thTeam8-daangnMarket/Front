@@ -50,8 +50,15 @@ const change_like_count = createAction(CHANGE_LIKE_COUNT, (like) => ({ like }));
 //무한스크롤 위해서 인자로 보내야할 값 넣어야 함
 const getPost = () => {
   return function (dispatch, getState, { history }) {
-    api
-      .get(`/api/posted/1`)
+
+    api //username.보내주기 . 회원아니면 Null
+      .get(`/api/posted/1`,{
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      },
+      { withCredentials: true })
       .then((res) => {
         console.log(res.data);
         dispatch(get_post(res.data));
@@ -147,6 +154,40 @@ const addPost = (imageUrl, title, category, content, price) => {
   };
 };
 
+const updatePost = (imageUrl, title, category, content, price, postId) => {
+  const postID = parseInt(postId);
+  const formData = new FormData();
+  formData.append("postTitle", title);
+  formData.append("category", category);
+  formData.append("postContents", content);
+  formData.append("price", price);
+  formData.append("imageUrl", imageUrl);
+  return async function (dispatch, getState, { history }) {
+    try {
+      await axios.post(
+        `http://3.38.117.7/api/posts/${postID}`,
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        },
+        { withCredentials: true }
+      );
+      window.alert("게시글 수정을 성공하였습니다.");
+      history.replace("/");
+    } catch (err) {
+      window.alert("게시글 수정에 실패하였습니다.");
+      console.log(err);
+      return;
+    }
+  };
+}
+
+
+
+
 const deletePost = (postId) => {
   const postID = parseInt(postId);
   return async function (dispatch, getState, { history }) {
@@ -172,7 +213,7 @@ const changeLikeCnt = (postId) => {
   const postID = parseInt(postId);
   return function (dispatch, getState, { history }) {
     api
-      .post(`/api/posts/${postID}/like`, {
+      .post(`/api/posts/${postID}/like`, {}, {
         headers: {
           "content-type": "application/json;charset=UTF-8",
           Authorization: `${localStorage.getItem("token")}`,
@@ -236,6 +277,7 @@ const actionCreators = {
   getPost,
   getAPost,
   deletePost,
+  updatePost,
   changeLikeCnt,
   getSearch,
   getCategory,

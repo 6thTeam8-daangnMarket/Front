@@ -5,6 +5,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import HomeIcon from '@mui/icons-material/Home';
 import Like from "../components/Like";
 import Text2 from "../elements/Text2";
+import Permit from "../components/mainpage/Permit";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -59,7 +60,7 @@ const PostDetailPage = (props) => {
       style={{
         position:"absolute", 
         left: "20px", 
-        top: "12px", 
+        top: "20px", 
         color: "lightgrey", 
         fontSize:"1.7em", 
         lineHeight:"0.5"
@@ -70,7 +71,7 @@ const PostDetailPage = (props) => {
       style={{
         position:"absolute", 
         left: "50px", 
-        top: "10px", 
+        top: "19px", 
         fontSize:"1.9em", 
         color: "lightgrey", 
         lineHeight: "2.3"
@@ -83,10 +84,10 @@ const PostDetailPage = (props) => {
         style={{
           position:"absolute", 
           right: "0", 
-          top: "0", 
+          top: "20px", 
           color: "lightgrey", 
           zIndex:"9999", 
-          lineHeight:"3", 
+          lineHeight:"1", 
           backgroundColor:"transparent"
         }} 
         onClick={openModal}>***</Button>
@@ -139,12 +140,15 @@ const PostDetailPage = (props) => {
           <LikedWrap>
             <Text2 color="grey" fontSize="15px">관심 {response.likeCount}</Text2>
           </LikedWrap>
+          <Permit>
           <LikesNPriceWrap>
             {/* 게시글을 불러올 때 해당 회원이 해당 게시물 좋아요를 눌렀었는지여부 */}
             <Like like={like} onClick={toggleLike} {...props}/>
             <Text2 lineHeight="2.5em" fontFamily="AppleSDGothicNeoB" fontSize="1.2em"> {response.price} 원</Text2>
             <Button style={{fontSize: "15px",color: "white", backgroundColor:"#FF8A3D", width: "100px", height:"3em"}}>채팅하기</Button>
           </LikesNPriceWrap>
+          </Permit>
+          
         </DetailContentWrap>
     </DetailWrap>
   );

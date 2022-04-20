@@ -78,7 +78,6 @@ const logIn = (id, pw) => {
 // 4.3. isLogin
 const isLogin = (Token) => {
   return function (dispatch, getState, { history }) {
-    console.log(Token);
     api
       .get("/user/isLogIn", {
         headers: {
@@ -131,8 +130,7 @@ const logout = () => {
     localStorage.removeItem("token");
 
     dispatch(logOut());
-    window.alert("로그아웃이 완료되었습니다!");
-    history.push("/");
+    history.replace("/");
   };
 };
 

@@ -4,23 +4,35 @@ import Button from "@mui/material/Button";
 import Text2 from "../elements/Text2";
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as PostActions } from "../redux/modules/post";
 
-const PostWritePage = () => {
-  const cateRef = React.useRef();
+const PostUpdatePage = () => {
+  const cateRef = React.useRef();   
+  const titleRef = React.useRef();   
+  const contentsRef = React.useRef();   
+  const priceRef = React.useRef();   
+
   const dispatch = useDispatch();
+  const params = useParams();
   const history = useHistory();
+
+const postID = params.postId;
+  const response = useSelector((state) => state.post?.post);
+
+  React.useEffect(() => {
+    dispatch(PostActions.getAPost(postID));
+  },[]);
 
   const [image, setImage] = React.useState(""); //preview
 
   const [imageUrl, setImageUrl] = React.useState(""); //보내는 image
   const [title, setTitle] = React.useState("");
-  const [content, setContent] = React.useState("");
-  const [category, setCategory] = React.useState("");
-  const [price, setPrice] = React.useState(0);
-
+  const [content, setContent] =  React.useState("");
+  const [category, setCategory] =  React.useState("");
+  const [price, setPrice] =  React.useState("");
+  
   const reader = new FileReader();
 
   const encodeFileToBase64 = (fileBlob) => {
@@ -33,6 +45,7 @@ const PostWritePage = () => {
   };
 
   const changeContent = (e) => {
+      console.log(e.target.value);
     setContent(e.target.value);
   };
   const changePrice = (e) => {
@@ -49,19 +62,19 @@ const PostWritePage = () => {
   };
 
   const submit = () => {
-    if (
-      imageUrl === "" ||
-      title === "" ||
-      category === "" ||
-      content === "" ||
-      price === ""
-    ) {
-      alert("모든 사항을 기입해주세요.");
-      return;
-    } else {
-      dispatch(PostActions.addPost(imageUrl, title, category, content, price));
-    }
+      console.log(titleRef.current.value);
+      console.log(contentsRef.current.value);
+      console.log(priceRef.current.value);
+      console.log(cateRef.current.value);
+    //모든지 ""로 가면 
+      dispatch(PostActions.updatePost(imageUrl, title, category, content, price, postID));
+    
   };
+  if(!response){
+      return(
+          <div></div>
+      )
+  }
   return (
     <PostWrite>
       <PostHeader>
@@ -116,25 +129,38 @@ const PostWritePage = () => {
             />
             {/* 미리보기 */}
             <div style={{ width: "100px", height: "100px", margin:"10px"}}>
-              {image && (
+                {image ? (
+                        <img
+                          src={image}
+                          alt="preview-img"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundSize: "cover",
+                          }}
+                        />
+                      )
+                 : 
                 <img
-                  src={image}
-                  alt="preview-img"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    backgroundSize: "cover",
-                  }}
+                    src={response.imageUrl}
+                    alt="preview-img"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundSize: "cover",
+                    }}
                 />
-              )}
+            }
+              
             </div>
           </ImageUpload>
           <DetailWrap>
+              
             <input
               type="text"
               id="title"
               name="title"
-              placeholder="글 제목"
+              placeholder="게시물 제목"
               style={{
                 fontSize: "1.1em",
                 height: "100%",
@@ -144,7 +170,9 @@ const PostWritePage = () => {
                 border: "1px solid #FAFAFA",
                 padding: "15px",
               }}    
-              onChange={changeTitle}
+              ref={titleRef}
+              onChange={changeTitle}    
+              defaultValue={response.postTitle}
             />
           </DetailWrap>
           {/* 카테고리 설정 */}
@@ -158,6 +186,8 @@ const PostWritePage = () => {
               border: "1px solid #FAFAFA",
               fontSize: "1em",
             }}
+            ref={cateRef}
+            defaultValue={response.category}
             onChange={changeCategory}>
               <option value="none">카테고리 선택</option>
               <option value="디지털기기">디지털기기</option>
@@ -192,6 +222,8 @@ const PostWritePage = () => {
                 fontSize: "1em",
                 boxSizing: "border-box",
               }}
+              ref={priceRef}
+              defaultValue={response.price}
               onChange={changePrice}
             />
             <label htmlFor="price" />
@@ -224,7 +256,9 @@ const PostWritePage = () => {
               className="content"
               rows="10"
               style={{ height: "98%", border: "1px solid #FAFAFA",fontSize: "20px", width: "100%", boxSizing: "border-box", padding:"10px"}}
-              placeholder={`${user.location}게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)`}
+              placeholder="${ㅇㅇ시의 }게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)"
+              ref={contentsRef}
+              defaultValue={response.postContents}
               onChange={changeContent}
             ></textarea>
           </ContentsWrap>
@@ -280,4 +314,4 @@ const PostFooter = styled.div`
   padding-left: 10px;
   background-color: #FAFAFA;
 `;
-export default PostWritePage;
+export default PostUpdatePage;
