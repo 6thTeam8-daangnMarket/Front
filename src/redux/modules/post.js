@@ -18,7 +18,6 @@ const CHANGE_LIKE_COUNT = "CHANGE_LIKE_COUNT";
 const initialState = {
   post_list: [],
   post: null,
-  post_liked: false,
 };
 // 게시글 하나에 대한 default initial 값
 const initialPost = {
@@ -191,7 +190,7 @@ export default handleActions(
       [UPDATE_POST]: (state, action) => produce(state, (draft) => {}),
       [DELETE_POST]: (state, action) => produce(state, (draft) => {
           draft.post_list.filter(!action.payload.post);
-        }),
+      }),
 
       [CHANGE_LIKE_COUNT]: (state, action) => produce(state, (draft) => {
         console.log(action.payload);
