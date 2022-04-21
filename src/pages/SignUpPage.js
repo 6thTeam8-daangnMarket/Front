@@ -52,13 +52,11 @@ const SignUpPage = () => {
         console.log(res.data.status);
         if (res.data.status === "OK") {
           window.alert("사용할 수 있는 닉네임 입니다.");
-        } else {
-          window.alert("사용할 수 없는 닉네임 입니다.");
         }
       })
       .catch((err) => {
         console.log(err);
-        window.alert("오류가 확인되었습니다. 다시 시도해주세요.");
+        window.alert("사용할 수 없는 닉네임 입니다.");
       });
   };
 
