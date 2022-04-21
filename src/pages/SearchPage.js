@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
-import { Input, Button } from "../elements/index";
+import { Input } from "../elements/index";
 import Navbar from "../components/Navbar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 

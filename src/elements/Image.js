@@ -18,11 +18,10 @@ const Image = (props) => {
 };
 
 Image.defaultProps = {
-  width: "72pt",
-  height: "72pt",
-  // shape: "rectangul",
+  width: "75%",
+  height: "75%",
   src: false,
-  size: "80%",
+  // size: "80%",
   half: false,
 };
 

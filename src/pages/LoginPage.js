@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { actionCreators as userActions } from "../redux/modules/user";
 
-import { Button, Grid, Text, Input, Image } from "../elements/index";
+import { Button1, Grid, Text, Input, Image } from "../elements/index";
 import Navbar from "../components/Navbar";
 
 const LoginPage = () => {
@@ -66,7 +66,7 @@ const LoginPage = () => {
           </Grid>
 
           <Grid height="12%" is_flex>
-            <Button
+            <Button1
               width="50%"
               margin="8px"
               bg="#FF9F57"
@@ -77,8 +77,8 @@ const LoginPage = () => {
               }}
             >
               로그인
-            </Button>
-            <Button
+            </Button1>
+            <Button1
               width="50%"
               margin="8px"
               bg="#ffffff"
@@ -88,7 +88,7 @@ const LoginPage = () => {
               }}
             >
               회원가입
-            </Button>
+            </Button1>
           </Grid>
         </Grid>
       </Grid>

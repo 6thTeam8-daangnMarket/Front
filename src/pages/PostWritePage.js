@@ -12,7 +12,7 @@ const PostWritePage = () => {
   const cateRef = React.useRef();
   const dispatch = useDispatch();
   const history = useHistory();
-  const userLocation = useSelector(state => state.user?.location);
+  const userLocation = useSelector((state) => state.user?.location);
   const [image, setImage] = React.useState(""); //preview
 
   const [imageUrl, setImageUrl] = React.useState(""); //보내는 image
@@ -79,7 +79,7 @@ const PostWritePage = () => {
         </Button>
         <Text2
           fontSize="22px"
-          lineHeight= "2.5em"
+          lineHeight="2.5em"
           fontWeight="1000"
           style={{ fontFamily: "AppleSDGothicNeoM" }}
         >
@@ -101,22 +101,27 @@ const PostWritePage = () => {
       <Hr />
       <PostBody>
         {/* FormData */}
-        <form id="postForm" name="postForm" style={{height: "100%"}}>
+        <form id="postForm" name="postForm" style={{ height: "100%" }}>
           <ImageUpload>
             {/* 이미지 업로드 */}
-            <label htmlFor="image"><img src={process.env.PUBLIC_URL + "/다운로드.png"} style={{width:"100px", height:"100px", margin:"10px"}}/></label>
+            <label htmlFor="image">
+              <img
+                src={process.env.PUBLIC_URL + "/다운로드.png"}
+                style={{ width: "100px", height: "100px", margin: "10px" }}
+              />
+            </label>
             <input
               id="image"
               name="image"
               type="file"
-              style={{display:"none"}}
+              style={{ display: "none" }}
               onChange={(e) => {
                 changeImageUrl(e);
                 encodeFileToBase64(e.target.files[0]);
               }}
             />
             {/* 미리보기 */}
-            <div style={{ width: "100px", height: "100px", margin:"10px"}}>
+            <div style={{ width: "100px", height: "100px", margin: "10px" }}>
               {image && (
                 <img
                   src={image}
@@ -144,36 +149,39 @@ const PostWritePage = () => {
                 boxSizing: "border-box",
                 border: "1px solid #FAFAFA",
                 padding: "15px",
-              }}    
+              }}
               onChange={changeTitle}
             />
           </DetailWrap>
           {/* 카테고리 설정 */}
           <DetailWrap>
-            <select name="category" id="category" 
-            style={{
-              padding: "0 10px",
-              marginRight: "10px",
-              width: "96%",
-              height: "100%",
-              border: "1px solid #FAFAFA",
-              fontSize: "1em",
-            }}
-            onChange={changeCategory}>
+            <select
+              name="category"
+              id="category"
+              style={{
+                padding: "0 10px",
+                marginRight: "10px",
+                width: "96%",
+                height: "100%",
+                border: "1px solid #FAFAFA",
+                fontSize: "1em",
+              }}
+              onChange={changeCategory}
+            >
               <option value="none">카테고리 선택</option>
               <option value="디지털기기">디지털기기</option>
               <option value="생활가전">생활가전</option>
-              <option value="가구/인테리어">가구/인테리어</option>
+              <option value="가구&인테리어">가구/인테리어</option>
               <option value="유아동">유아동</option>
-              <option value="생활/가공식품">생활/가공식품</option>
+              <option value="생활&가공식품">생활/가공식품</option>
               <option value="유아도서">유아도서</option>
               <option value="스포츠/레저">스포츠/레저</option>
               <option value="여성패션">여성패션/잡화</option>
               <option value="남성패션">남성패션/잡화</option>
-              <option value="게임/취미">게임/취미</option>
-              <option value="뷰티/미용">뷰티/미용</option>
+              <option value="게임&취미">게임/취미</option>
+              <option value="뷰티&미용">뷰티/미용</option>
               <option value="반려동물용품">반려동물용품</option>
-              <option value="도서/티켓/음반">도서/티켓/음반</option>
+              <option value="도서&티켓&음반">도서/티켓/음반</option>
               <option value="기타">기타 중고물품</option>
               <option value="삽니다">삽니다</option>
             </select>
@@ -188,7 +196,7 @@ const PostWritePage = () => {
               type="number"
               placeholder="가격 (선택사항)"
               style={{
-                height:"100%",
+                height: "100%",
                 border: "1px solid #FAFAFA",
                 fontSize: "1em",
                 boxSizing: "border-box",
@@ -196,14 +204,15 @@ const PostWritePage = () => {
               onChange={changePrice}
             />
             <label htmlFor="price" />
-            <div style={{ 
-              float: "right",
+            <div
+              style={{
                 float: "right",
                 display: "flex",
                 height: "100%",
                 alignItems: "center",
                 marginRight: "10px",
-                }}>
+              }}
+            >
               {/* 가격 제안받기 */}
               <input
                 name="priceOffer"
@@ -211,7 +220,7 @@ const PostWritePage = () => {
                 type="checkbox"
                 value="priceOffer"
                 disabled
-                style={{marginRight: "7px"}}
+                style={{ marginRight: "7px" }}
               />
               <label htmlFor="priceOffer">가격 제안받기</label>
             </div>
@@ -224,7 +233,14 @@ const PostWritePage = () => {
               id="content"
               className="content"
               rows="10"
-              style={{ height: "98%", border: "1px solid #FAFAFA",fontSize: "20px", width: "100%", boxSizing: "border-box", padding:"10px"}}
+              style={{
+                height: "98%",
+                border: "1px solid #FAFAFA",
+                fontSize: "20px",
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "10px",
+              }}
               placeholder={`${userLocation}의 게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)`}
               onChange={changeContent}
             ></textarea>
@@ -267,7 +283,6 @@ const ImageUpload = styled.div`
   height: 20%;
   width: 100%;
   display: flex;
-
 `;
 const DetailWrap = styled.div`
   width: 100%;

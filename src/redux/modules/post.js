@@ -369,7 +369,7 @@ const deletePost = (postId) => {
       })
       .then((response) => {
         window.alert("게시글 삭제를 성공하였습니다.");
-        history.replace("/main");
+        window.location.replace("/main");
       })
       .catch((err) => {
         console.log(err);
