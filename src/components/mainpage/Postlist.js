@@ -26,7 +26,7 @@ const Postlist = (props) => {
 
   return (
     <React.Fragment>
-      <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
+      <Grid bg="white" height="80%" fixed top="8%" padding="0px 16px" scroll>
         {post_list.map((p) => {
           if (p.like === false) {
             return (

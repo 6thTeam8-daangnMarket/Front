@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 // import styled from "styled-components";
 
-import { Button, Grid, Text, Input, Image } from "../elements/index";
+import { Button1, Grid, Text, Input, Image } from "../elements/index";
 import Navbar from "../components/Navbar";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { api } from "../shared/api";
 
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -53,13 +52,11 @@ const SignUpPage = () => {
         console.log(res.data.status);
         if (res.data.status === "OK") {
           window.alert("사용할 수 있는 닉네임 입니다.");
-        } else {
-          window.alert("사용할 수 없는 닉네임 입니다.");
         }
       })
       .catch((err) => {
         console.log(err);
-        window.alert("오류가 확인되었습니다. 다시 시도해주세요.");
+        window.alert("사용할 수 없는 닉네임 입니다.");
       });
   };
 
@@ -121,7 +118,7 @@ const SignUpPage = () => {
               setId(e.target.value);
             }}
           />
-          <Button
+          <Button1
             width="40%"
             margin="0 1%"
             bg="#FF9F57"
@@ -129,7 +126,7 @@ const SignUpPage = () => {
             _onClick={() => idCheck(id)}
           >
             아이디 중복 체크
-          </Button>
+          </Button1>
         </Grid>
         <Grid height="10%">
           <Input
@@ -140,7 +137,7 @@ const SignUpPage = () => {
               setNickName(e.target.value);
             }}
           />
-          <Button
+          <Button1
             width="40%"
             margin="0 1%"
             bg="#FF9F57"
@@ -148,7 +145,7 @@ const SignUpPage = () => {
             _onClick={() => nickNameCheck(id)}
           >
             닉네임 중복 체크
-          </Button>
+          </Button1>
         </Grid>
         <Grid height="10%" is_flex>
           <Input
@@ -196,7 +193,7 @@ const SignUpPage = () => {
           </FormControl>
         </Grid>
         <Grid height="10%" is_flex>
-          <Button
+          <Button1
             width="100%"
             margin="8px"
             _onClick={signUp}
@@ -204,7 +201,7 @@ const SignUpPage = () => {
             color="#ffffff"
           >
             회원가입
-          </Button>
+          </Button1>
         </Grid>
       </Grid>
     </Grid>

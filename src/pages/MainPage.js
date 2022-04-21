@@ -2,12 +2,16 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Text, Grid } from "../elements/index";
+import { Button1, Text, Grid } from "../elements/index";
 
 import Navbar from "../components/Navbar";
 import Postlist from "../components/mainpage/Postlist";
 import Permit from "../components/mainpage/Permit";
 import BottomNavbar from "../components/BottomNavbar";
+import Fab from "@mui/material/Fab";
+
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -40,7 +44,7 @@ const MainPage = () => {
             <div>
               <IconButton
                 onClick={() => {
-                  history.push("/search");
+                  window.location.replace("/search");
                 }}
               >
                 <SearchOutlinedIcon />
@@ -58,16 +62,23 @@ const MainPage = () => {
             </div>
           </Navbar>
           <Postlist></Postlist>
-          <Permit>
-            <Button
-              is_float
-              bg="#FF9F57"
-              text="+"
-              _onClick={() => {
-                history.push("/post/write");
-              }}
-            ></Button>
-          </Permit>
+
+          <Fab
+            style={{
+              backgroundColor: "#FF9F57",
+              color: "white",
+              position: "fixed",
+              bottom: "13%",
+              right: "4%",
+            }}
+            onClick={() => {
+              history.push("/post/write");
+            }}
+            aria-label="add"
+          >
+            <AddIcon />
+          </Fab>
+
           <BottomNavbar></BottomNavbar>
         </Grid>
       </React.Fragment>

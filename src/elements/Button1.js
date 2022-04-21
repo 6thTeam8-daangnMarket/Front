@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = (props) => {
+const Button1 = (props) => {
   const {
     width,
     height,
@@ -53,7 +53,7 @@ const Button = (props) => {
   );
 };
 
-Button.defaultProps = {
+Button1.defaultProps = {
   display: "inline-block",
   margin: false,
   padding: "16px 16px",
@@ -98,7 +98,7 @@ const FloatButton = styled.button`
 
   //버튼 위치
   position: fixed;
-  bottom: 9%;
+  bottom: 13%;
   right: 25px;
 
   //+ 위치
@@ -110,4 +110,4 @@ const FloatButton = styled.button`
   border-radius: 50px;
 `;
 
-export default Button;
+export default Button1;

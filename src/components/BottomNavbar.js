@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router";
-
-import { actionCreators as userActions } from "../redux/modules/user";
+import React from "react";
+import { useHistory } from "react-router";
 
 import { Grid, Text } from "../elements/index";
 import styled from "styled-components";
@@ -16,14 +13,10 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 const BottomNavbar = (props) => {
-  const history = useHistory();
-
-  const { children } = props;
-
   return (
     <React.Fragment>
       <Grid
-        height="8%"
+        height="11%"
         fixed
         bottom="0px"
         bg="white"
