@@ -21,12 +21,12 @@
 ### API
 https://www.notion.so/85b03e707f684808be06c01b124f6816?v=61637e0b11ed49878255ce264f12e69d
 
-#### Front End 구성원 별 기능 담당
+### Front End 구성원 별 기능 담당
 
 👩노현정: 게시물 작성, 특정상품 조회, 수정, 삭제, 좋아요 및 장바구니 담기
 👱‍♂️이춘: 메인페이지 게시글 불러오기, 검색어 및 카테고리 검색기능, 장바구니 불러오기, 회원가입, 로그인, 로그아웃, 소셜 로그인
 
-##### Pages
+#### Pages
 
 1. App.js
 2. 로그인(Login) 
@@ -41,7 +41,7 @@ https://www.notion.so/85b03e707f684808be06c01b124f6816?v=61637e0b11ed49878255ce2
 11. 카테고리(CategoryPage)
 12. 카테고리 결과 페이지(CategoryResultPage)
 
-##### Component
+#### Component
 
 1. Bottom Nav_bar
 2. Nav_bar
@@ -55,21 +55,24 @@ https://www.notion.so/85b03e707f684808be06c01b124f6816?v=61637e0b11ed49878255ce2
 10. 모달 (Modal - 수정/삭제)
 11. 
 
-##### Redux
+#### Redux
 
 1. Store
 2. user
 3. post
 
-##### common
+#### common
 
 1. api(axios)
 3. App.css
 
-## 사용 기술
+### 사용 기술
 
 - View : **`React with JavaScript`, `React-Router`, `material-UI`, `Styled-components`**
 - State Management : **`Redux`, `Redux-Thunk`, `Immer`, `Redux-actions`**
 - Build Tool : **`Create React App`**
 - Infrastructure **`AWS S3`**
 - Other Tools : **`Git`, `Github`, `notion`**
+
+## TroubleShooting
+작성중
