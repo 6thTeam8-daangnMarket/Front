@@ -21,7 +21,8 @@ const PostDetailPage = (props) => {
   const postId = parseInt(params.postId);
   const userId = useSelector((state) => state.user.userId);
   const response = useSelector((state) => state.post?.post);
-
+  const postLike = useSelector((state) => state.post.post);
+  console.log(postLike);
   const [like, setLike] = React.useState(false);
   const toggleLike = () => {
     if (like === false) {
@@ -174,7 +175,7 @@ const PostDetailPage = (props) => {
         </LikedWrap>
         <LikesNPriceWrap>
           {/* 게시글을 불러올 때 해당 회원이 해당 게시물 좋아요를 눌렀었는지여부 */}
-          <Like like={like} onClick={toggleLike} {...props} />
+          <Like like={response.like} onClick={toggleLike} {...props} />
           <Text2
             lineHeight="2.5em"
             fontFamily="AppleSDGothicNeoB"

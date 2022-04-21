@@ -66,8 +66,8 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 //무한스크롤 위해서 인자로 보내야할 값 넣어야 함
 const getPost = (page) => {
   return function (dispatch, getState, { history }) {
+    console.log(page);
     dispatch(loading(true));
-
     api //username.보내주기 . 회원아니면 Null
       .get(`/api/posted/${page}`, {
         headers: {
@@ -153,7 +153,13 @@ const getAPost = (postId) => {
   return function (dispatch, getState, { history }) {
     const postID = parseInt(postId);
     api
-      .get(`/api/posts/${postID}`)
+      .get(`/api/posts/${postID}`,{
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      },
+      { withCredentials: true })
       .then((res) => {
         console.log(res.data);
         dispatch(get_a_post(res.data));
@@ -165,48 +171,106 @@ const getAPost = (postId) => {
   };
 };
 
-const getSearch = (keyword) => {
+const getSearch = (keyword, page) => {
   return function (dispatch) {
+    dispatch(loading(true));
     console.log(keyword);
     api
-      .get(`/api/search/${keyword}`)
-      .then((res) => {
-        console.log(res.data);
-        dispatch(get_search_post(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
-const getCategory = (category) => {
-  return function (dispatch, getState, { history }) {
-    api
-      .get(`/api/category/${category}`)
-      .then((res) => {
-        console.log(res.data);
-        dispatch(get_category_post(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
-const getLike = () => {
-  return function (dispatch, getState, { history }) {
-    api
-      .get("/user/mypage/1", {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `${localStorage.getItem("token")}`,
+      .get(
+        `/api/search/${keyword}/${page}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
         },
-      })
+        { withCredentials: true }
+      )
       .then((res) => {
+        console.log(res.data);
+        console.log(res.data.postList);
+        console.log(res.data.postList.length);
+        let has_next = null;
+        if (res.data.postList.length < 10) {
+          has_next = false;
+        } else {
+          has_next = true;
+        }
+        let post_data = {
+          post_list: res.data.postList,
+          page: page + 1,
+          has_next: has_next,
+        };
+        dispatch(get_search_post(post_data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+const getCategory = (category, page) => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    api
+      .get(
+        `/api/category/${category}/${page}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data);
         console.log(res.data.likeposts);
-
-        dispatch(get_like_post(res.data.likeposts));
+        console.log(res.data.likeposts.length);
+        let has_next = null;
+        if (res.data.postList.length < 10) {
+          has_next = false;
+        } else {
+          has_next = true;
+        }
+        let post_data = {
+          post_list: res.data.postList,
+          page: page + 1,
+          has_next: has_next,
+        };
+        dispatch(get_category_post(post_data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+const getLike = (page) => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    api
+      .get(
+        `/user/mypage/${page}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.data.likeposts);
+        console.log(res.data.likeposts.length);
+        let has_next = null;
+        if (res.data.likeposts.length < 10) {
+          has_next = false;
+        } else {
+          has_next = true;
+        }
+        let post_data = {
+          post_list: res.data.likeposts,
+          page: page + 1,
+          has_next: has_next,
+        };
+        dispatch(get_like_post(post_data));
       })
       .catch((err) => {
         console.log(err);
@@ -224,7 +288,7 @@ const addPost = (imageUrl, title, category, content, price) => {
   return async function (dispatch, getState, { history }) {
     try {
       await axios.post(
-        "http://3.38.117.7/api/write",
+        "http://3.36.77.41/api/write",
         formData,
         {
           headers: {
@@ -235,7 +299,7 @@ const addPost = (imageUrl, title, category, content, price) => {
         { withCredentials: true }
       );
       window.alert("게시글 작성을 성공하였습니다.");
-      history.replace("/main");
+      window.location.replace('/main');
     } catch (err) {
       window.alert("게시글 작성에 실패하였습니다.");
       console.log(err);
@@ -244,8 +308,10 @@ const addPost = (imageUrl, title, category, content, price) => {
   };
 };
 
-const updatePost = (imageUrl, title, category, content, price, postId) => {
+const updatePost = (imageUrl, title, content, price, category, postId) => {
   const postID = parseInt(postId);
+  console.log(imageUrl, title, content, price, category, postId);
+  
   const formData = new FormData();
   formData.append("postTitle", title);
   formData.append("category", category);
@@ -254,8 +320,8 @@ const updatePost = (imageUrl, title, category, content, price, postId) => {
   formData.append("imageUrl", imageUrl);
   return async function (dispatch, getState, { history }) {
     try {
-      await axios.post(
-        `http://3.38.117.7/api/posts/${postID}`,
+      await axios.put(
+        `http://3.36.77.41/api/posts/${postID}`,
         formData,
         {
           headers: {
@@ -266,7 +332,7 @@ const updatePost = (imageUrl, title, category, content, price, postId) => {
         { withCredentials: true }
       );
       window.alert("게시글 수정을 성공하였습니다.");
-      history.replace("/");
+      window.location.replace('/main');
     } catch (err) {
       window.alert("게시글 수정에 실패하였습니다.");
       console.log(err);
@@ -274,9 +340,6 @@ const updatePost = (imageUrl, title, category, content, price, postId) => {
     }
   };
 }
-
-
-
 
 const deletePost = (postId) => {
   const postID = parseInt(postId);
@@ -315,9 +378,13 @@ const changeLikeCnt = (postId) => {
         }
       )
       .then((res) => {
-        console.log(res);
-
-        window.alert("관심상품으로 등륵되었습니다.");
+        if(res.data.result === true ){
+          window.alert("관심상품으로 등륵되었습니다.");
+        }else {
+          window.alert("관심상품을 취소하였습니다.");
+        }
+     
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -340,54 +407,64 @@ export default handleActions(
         draft.has_next = action.payload.post_data.has_next;
         draft.is_loading = false;
       }),
-      [GET_FIRST_POSTLIST]: (state,action) => produce(state, (draft) => {
+    [GET_FIRST_POSTLIST]: (state, action) =>
+      produce(state, (draft) => {
         console.log(action.payload);
         draft.post_list = action.payload.postList;
         draft.paging.lastPage = action.payload.paging.lastPage;
-        draft.is_loading = false;// 로딩이 다되었으니까 false로 바꿔줘 다시
+        draft.is_loading = false; // 로딩이 다되었으니까 false로 바꿔줘 다시
       }),
-      [GET_NEXT_POSTLIST]: (state,action) => produce(state, (draft) => {
+    [GET_NEXT_POSTLIST]: (state, action) =>
+      produce(state, (draft) => {
         console.log(action.payload);
         draft.post_list.push(...action.payload.postList);
         draft.paging = action.payload.paging;
-        draft.is_loading = false;// 로딩이 다되었으니까 false로 바꿔줘 다시
+        draft.is_loading = false; // 로딩이 다되었으니까 false로 바꿔줘 다시
       }),
     [GET_A_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post = action.payload.post;
         console.log(action.payload.post);
       }),
-
     [CHANGE_LIKE_COUNT]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
         draft.post_liked = action.payload.result;
       }),
-        [UPDATE_POST]: (state, action) => produce(state, (draft) => {
-          console.log(action.payload.post);
-          draft.post_list.post.map((x) => {
-              if (x.postId === action.payload.post.postId) {
-               x.post = action.payload.post;
-              }
-          })
-        }),
+    [UPDATE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.post);
+        draft.post_list.post.map((x) => {
+          if (x.postId === action.payload.post.postId) {
+            x.post = action.payload.post;
+          }
+        });
+      }),
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post_list.filter(!action.payload.post);
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.search_list = action.payload.posts;
+        draft.search_list.push(...action.payload.posts.post_list);
+        draft.page = action.payload.posts.page;
+        draft.has_next = action.payload.posts.has_next;
+        draft.is_loading = false;
       }),
     [GET_CATEGORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.category_list = action.payload.posts;
+        draft.category_list.push(...action.payload.posts.post_list);
+        draft.page = action.payload.posts.page;
+        draft.has_next = action.payload.posts.has_next;
+        draft.is_loading = false;
       }),
     [GET_LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.like_list = action.payload.posts;
+        draft.like_list.push(...action.payload.posts.post_list);
+        draft.page = action.payload.posts.page;
+        draft.has_next = action.payload.posts.has_next;
+        draft.is_loading = false;
       }),
-
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;

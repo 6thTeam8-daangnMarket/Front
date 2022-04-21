@@ -78,8 +78,9 @@ const PostWritePage = () => {
           x
         </Button>
         <Text2
-          fontSize="25px"
+          fontSize="22px"
           lineHeight= "2.5em"
+          fontWeight="1000"
           style={{ fontFamily: "AppleSDGothicNeoM" }}
         >
           중고거래 글쓰기
@@ -248,7 +249,7 @@ const PostWrite = styled.div`
 `;
 const PostHeader = styled.div`
   width: 100%;
-  height: 10%;
+  height: 8%;
   text-align: center;
   display: flex;
   align-items: end;
@@ -278,7 +279,7 @@ const ContentsWrap = styled.div`
 `;
 const PostFooter = styled.div`
   width: 100%;
-  height: 10%;
+  height: 12%;
   padding-top: 10px;
   padding-left: 10px;
   background-color: #fafafa;

@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Navbar from "../components/Navbar";
 import LikeList from "../components/mypage/LikeList";
 import BottomNavbar from "../components/BottomNavbar";
-
+import { Button } from "@mui/material";
 import { Text, Grid, Image } from "../elements/index";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const MyPage = () => {
   const dispatch = useDispatch();
-
+  const page = useSelector((state) => state.post?.page);
   React.useEffect(() => {
-    dispatch(postActions.getLike());
+    dispatch(postActions.getLike(1));
   }, []);
 
   return (
@@ -34,6 +34,12 @@ const MyPage = () => {
         </Grid> */}
         <LikeList></LikeList>
         <BottomNavbar></BottomNavbar>
+        <div style={{width:"100%", height: "50px", display:"flex", alignItems:"center", justifyContent:"center"}}>
+          <Button variant="contained" style={{margin:"0 auto", backgroundColor: "#FAFAFA", color: "darkgrey"}}
+          onClick={()=>{
+            dispatch(postActions.getLike(page));
+          }}>더 보기</Button>
+          </div>
       </Grid>
     </React.Fragment>
   );

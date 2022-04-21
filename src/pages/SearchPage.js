@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 import { Input, Button } from "../elements/index";
@@ -17,11 +17,9 @@ import SearchList from "../components/SearchPage/SearchList";
 const SearchPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const page = useSelector((state) => state.post?.page);
   // const [query, setQuery] = useState("");
   const [searchWord, setSearchWord] = React.useState("");
-
-  console.log(searchWord);
 
   const searchWordChange = (e) => {
     setSearchWord(e.target.value);
@@ -32,7 +30,7 @@ const SearchPage = () => {
       window.alert("검색어를 입력해주세요!");
       return;
     }
-    dispatch(postActions.getSearch(searchWord));
+    dispatch(postActions.getSearch(searchWord, page));
   };
 
   return (

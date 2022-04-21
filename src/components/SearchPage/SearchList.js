@@ -1,8 +1,9 @@
 import React from "react";
+import { Button } from "@mui/material";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
+import {actionCreators as postActions} from "../../redux/modules/post";
 import styled from "styled-components";
 import { Image, Grid, Text } from "../../elements/index";
 
@@ -11,10 +12,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const Categories = (props) => {
   const search_list = useSelector((state) => state.post?.search_list);
   const is_login = useSelector((state) => state.user.is_login);
-
+  const dispatch = useDispatch();
+  const page = useSelector((state) => state.post?.page);
   const history = useHistory();
   const searchList = search_list?.postList;
-  console.log("search_list", searchList);
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
   if (!search_list) {
     return <div>대기중...</div>;
@@ -60,6 +61,12 @@ const Categories = (props) => {
             </Grid>
           );
         })}
+        <div style={{width:"100%", height: "50px", display:"flex", alignItems:"center", justifyContent:"center"}}>
+          <Button variant="contained" style={{margin:"0 auto", backgroundColor: "#FAFAFA", color: "darkgrey"}}
+          onClick={()=>{
+            dispatch(postActions.getSearch(page));
+          }}>더 보기</Button>
+        </div>
       </Grid>
     </React.Fragment>
   );

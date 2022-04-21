@@ -43,8 +43,7 @@ const postID = params.postId;
       };
     });
   };
-
-  const changeContent = (e) => {
+ const changeContent = (e) => {
       console.log(e.target.value);
     setContent(e.target.value);
   };
@@ -67,7 +66,7 @@ const postID = params.postId;
       console.log(priceRef.current.value);
       console.log(cateRef.current.value);
     //모든지 ""로 가면 
-      dispatch(PostActions.updatePost(imageUrl, title, category, content, price, postID));
+      dispatch(PostActions.updatePost(imageUrl, titleRef.current.value, contentsRef.current.value, priceRef.current.value, cateRef.current.value, postID));
     
   };
   if(!response){

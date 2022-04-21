@@ -8,11 +8,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { pink } from "@mui/material/colors";
 import { actionCreators as postActions } from "../../redux/modules/post";
 import InfinityScroll from "../../shared/InfinityScroll";
+import { Button } from "@mui/material";
 
 const Postlist = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  
   const post_list = useSelector((state) => state.post?.post_list);
   const page = useSelector((state) => state.post?.page);
   const has_next = useSelector((state) => state.post?.has_next);
@@ -21,9 +22,7 @@ const Postlist = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
 
   React.useEffect(() => {
-    if (post_list.length === 0) {
       dispatch(postActions.getPost(1));
-    }
   }, []);
 
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
@@ -34,20 +33,20 @@ const Postlist = (props) => {
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
-        <InfinityScroll
+        {/* <InfinityScroll
           callNext={() => {
             console.log("next!");
             // dispatch(postActions.getPost(page));
           }}
           has_next={has_next ? true : false}
           is_loading={is_loading}
-        >
+        > */}
           {post_list.map((p) => {
             if (p.like === false) {
               return (
                 <Grid
                   key={p.postId}
-                  height="21%"
+                  height="20%"
                   _onClick={() => {
                     if (!is_login) {
                       window.alert("로그인 후 게시물을 확인할 수 있습니다!");
@@ -83,7 +82,7 @@ const Postlist = (props) => {
               return (
                 <Grid
                   key={p.postId}
-                  height="21%"
+                  height="20%"
                   _onClick={() => {
                     if (!is_login) {
                       window.alert("로그인 후 게시물을 확인할 수 있습니다!");
@@ -122,7 +121,14 @@ const Postlist = (props) => {
               );
             }
           })}
-        </InfinityScroll>
+        {/* </InfinityScroll> */}
+
+        <div style={{width:"100%", height: "50px", display:"flex", alignItems:"center", justifyContent:"center"}}>
+          <Button variant="contained" style={{margin:"0 auto", backgroundColor: "#FAFAFA", color: "darkgrey"}}
+          onClick={()=>{
+            dispatch(postActions.getPost(page));
+          }}>더 보기</Button>
+        </div>
       </Grid>
     </React.Fragment>
   );
