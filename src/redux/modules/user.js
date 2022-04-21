@@ -44,7 +44,7 @@ const signUp = (id, nickName, location, pw, pwCheck) => {
       .then((res) => {
         console.log(res);
         window.alert("회원가입이 완료되었습니다. 로그인해주세요!");
-        history.push("/login");
+        history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +67,7 @@ const logIn = (id, pw) => {
         localStorage.setItem("token", data.headers.authorization);
 
         dispatch(setUser({}));
-        history.push("/");
+        history.push("/main");
       })
       .catch((err) => {
         console.log(err);
@@ -104,26 +104,6 @@ const isLogin = (Token) => {
   };
 };
 
-// 4.4.2. 마이페이지_내가 쓴 글 불러오기
-// export const mylikeAPI = () => {
-//   const token = localStorage.getItem("token");
-
-//   return function (dispatch, getState, { history }) {
-//     api
-//       .get(`/mypage/mypost`, {
-//         headers: {
-//           Authorization: `${token}`,
-//         },
-//       })
-//       .then((res) => {
-//         dispatch(setPost(res.data));
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-// };
-
 // 5. 로그아웃
 const logout = () => {
   return function (dispatch, getState, { history }) {
@@ -134,17 +114,6 @@ const logout = () => {
   };
 };
 
-// //좋아요 및 관심상품 담기
-// const addCart = () => {
-//   return function (dispatch, getState, { history }){
-//     return null;
-//   }
-// }
-// const deleteCart = () => {
-//   return function (dispatch, getState, { history }){
-//     return null;
-//   }
-// }
 // 5. reducer
 export default handleActions(
   {

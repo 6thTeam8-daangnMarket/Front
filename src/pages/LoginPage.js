@@ -38,7 +38,7 @@ const LoginPage = () => {
           margin="8px 0 0 0"
           center
         >
-          <Text size="32px" bold margin="0px 0px 16px 0px">
+          <Text size="200%" bold margin="0px 0px 16px 0px">
             로그인
           </Text>
           <Grid height="12%" is_flex>
@@ -89,18 +89,6 @@ const LoginPage = () => {
             >
               회원가입
             </Button>
-          </Grid>
-          <Grid height="4%" center padding="40px 8px">
-            <a
-              id="custom-login-btn"
-              href="https://kauth.kakao.com/oauth/authorize?client_id=d358b23f54bf03b7bc1822b251d45da7&redirect_uri=http://3.38.117.7/user/kakao/callback&response_type=code"
-            >
-              <img
-                src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-                width="90%"
-                alt="카카오 로그인 버튼"
-              />
-            </a>
           </Grid>
         </Grid>
       </Grid>

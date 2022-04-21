@@ -18,7 +18,6 @@ const GET_CATEGORY_POST = "GET_CATEGORY_POST";
 const GET_LIKE_POST = "GET_LIKE_POST";
 
 const CHANGE_LIKE_COUNT = "CHANGE_LIKE_COUNT";
-
 const LOADING = "LOADING";
 
 //reducer이 사용할 initialState
@@ -34,6 +33,9 @@ const initialState = {
   search_list: [],
   category_list: [],
   like_list: [],
+  page: 1,
+  has_next: null,
+  is_loading: false,
 };
 // 게시글 하나에 대한 default initial 값
 const initialPost = {
@@ -46,9 +48,10 @@ const initialPost = {
 };
 //actionCreators
 const add_post = createAction(ADD_POST, (post) => ({ post }));
-const get_post = createAction(GET_POST, (posts) => ({ posts }));
 const get_first_postlist = createAction(GET_FIRST_POSTLIST, (posts) => ({ posts }));
 const get_next_postlist = createAction(GET_NEXT_POSTLIST, (posts) => ({ posts }));
+
+const get_post = createAction(GET_POST, (post_data) => ({ post_data }));
 const get_a_post = createAction(GET_A_POST, (post) => ({ post }));
 const delete_post = createAction(DELETE_POST, () => ({}));
 const update_post = createAction(UPDATE_POST, (post) => ({ post }));
@@ -58,24 +61,36 @@ const get_category_post = createAction(GET_CATEGORY_POST, (posts) => ({
 }));
 const get_like_post = createAction(GET_LIKE_POST, (posts) => ({ posts }));
 const change_like_count = createAction(CHANGE_LIKE_COUNT, (like) => ({ like }));
-
-const loading = createAction(LOADING, (is_loading)=>({is_loading}));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 //무한스크롤 위해서 인자로 보내야할 값 넣어야 함
-const getPost = () => {
+const getPost = (page) => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
+
     api //username.보내주기 . 회원아니면 Null
-      .get(`/api/posted/1`,{
+      .get(`/api/posted/${page}`, {
         headers: {
-          "content-type": "application/json;charset=UTF-8",
           Authorization: `${localStorage.getItem("token")}`,
         },
       },
       { withCredentials: true })
       .then((res) => {
         console.log(res.data);
-        dispatch(get_post(res.data));
+        console.log(res.data.postList);
+        console.log(res.data.postList.length);
+        let has_next = null;
+        if (res.data.postList.length < 10) {
+          has_next = false;
+        } else {
+          has_next = true;
+        }
+        let post_data = {
+          post_list: res.data.postList,
+          page: page + 1,
+          has_next: has_next,
+        };
+        dispatch(get_post(post_data));
       })
       .catch((err) => {
         console.log(err);
@@ -151,10 +166,12 @@ const getAPost = (postId) => {
 };
 
 const getSearch = (keyword) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch) {
+    console.log(keyword);
     api
       .get(`/api/search/${keyword}`)
       .then((res) => {
+        console.log(res.data);
         dispatch(get_search_post(res.data));
       })
       .catch((err) => {
@@ -168,6 +185,7 @@ const getCategory = (category) => {
     api
       .get(`/api/category/${category}`)
       .then((res) => {
+        console.log(res.data);
         dispatch(get_category_post(res.data));
       })
       .catch((err) => {
@@ -179,9 +197,16 @@ const getCategory = (category) => {
 const getLike = () => {
   return function (dispatch, getState, { history }) {
     api
-      .get("/user/myPage")
+      .get("/user/mypage/1", {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      })
       .then((res) => {
-        dispatch(get_like_post(res.data));
+        console.log(res.data.likeposts);
+
+        dispatch(get_like_post(res.data.likeposts));
       })
       .catch((err) => {
         console.log(err);
@@ -210,7 +235,7 @@ const addPost = (imageUrl, title, category, content, price) => {
         { withCredentials: true }
       );
       window.alert("게시글 작성을 성공하였습니다.");
-      history.replace("/");
+      history.replace("/main");
     } catch (err) {
       window.alert("게시글 작성에 실패하였습니다.");
       console.log(err);
@@ -265,7 +290,7 @@ const deletePost = (postId) => {
       })
       .then((response) => {
         window.alert("게시글 삭제를 성공하였습니다.");
-        history.replace("/");
+        history.replace("/main");
       })
       .catch((err) => {
         console.log(err);
@@ -278,13 +303,20 @@ const changeLikeCnt = (postId) => {
   const postID = parseInt(postId);
   return function (dispatch, getState, { history }) {
     api
-      .post(`/api/posts/${postID}/like`, {}, {
-        headers: {
-          "content-type": "application/json;charset=UTF-8",
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      })
-      .then((response) => {
+
+      .post(
+        `/api/posts/${postID}/like`,
+        {},
+        {
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+
         window.alert("관심상품으로 등륵되었습니다.");
       })
       .catch((err) => {
@@ -303,7 +335,10 @@ export default handleActions(
       }),
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.post_list = action.payload.posts;
+        draft.post_list.push(...action.payload.post_data.post_list);
+        draft.page = action.payload.post_data.page;
+        draft.has_next = action.payload.post_data.has_next;
+        draft.is_loading = false;
       }),
       [GET_FIRST_POSTLIST]: (state,action) => produce(state, (draft) => {
         console.log(action.payload);
@@ -352,9 +387,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.like_list = action.payload.posts;
       }),
-      [LOADING]: (state, action) => produce (state, (draft) => {
+
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
-      })
+      }),
   },
   initialState
 );

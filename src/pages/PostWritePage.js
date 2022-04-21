@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import Text2 from "../elements/Text2";
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as PostActions } from "../redux/modules/post";
@@ -73,7 +73,7 @@ const PostWritePage = () => {
             fontWeight: "300",
             lineHeight: "2",
           }}
-          onClick={() => history.push("/")}
+          onClick={() => history.push("/main")}
         >
           x
         </Button>
@@ -231,10 +231,13 @@ const PostWritePage = () => {
         </form>
       </PostBody>
       <PostFooter>
-        <Button variant="text" style={{color: "grey", fontSize:"1em"}}> 
-        <CommentOutlinedIcon style={{marginRight: "5px"}} /> 자주 쓰는 문구 </Button>
-        <Button variant="text" style={{color: "grey", fontSize:"1em"}}> 
-        <LocationOnOutlinedIcon style={{marginRight: "5px"}} /> 보여줄 동네 설정 </Button>
+        <Button variant="text" style={{ color: "grey", fontSize: "1em" }}>
+          <CommentOutlinedIcon style={{ marginRight: "5px" }} /> 자주 쓰는 문구{" "}
+        </Button>
+        <Button variant="text" style={{ color: "grey", fontSize: "1em" }}>
+          <LocationOnOutlinedIcon style={{ marginRight: "5px" }} /> 보여줄 동네
+          설정{" "}
+        </Button>
       </PostFooter>
     </PostWrite>
   );
@@ -257,7 +260,7 @@ const PostBody = styled.div`
   font-size: 20px;
 `;
 const Hr = styled.hr`
-  color: #F5F5F5;
+  color: #f5f5f5;
 `;
 const ImageUpload = styled.div`
   height: 20%;
@@ -278,6 +281,6 @@ const PostFooter = styled.div`
   height: 10%;
   padding-top: 10px;
   padding-left: 10px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 `;
 export default PostWritePage;

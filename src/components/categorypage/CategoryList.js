@@ -13,17 +13,17 @@ const Categories = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
 
   const history = useHistory();
-  const categoryList = category_list?.postList;
-  console.log("category_list", categoryList);
+  console.log("category_list", category_list);
 
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
-  if (!categoryList) {
+  if (!category_list) {
     return <div>대기중</div>;
   }
+
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
-        {categoryList.map((p) => {
+        {category_list.map((p) => {
           return (
             <Grid
               key={p.postId}

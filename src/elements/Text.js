@@ -19,7 +19,7 @@ Text.defaultProps = {
   children: null,
   bold: false,
   font: "AppleSDGothicNeoB",
-  size: "14px",
+  size: "1em",
   color: "#222831",
   margin: false,
   padding: false,

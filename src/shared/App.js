@@ -33,9 +33,9 @@ function App() {
   return (
     <>
       <ConnectedRouter history={history}>
-        <Route path="/" exact component={MainPage} />
+        <Route path="/main" exact component={MainPage} />
         <Route path="/mypage" exact component={MyPage} />
-        <Route path="/login" exact component={LoginPage} />
+        <Route path="/" exact component={LoginPage} />
         <Route path="/post/detail/:postId" exact component={PostDetailPage} />
         <Route path="/post/write" exact component={PostWritePage} />
         <Route path="/post/edit/:postId" exact component={PostUpdatePage}/>

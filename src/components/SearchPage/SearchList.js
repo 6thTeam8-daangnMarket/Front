@@ -16,13 +16,13 @@ const Categories = (props) => {
   const searchList = search_list?.postList;
   console.log("search_list", searchList);
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
-  if (!searchList) {
+  if (!search_list) {
     return <div>대기중...</div>;
   }
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
-        {searchList.map((p) => {
+        {search_list.map((p) => {
           return (
             <Grid
               key={p.postId}
