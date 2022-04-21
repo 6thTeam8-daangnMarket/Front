@@ -55,7 +55,6 @@ https://www.notion.so/85b03e707f684808be06c01b124f6816?v=61637e0b11ed49878255ce2
 8. 검색 리스트 (SearchList)
 9. 좋아요 설정 (Like)
 10. 모달 (Modal - 수정/삭제)
-11. 
 
 #### Redux
 
