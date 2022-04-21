@@ -22,25 +22,8 @@ const CategoryResultPage = (props) => {
   console.log(typeof category);
 
   React.useEffect(() => {
-    dispatch(postActions.getCategory(category));
+    dispatch(postActions.getCategory(category, 1));
   }, []);
-
-  // React.useEffect(() => {
-  //   const categoryLoad = async () => {
-  //     setLoading(true);
-  //     try {
-  //       console.log("category :", category);
-  //       const response = await api.get("/api/category", {
-  //         params: { category: `${category}` },
-  //       });
-  //       dispatch(postActions.set_post(response));
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   categoryLoad().then((r) => console.log("OK"));
-  // }, [category]);
 
   return (
     <Grid bg="#CCC">
@@ -58,7 +41,7 @@ const CategoryResultPage = (props) => {
             fontSize: "1.7em",
             lineHeight: "0.5",
           }}
-          onClick={() => history.push("/category")}
+          onClick={() => window.location.replace("/category")}
         ></ArrowBackIosIcon>
       </Navbar>
       <CategoryList></CategoryList>

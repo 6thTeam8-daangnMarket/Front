@@ -18,7 +18,6 @@ const SearchPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const page = useSelector((state) => state.post?.page);
-  // const [query, setQuery] = useState("");
   const [searchWord, setSearchWord] = React.useState("");
 
   const searchWordChange = (e) => {
@@ -46,7 +45,7 @@ const SearchPage = () => {
             fontSize: "170%",
             lineHeight: "0.5",
           }}
-          onClick={() => history.goBack()}
+          onClick={() => window.location.replace("/main")}
         ></ArrowBackIosIcon>
 
         <Input

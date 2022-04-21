@@ -29,10 +29,6 @@ const MainPage = () => {
   const userLocation = useSelector((state) => state.user?.location);
   const is_login = useSelector((state) => state.user.is_login);
 
-  // React.useEffect(() => {
-  //   dispatch(postActions.getPost());
-  // }, []);
-
   if (is_login) {
     return (
       <React.Fragment>
@@ -77,45 +73,6 @@ const MainPage = () => {
       </React.Fragment>
     );
   }
-
-  // if (!is_login) {
-  //   return (
-  //     <React.Fragment>
-  //       <Grid bg="#CCC">
-  //         <Navbar>
-  //           <Text bold size="20px" padding="0 0 0 10px">
-  //             {userLocation}
-  //           </Text>
-  //           <div>
-  //             <IconButton
-  //               onClick={() => {
-  //                 history.push("/search");
-  //               }}
-  //             >
-  //               <SearchOutlinedIcon />
-  //             </IconButton>
-  //             <IconButton
-  //               onClick={() => {
-  //                 history.push("/category");
-  //               }}
-  //             >
-  //               <MenuOutlinedIcon />
-  //             </IconButton>
-  //             <IconButton
-  //               onClick={() => {
-  //                 history.push("/login");
-  //               }}
-  //             >
-  //               <LoginTwoToneIcon />
-  //             </IconButton>
-  //           </div>
-  //         </Navbar>
-  //         <Postlist></Postlist>
-  //         <BottomNavbar></BottomNavbar>
-  //       </Grid>
-  //     </React.Fragment>
-  //   );
-  // }
 };
 
 export default MainPage;

@@ -25,8 +25,8 @@ const initialState = {
   post_list: [],
   paging: {
     start: null,
-    next: null, 
-    lastPage: false
+    next: null,
+    lastPage: false,
   },
   is_loading: false,
   post: null,
@@ -48,8 +48,12 @@ const initialPost = {
 };
 //actionCreators
 const add_post = createAction(ADD_POST, (post) => ({ post }));
-const get_first_postlist = createAction(GET_FIRST_POSTLIST, (posts) => ({ posts }));
-const get_next_postlist = createAction(GET_NEXT_POSTLIST, (posts) => ({ posts }));
+const get_first_postlist = createAction(GET_FIRST_POSTLIST, (posts) => ({
+  posts,
+}));
+const get_next_postlist = createAction(GET_NEXT_POSTLIST, (posts) => ({
+  posts,
+}));
 
 const get_post = createAction(GET_POST, (post_data) => ({ post_data }));
 const get_a_post = createAction(GET_A_POST, (post) => ({ post }));
@@ -69,12 +73,15 @@ const getPost = (page) => {
     console.log(page);
     dispatch(loading(true));
     api //username.보내주기 . 회원아니면 Null
-      .get(`/api/posted/${page}`, {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
+      .get(
+        `/api/posted/${page}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
         },
-      },
-      { withCredentials: true })
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res.data);
         console.log(res.data.postList);
@@ -102,22 +109,25 @@ const getFirstPostList = () => {
     dispatch(loading(true));
     try {
       const response = api //username.보내주기 . 회원아니면 Null
-      .get(`/api/posted/1`,{
-        headers: {
-          "content-type": "application/json;charset=UTF-8",
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      },
-      { withCredentials: true });
-      let paging= {
-        start: 2, 
-        next: 3, 
-        lastPage: (response.data.totalPage === 1 ? true : false),
+        .get(
+          `/api/posted/1`,
+          {
+            headers: {
+              "content-type": "application/json;charset=UTF-8",
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          },
+          { withCredentials: true }
+        );
+      let paging = {
+        start: 2,
+        next: 3,
+        lastPage: response.data.totalPage === 1 ? true : false,
       };
-      if(response.status === 200){
+      if (response.status === 200) {
         dispatch(getFirstPostList(response.data.postList, paging));
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
       return;
     }
@@ -126,24 +136,27 @@ const getFirstPostList = () => {
 const getNextPostList = (page) => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
-    try{ 
+    try {
       const response = api //username.보내주기 . 회원아니면 Null
-      .get(`/api/posted/${page }`,{
-        headers: {
-          "content-type": "application/json;charset=UTF-8",
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      },
-      { withCredentials: true })
-      let paging= {
-        start: page+1, 
-        next: page+2, 
-        lastPage: (response.data.totalPage === page ? true : false),
+        .get(
+          `/api/posted/${page}`,
+          {
+            headers: {
+              "content-type": "application/json;charset=UTF-8",
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          },
+          { withCredentials: true }
+        );
+      let paging = {
+        start: page + 1,
+        next: page + 2,
+        lastPage: response.data.totalPage === page ? true : false,
       };
-      if(response.status === 200){
+      if (response.status === 200) {
         dispatch(getNextPostList(response.data.postList, paging));
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
       return;
     }
@@ -153,13 +166,16 @@ const getAPost = (postId) => {
   return function (dispatch, getState, { history }) {
     const postID = parseInt(postId);
     api
-      .get(`/api/posts/${postID}`,{
-        headers: {
-          "content-type": "application/json;charset=UTF-8",
-          Authorization: `${localStorage.getItem("token")}`,
+      .get(
+        `/api/posts/${postID}`,
+        {
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+            Authorization: `${localStorage.getItem("token")}`,
+          },
         },
-      },
-      { withCredentials: true })
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res.data);
         dispatch(get_a_post(res.data));
@@ -222,8 +238,8 @@ const getCategory = (category, page) => {
       )
       .then((res) => {
         console.log(res.data);
-        console.log(res.data.likeposts);
-        console.log(res.data.likeposts.length);
+        console.log(res.data.postList);
+        console.log(res.data.postList.length);
         let has_next = null;
         if (res.data.postList.length < 10) {
           has_next = false;
@@ -299,7 +315,7 @@ const addPost = (imageUrl, title, category, content, price) => {
         { withCredentials: true }
       );
       window.alert("게시글 작성을 성공하였습니다.");
-      window.location.replace('/main');
+      window.location.replace("/main");
     } catch (err) {
       window.alert("게시글 작성에 실패하였습니다.");
       console.log(err);
@@ -311,7 +327,7 @@ const addPost = (imageUrl, title, category, content, price) => {
 const updatePost = (imageUrl, title, content, price, category, postId) => {
   const postID = parseInt(postId);
   console.log(imageUrl, title, content, price, category, postId);
-  
+
   const formData = new FormData();
   formData.append("postTitle", title);
   formData.append("category", category);
@@ -332,14 +348,14 @@ const updatePost = (imageUrl, title, content, price, category, postId) => {
         { withCredentials: true }
       );
       window.alert("게시글 수정을 성공하였습니다.");
-      window.location.replace('/main');
+      window.location.replace("/main");
     } catch (err) {
       window.alert("게시글 수정에 실패하였습니다.");
       console.log(err);
       return;
     }
   };
-}
+};
 
 const deletePost = (postId) => {
   const postID = parseInt(postId);
@@ -378,12 +394,12 @@ const changeLikeCnt = (postId) => {
         }
       )
       .then((res) => {
-        if(res.data.result === true ){
+        if (res.data.result === true) {
           window.alert("관심상품으로 등륵되었습니다.");
-        }else {
+        } else {
           window.alert("관심상품을 취소하였습니다.");
         }
-     
+
         window.location.reload();
       })
       .catch((err) => {
@@ -402,7 +418,10 @@ export default handleActions(
       }),
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.post_list.push(...action.payload.post_data.post_list);
+        draft.post_list = [
+          ...state.post_list,
+          ...action.payload.post_data.post_list,
+        ];
         draft.page = action.payload.post_data.page;
         draft.has_next = action.payload.post_data.has_next;
         draft.is_loading = false;

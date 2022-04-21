@@ -44,7 +44,7 @@ const CategoryPage = (props) => {
             fontSize: "1.7em",
             lineHeight: "0.5",
           }}
-          onClick={() => history.push("/main")}
+          onClick={() => window.location.replace("/main")}
         ></ArrowBackIosIcon>
         <Text bold size="20px" padding="0 0 0 10px">
           카테고리

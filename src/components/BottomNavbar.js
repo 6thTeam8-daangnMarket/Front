@@ -32,7 +32,7 @@ const BottomNavbar = (props) => {
         space_around
       >
         <Div>
-          <IconButton onClick={() => history.push("/main")}>
+          <IconButton onClick={() => window.location.replace("/main")}>
             <HomeIcon sx={{ fontSize: 30 }}></HomeIcon>
           </IconButton>
           <Text>홈</Text>
@@ -65,7 +65,7 @@ const BottomNavbar = (props) => {
         </Div>
 
         <Div>
-          <IconButton onClick={() => history.push("/mypage")}>
+          <IconButton onClick={() => window.location.replace("/mypage")}>
             <PersonOutlineOutlinedIcon
               sx={{ fontSize: 30 }}
             ></PersonOutlineOutlinedIcon>

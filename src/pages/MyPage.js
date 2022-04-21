@@ -14,7 +14,9 @@ const MyPage = () => {
   const dispatch = useDispatch();
   const page = useSelector((state) => state.post?.page);
   React.useEffect(() => {
-    dispatch(postActions.getLike(1));
+    if (page === 1) {
+      dispatch(postActions.getLike(1));
+    }
   }, []);
 
   return (
@@ -34,12 +36,6 @@ const MyPage = () => {
         </Grid> */}
         <LikeList></LikeList>
         <BottomNavbar></BottomNavbar>
-        <div style={{width:"100%", height: "50px", display:"flex", alignItems:"center", justifyContent:"center"}}>
-          <Button variant="contained" style={{margin:"0 auto", backgroundColor: "#FAFAFA", color: "darkgrey"}}
-          onClick={()=>{
-            dispatch(postActions.getLike(page));
-          }}>더 보기</Button>
-          </div>
       </Grid>
     </React.Fragment>
   );

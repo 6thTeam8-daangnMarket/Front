@@ -48,6 +48,9 @@ const signUp = (id, nickName, location, pw, pwCheck) => {
       })
       .catch((err) => {
         console.log(err);
+        window.alert(
+          "회원가입에 실패했습니다. 비밀번호는 아이디를 포함할 수 없습니다."
+        );
       });
   };
 };

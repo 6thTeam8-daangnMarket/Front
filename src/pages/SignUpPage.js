@@ -28,20 +28,18 @@ const SignUpPage = () => {
   const idCheck = (id) => {
     api
       .post("/user/idCheck", {
-        username: id,
+        userName: id,
       })
       .then((res) => {
         setIdDup(true);
         console.log(res);
         if (res.data.status === "OK") {
           window.alert("사용할 수 있는 ID 입니다.");
-        } else {
-          window.alert("사용할 수 없는 ID 입니다.");
         }
       })
       .catch((err) => {
         console.log(err.response);
-        window.alert("오류가 확인되었습니다. 다시 시도해주세요.");
+        window.alert("사용할 수 없는 ID 입니다.");
       });
   };
 

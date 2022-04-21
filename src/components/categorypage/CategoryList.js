@@ -1,16 +1,21 @@
 import React from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { actionCreators as postActions } from "../../redux/modules/post";
 
 import styled from "styled-components";
 import { Image, Grid, Text } from "../../elements/index";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+import { Button } from "@mui/material";
+
 const Categories = (props) => {
+  const dispatch = useDispatch();
   const category_list = useSelector((state) => state.post?.category_list);
   const is_login = useSelector((state) => state.user.is_login);
+  const page = useSelector((state) => state.post?.page);
 
   const history = useHistory();
   console.log("category_list", category_list);
@@ -61,6 +66,29 @@ const Categories = (props) => {
             </Grid>
           );
         })}
+        <div
+          style={{
+            width: "100%",
+            height: "50px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            style={{
+              margin: "0 auto",
+              backgroundColor: "#FAFAFA",
+              color: "darkgrey",
+            }}
+            onClick={() => {
+              dispatch(postActions.getSearch(page));
+            }}
+          >
+            더 보기
+          </Button>
+        </div>
       </Grid>
     </React.Fragment>
   );
