@@ -1,21 +1,25 @@
-import React from "react";
-
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Image, Grid, Text } from "../../elements/index";
-
+import Scroll from "../../elements/Scroll";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { actionCreators as PostActions } from "../../redux/modules/post";
 
 const Postlist = (props) => {
+  const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post?.post_list);
   const is_login = useSelector((state) => state.user.is_login);
-
+  const is_loading = useSelector((state) => state.post?.is_loading);
+  const paging = useSelector((state) => state.post?.paging);
+  const is_next= paging.lastPage? false: true;
   const history = useHistory();
   const postList = post_list?.postList;
-  console.log(post_list);
-  console.log("post_list", postList);
+
+  useEffect(() => {
+    dispatch(PostActions.getFirstPostList());
+  },[]);
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
   if (!postList) {
     return <div></div>;
@@ -23,6 +27,12 @@ const Postlist = (props) => {
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
+        <Scroll 
+          callNext={() => {
+            dispatch(PostActions.getNextPostList(paging.start));
+            }}
+          is_next={is_next? true: false}
+          loading={is_loading}>
         {postList.map((p) => {
           return (
             <Grid
@@ -61,6 +71,7 @@ const Postlist = (props) => {
             </Grid>
           );
         })}
+        </Scroll>
       </Grid>
     </React.Fragment>
   );

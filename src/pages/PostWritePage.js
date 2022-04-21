@@ -5,14 +5,14 @@ import Text2 from "../elements/Text2";
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as PostActions } from "../redux/modules/post";
 
 const PostWritePage = () => {
   const cateRef = React.useRef();
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const userLocation = useSelector(state => state.user?.location);
   const [image, setImage] = React.useState(""); //preview
 
   const [imageUrl, setImageUrl] = React.useState(""); //보내는 image
@@ -224,7 +224,7 @@ const PostWritePage = () => {
               className="content"
               rows="10"
               style={{ height: "98%", border: "1px solid #FAFAFA",fontSize: "20px", width: "100%", boxSizing: "border-box", padding:"10px"}}
-              placeholder={`${user.location}게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)`}
+              placeholder={`${userLocation}의 게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)`}
               onChange={changeContent}
             ></textarea>
           </ContentsWrap>

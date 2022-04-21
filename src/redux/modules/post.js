@@ -7,6 +7,8 @@ import axios from "axios"; //axios: node.js와 브라우저를 위한 Promise �
 
 //Actions
 const ADD_POST = "ADD_POST";
+const GET_FIRST_POSTLIST = "GET_FIRST_POSTLIST";
+const GET_NEXT_POSTLIST = "GET_NEXT_POSTLIST";
 const GET_POST = "SET_POST";
 const GET_A_POST = "GET_A_POST";
 const UPDATE_POST = "UPDATE_POST";
@@ -17,9 +19,17 @@ const GET_LIKE_POST = "GET_LIKE_POST";
 
 const CHANGE_LIKE_COUNT = "CHANGE_LIKE_COUNT";
 
+const LOADING = "LOADING";
+
 //reducer이 사용할 initialState
 const initialState = {
   post_list: [],
+  paging: {
+    start: null,
+    next: null, 
+    lastPage: false
+  },
+  is_loading: false,
   post: null,
   search_list: [],
   category_list: [],
@@ -37,6 +47,8 @@ const initialPost = {
 //actionCreators
 const add_post = createAction(ADD_POST, (post) => ({ post }));
 const get_post = createAction(GET_POST, (posts) => ({ posts }));
+const get_first_postlist = createAction(GET_FIRST_POSTLIST, (posts) => ({ posts }));
+const get_next_postlist = createAction(GET_NEXT_POSTLIST, (posts) => ({ posts }));
 const get_a_post = createAction(GET_A_POST, (post) => ({ post }));
 const delete_post = createAction(DELETE_POST, () => ({}));
 const update_post = createAction(UPDATE_POST, (post) => ({ post }));
@@ -47,10 +59,12 @@ const get_category_post = createAction(GET_CATEGORY_POST, (posts) => ({
 const get_like_post = createAction(GET_LIKE_POST, (posts) => ({ posts }));
 const change_like_count = createAction(CHANGE_LIKE_COUNT, (like) => ({ like }));
 
+const loading = createAction(LOADING, (is_loading)=>({is_loading}));
+
 //무한스크롤 위해서 인자로 보내야할 값 넣어야 함
 const getPost = () => {
   return function (dispatch, getState, { history }) {
-
+    dispatch(loading(true));
     api //username.보내주기 . 회원아니면 Null
       .get(`/api/posted/1`,{
         headers: {
@@ -68,7 +82,58 @@ const getPost = () => {
       });
   };
 };
-
+const getFirstPostList = () => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    try {
+      const response = api //username.보내주기 . 회원아니면 Null
+      .get(`/api/posted/1`,{
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      },
+      { withCredentials: true });
+      let paging= {
+        start: 2, 
+        next: 3, 
+        lastPage: (response.data.totalPage === 1 ? true : false),
+      };
+      if(response.status === 200){
+        dispatch(getFirstPostList(response.data.postList, paging));
+      }
+    }catch(err){
+      console.log(err);
+      return;
+    }
+  };
+};
+const getNextPostList = (page) => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    try{ 
+      const response = api //username.보내주기 . 회원아니면 Null
+      .get(`/api/posted/${page }`,{
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      },
+      { withCredentials: true })
+      let paging= {
+        start: page+1, 
+        next: page+2, 
+        lastPage: (response.data.totalPage === page ? true : false),
+      };
+      if(response.status === 200){
+        dispatch(getNextPostList(response.data.postList, paging));
+      }
+    }catch(err){
+      console.log(err);
+      return;
+    }
+  };
+};
 const getAPost = (postId) => {
   return function (dispatch, getState, { history }) {
     const postID = parseInt(postId);
@@ -234,11 +299,23 @@ export default handleActions(
   {
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.unshift(action.payload.post);
+        draft.post_list.unshift(action.payload.post);
       }),
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post_list = action.payload.posts;
+      }),
+      [GET_FIRST_POSTLIST]: (state,action) => produce(state, (draft) => {
+        console.log(action.payload);
+        draft.post_list = action.payload.postList;
+        draft.paging.lastPage = action.payload.paging.lastPage;
+        draft.is_loading = false;// 로딩이 다되었으니까 false로 바꿔줘 다시
+      }),
+      [GET_NEXT_POSTLIST]: (state,action) => produce(state, (draft) => {
+        console.log(action.payload);
+        draft.post_list.push(...action.payload.postList);
+        draft.paging = action.payload.paging;
+        draft.is_loading = false;// 로딩이 다되었으니까 false로 바꿔줘 다시
       }),
     [GET_A_POST]: (state, action) =>
       produce(state, (draft) => {
@@ -251,7 +328,14 @@ export default handleActions(
         console.log(action.payload);
         draft.post_liked = action.payload.result;
       }),
-    [UPDATE_POST]: (state, action) => produce(state, (draft) => {}),
+        [UPDATE_POST]: (state, action) => produce(state, (draft) => {
+          console.log(action.payload.post);
+          draft.post_list.post.map((x) => {
+              if (x.postId === action.payload.post.postId) {
+               x.post = action.payload.post;
+              }
+          })
+        }),
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post_list.filter(!action.payload.post);
@@ -268,6 +352,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.like_list = action.payload.posts;
       }),
+      [LOADING]: (state, action) => produce (state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+      })
   },
   initialState
 );
@@ -282,5 +369,7 @@ const actionCreators = {
   getSearch,
   getCategory,
   getLike,
+  getFirstPostList,
+  getNextPostList,
 };
 export { actionCreators };
