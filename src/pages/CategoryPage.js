@@ -44,7 +44,7 @@ const CategoryPage = (props) => {
             fontSize: "1.7em",
             lineHeight: "0.5",
           }}
-          onClick={() => history.push("/")}
+          onClick={() => history.push("/main")}
         ></ArrowBackIosIcon>
         <Text bold size="20px" padding="0 0 0 10px">
           카테고리
@@ -127,11 +127,9 @@ const CategoryPage = (props) => {
           </Div>
         </Grid>
 
-        <Grid width="90%" height="16%" space_between>
-          <Div>
-            <IconButton
-              onClick={() => history.push(`/category/${"게임&취미"}`)}
-            >
+        <Grid height="16%" space_between>
+          <Div onClick={() => history.push(`/category/${"게임&취미"}`)}>
+            <IconButton>
               <SportsEsportsIcon sx={{ fontSize: 45 }}></SportsEsportsIcon>
             </IconButton>
             <Text>게임/취미</Text>
@@ -188,6 +186,7 @@ const CategoryPage = (props) => {
 export default CategoryPage;
 
 const Div = styled.div`
+  width: 33%;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -6,23 +6,23 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Image, Grid, Text } from "../../elements/index";
 
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Categories = (props) => {
   const like_list = useSelector((state) => state.post?.like_list);
   const is_login = useSelector((state) => state.user.is_login);
 
   const history = useHistory();
-  const likeList = like_list?.postList;
-  console.log("like_list", likeList);
+  console.log("like_list", like_list);
   //없으면 빈채로 보여주고 생긴다음에 밑에 보여줌
-  if (!likeList) {
+  if (!like_list) {
     return <div></div>;
   }
+
   return (
     <React.Fragment>
       <Grid bg="white" height="84%" fixed top="8%" padding="0px 16px" scroll>
-        {likeList.map((p) => {
+        {like_list.map((p) => {
           return (
             <Grid
               key={p.postId}
@@ -52,7 +52,7 @@ const Categories = (props) => {
                   <Text>{p.category}</Text>
 
                   <Heart>
-                    <FavoriteBorderIcon></FavoriteBorderIcon>
+                    <FavoriteIcon></FavoriteIcon>
                     <Text>{p.likeCount}</Text>
                   </Heart>
                 </Contents>

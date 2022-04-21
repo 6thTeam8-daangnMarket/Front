@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import styled from "styled-components";
 import { Input, Button } from "../elements/index";
 import Navbar from "../components/Navbar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -15,7 +16,7 @@ import SearchList from "../components/SearchPage/SearchList";
 
 const SearchPage = () => {
   const history = useHistory();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // const [query, setQuery] = useState("");
   const [searchWord, setSearchWord] = React.useState("");
@@ -26,6 +27,14 @@ const SearchPage = () => {
     setSearchWord(e.target.value);
   };
 
+  const search = () => {
+    if (searchWord === "") {
+      window.alert("검색어를 입력해주세요!");
+      return;
+    }
+    dispatch(postActions.getSearch(searchWord));
+  };
+
   return (
     <React.Fragment>
       <Navbar is_flex>
@@ -33,24 +42,25 @@ const SearchPage = () => {
           variant="text"
           style={{
             position: "absolute",
-            left: "20px",
-            top: "12px",
+            left: "8%",
+            // top: "12px",
             color: "lightgrey",
-            fontSize: "1.7em",
+            fontSize: "170%",
             lineHeight: "0.5",
           }}
           onClick={() => history.goBack()}
         ></ArrowBackIosIcon>
 
         <Input
-          width="55%"
+          width="50%"
           height="1%"
           padding="10px 25px"
+          margin="0 0 0 12%"
           placeholder="검색어를 입력해주세요"
           _onChange={searchWordChange}
         ></Input>
 
-        <IconButton onClick={postActions.getSearch(searchWord)}>
+        <IconButton onClick={search}>
           <SearchOutlinedIcon />
         </IconButton>
       </Navbar>
@@ -60,3 +70,10 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

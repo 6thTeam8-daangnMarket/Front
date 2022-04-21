@@ -110,21 +110,22 @@ const SignUpPage = () => {
         margin="8px 0 0 0 "
         center
       >
-        <Text size="32px" bold margin="0px 0px 16px 0px">
+        <Text size="200%" bold margin="0px 0px 16px 0px">
           회원가입
         </Text>
 
         <Grid height="10%">
           <Input
-            width="52%"
+            width="55%"
             placeholder="아이디를 입력해주세요"
-            margin="8px"
+            margin="0 1%"
             _onChange={(e) => {
               setId(e.target.value);
             }}
           />
           <Button
-            margin="8px"
+            width="40%"
+            margin="0 1%"
             bg="#FF9F57"
             color="#ffffff"
             _onClick={() => idCheck(id)}
@@ -134,15 +135,16 @@ const SignUpPage = () => {
         </Grid>
         <Grid height="10%">
           <Input
-            width="52%"
+            width="55%"
             placeholder="닉네임을 입력해주세요"
-            margin="8px"
+            margin="0 1%"
             _onChange={(e) => {
               setNickName(e.target.value);
             }}
           />
           <Button
-            margin="8px"
+            width="40%"
+            margin="0 1%"
             bg="#FF9F57"
             color="#ffffff"
             _onClick={() => nickNameCheck(id)}
@@ -174,8 +176,7 @@ const SignUpPage = () => {
           />
         </Grid>
         <Grid height="10%" is_flex>
-          {" "}
-          <FormControl sx={{ m: 1, minWidth: "95%" }}>
+          <FormControl sx={{ m: 1, minWidth: "98%" }}>
             <InputLabel id="demo-simple-select-helper-label">지역</InputLabel>
             <Select
               labelId="demo-simple-select-helper-label"
@@ -186,9 +187,6 @@ const SignUpPage = () => {
                 setLocation(e.target.value);
               }}
             >
-              {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem> */}
               <MenuItem value={"서울시"}>서울시</MenuItem>
               <MenuItem value={"경기도"}>경기도</MenuItem>
               <MenuItem value={"충청도"}>충청도</MenuItem>
@@ -210,20 +208,6 @@ const SignUpPage = () => {
             회원가입
           </Button>
         </Grid>
-
-        {/* <select
-        name="location"
-        id="location"
-        onChange={(e) => setLocation(e.target.value)}
-      >
-        <option value=" ">--선택--</option>
-        <option value="서울시">서울시</option>
-        <option value="경기도">경기도</option>
-        <option value="충청도">충청도</option>
-        <option value="경상도">경상도</option>
-        <option value="강원도">강원도</option>
-        <option value="제주도">제주도</option>
-      </select> */}
       </Grid>
     </Grid>
   );

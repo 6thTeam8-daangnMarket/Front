@@ -23,68 +23,99 @@ const MainPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  // const post_data = useSelector((state) => state.post);
+  // const [isLoading, setIsLoading] = React.useState(false);
+
   const userLocation = useSelector((state) => state.user?.location);
   const is_login = useSelector((state) => state.user.is_login);
 
-  React.useEffect(() => {
-    dispatch(postActions.getPost());
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(postActions.getPost());
+  // }, []);
 
-  return (
-    <React.Fragment>
-      <Grid bg="#CCC">
-        <Navbar>
-          <Text bold size="20px" padding="0 0 0 10px">
-            {userLocation}
-          </Text>
-          <div>
-            <IconButton
-              onClick={() => {
-                history.push("/search");
-              }}
-            >
-              <SearchOutlinedIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                history.push("/category");
-              }}
-            >
-              <MenuOutlinedIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                history.push("/login");
-              }}
-            >
-              <LoginTwoToneIcon />
-            </IconButton>
-            <IconButton onClick={() => dispatch(userActions.logout())}>
-              <LogoutTwoToneIcon />
-            </IconButton>
-          </div>
-        </Navbar>
-        <Postlist></Postlist>
-
-        <Permit>
-          <Button
-            is_float
-            bg="#FF9F57"
-            text="+"
-            _onClick={() => {
-              if (!is_login) {
-                window.alert("로그인 후 게시물을 써주세요!");
-                history.push("/login");
-              } else {
+  if (is_login) {
+    return (
+      <React.Fragment>
+        <Grid bg="#CCC">
+          <Navbar>
+            <Text bold size="150%" padding="0 0 0 10px">
+              {userLocation}
+            </Text>
+            <div>
+              <IconButton
+                onClick={() => {
+                  history.push("/search");
+                }}
+              >
+                <SearchOutlinedIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  history.push("/category");
+                }}
+              >
+                <MenuOutlinedIcon />
+              </IconButton>
+              <IconButton onClick={() => dispatch(userActions.logout())}>
+                <LogoutTwoToneIcon />
+              </IconButton>
+            </div>
+          </Navbar>
+          <Postlist></Postlist>
+          <Permit>
+            <Button
+              is_float
+              bg="#FF9F57"
+              text="+"
+              _onClick={() => {
                 history.push("/post/write");
-              }
-            }}
-          ></Button>
-        </Permit>
-        <BottomNavbar></BottomNavbar>
-      </Grid>
-    </React.Fragment>
-  );
+              }}
+            ></Button>
+          </Permit>
+          <BottomNavbar></BottomNavbar>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
+  // if (!is_login) {
+  //   return (
+  //     <React.Fragment>
+  //       <Grid bg="#CCC">
+  //         <Navbar>
+  //           <Text bold size="20px" padding="0 0 0 10px">
+  //             {userLocation}
+  //           </Text>
+  //           <div>
+  //             <IconButton
+  //               onClick={() => {
+  //                 history.push("/search");
+  //               }}
+  //             >
+  //               <SearchOutlinedIcon />
+  //             </IconButton>
+  //             <IconButton
+  //               onClick={() => {
+  //                 history.push("/category");
+  //               }}
+  //             >
+  //               <MenuOutlinedIcon />
+  //             </IconButton>
+  //             <IconButton
+  //               onClick={() => {
+  //                 history.push("/login");
+  //               }}
+  //             >
+  //               <LoginTwoToneIcon />
+  //             </IconButton>
+  //           </div>
+  //         </Navbar>
+  //         <Postlist></Postlist>
+  //         <BottomNavbar></BottomNavbar>
+  //       </Grid>
+  //     </React.Fragment>
+  //   );
+  // }
 };
 
 export default MainPage;

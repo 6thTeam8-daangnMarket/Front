@@ -21,9 +21,6 @@ const CategoryResultPage = (props) => {
   console.log(category);
   console.log(typeof category);
 
-  // const [loading, setLoading] = useState(false);
-  // const post_list = useSelector((state) => state.post?.post_list);
-
   React.useEffect(() => {
     dispatch(postActions.getCategory(category));
   }, []);
@@ -49,7 +46,7 @@ const CategoryResultPage = (props) => {
     <Grid bg="#CCC">
       <Navbar is_flex>
         <Text bold size="20px" padding="0 0 0 10px">
-          카테고리 결과
+          {category}
         </Text>
         <ArrowBackIosIcon
           variant="text"

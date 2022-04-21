@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Navbar from "../components/Navbar";
 import LikeList from "../components/mypage/LikeList";
@@ -8,7 +8,15 @@ import BottomNavbar from "../components/BottomNavbar";
 
 import { Text, Grid, Image } from "../elements/index";
 
+import { actionCreators as postActions } from "../redux/modules/post";
+
 const MyPage = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(postActions.getLike());
+  }, []);
+
   return (
     <React.Fragment>
       <Grid bg="#CCC">
